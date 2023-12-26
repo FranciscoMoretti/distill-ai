@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* TODO: Replace Novel background color with shadcn scheme */
+body {
+    background-color: var(--novel-white);
+}

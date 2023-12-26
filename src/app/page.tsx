@@ -3,6 +3,9 @@ import Link from "next/link";
 import { CreatePost } from "@/app/_components/create-post";
 import { getServerAuthSession } from "@/server/auth";
 import { api } from "@/trpc/server";
+import { Github } from "@/components/icons";
+import Menu from "@/components/menu";
+import Editor from "@/components/editor";
 
 export default async function Home() {
   const hello = await api.post.hello.query({ text: "from tRPC" });
@@ -10,6 +13,17 @@ export default async function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
+    <div className="flex min-h-screen flex-col items-center sm:px-5 sm:pt-[calc(20vh)]">
+      <a
+        href="https://github.com/steven-tey/novel"
+        target="_blank"
+        className="absolute bottom-5 left-5 z-10 max-h-fit rounded-lg p-2 transition-colors duration-200 hover:bg-stone-100 sm:bottom-auto sm:top-5"
+      >
+        <Github />
+      </a>
+      <Menu />
+      <Editor />
+    </div>
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
         <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
           Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
