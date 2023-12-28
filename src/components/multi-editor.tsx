@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import EditorPanel from "@/components/editor-panel";
 import { extractBoldText, extractTitle } from "@/lib/text-extractor";
-import { type Editor, extensions, generateJSON } from "@tiptap/core";
+import { type Editor, generateJSON } from "@tiptap/core";
 import { useCompletion } from "ai/react";
 import { toast } from "sonner";
 import { Button } from "@/src/components/ui/button";
@@ -12,7 +12,6 @@ import { Link, Sparkles } from "lucide-react";
 
 export default function MultiEditor() {
   const [titleText, setTitleText] = useState<string>("");
-  const [outlineContent, setOutlineContent] = useState<string>("");
   const [mainEditor, setMainEditor] = useState<Editor | null>(null);
   const [outlineEditor, setOutlineEditor] = useState<Editor | null>(null);
   const [summaryEditor, setSummaryEditor] = useState<Editor | null>(null);
