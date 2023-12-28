@@ -8,7 +8,7 @@ import { useCompletion } from "ai/react";
 import { toast } from "sonner";
 import { Button } from "@/src/components/ui/button";
 import { Toggle } from "@/src/components/ui/toggle";
-import { Link } from "lucide-react";
+import { Link, Sparkles } from "lucide-react";
 
 export default function MultiEditor() {
   const [mainContent, setMainContent] = useState<string>("");
@@ -42,16 +42,7 @@ export default function MultiEditor() {
   }, [mainContent, autoGenerateOutline]);
 
   useEffect(() => {
-    if (outlineContent) {
-      console.log({ outlineContent, outlineEditor });
-      if (outlineContent && summaryEditor) {
-        summaryEditor.commands.setContent("");
-        (async () =>
-          await complete(outlineContent, {
-            body: { title: titleText },
-          }))().catch((err) => console.error(err));
-      }
-    }
+    GenerateSummary();
   }, [outlineContent, summaryEditor]);
 
   const { complete, completion, isLoading, stop } = useCompletion({
@@ -80,7 +71,7 @@ export default function MultiEditor() {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-8">
       <div className="flex flex-col items-center gap-2">
-        <div className="gap 2 flex flex-row justify-end">
+        <div className="flex w-full flex-row justify-end gap-2">
           <Button onClick={() => generateOutline()}>Generate Outline</Button>
           <Toggle
             aria-label="Toggle Auto Generate Outline"
@@ -105,23 +96,32 @@ export default function MultiEditor() {
           }}
         />
       </div>
-      <EditorPanel
-        setEditor={setOutlineEditor}
-        completionApi={"/api/complete"}
-        completionId={"outline"}
-        onDebouncedUpdate={(editor) => {
-          if (editor) {
-            // TODO not update on every update
-            const textString = editor?.getText();
-            if (textString != outlineContent) {
-              setOutlineContent(textString);
+      <div className="flex flex-col items-center gap-2">
+        <div className="flex w-full flex-row items-center justify-end gap-1">
+          <Button onClick={() => GenerateSummary()}>
+            <div className="flex flex-row items-center gap-1">
+              Generate Summary <Sparkles className="h-4 w-4" />
+            </div>
+          </Button>
+        </div>
+        <EditorPanel
+          setEditor={setOutlineEditor}
+          completionApi={"/api/complete"}
+          completionId={"outline"}
+          onDebouncedUpdate={(editor) => {
+            if (editor) {
+              // TODO not update on every update
+              const textString = editor?.getText();
+              if (textString != outlineContent) {
+                setOutlineContent(textString);
+              }
             }
-          }
-        }}
-        defaultValue={DEFAULT_OUTLINE_TEXT}
-        disableLocalStorage={false}
-        storageKey="novel__outline"
-      />
+          }}
+          defaultValue={DEFAULT_OUTLINE_TEXT}
+          disableLocalStorage={false}
+          storageKey="novel__outline"
+        />
+      </div>
       <EditorPanel
         setEditor={setSummaryEditor}
         completionApi={"/api/complete"}
@@ -134,6 +134,19 @@ export default function MultiEditor() {
       />
     </div>
   );
+
+  function GenerateSummary() {
+    if (outlineContent) {
+      console.log({ outlineContent, outlineEditor });
+      if (outlineContent && summaryEditor) {
+        summaryEditor.commands.setContent("");
+        (async () =>
+          await complete(outlineContent, {
+            body: { title: titleText },
+          }))().catch((err) => console.error(err));
+      }
+    }
+  }
 }
 
 const DEFAULT_OUTLINE_TEXT = {
