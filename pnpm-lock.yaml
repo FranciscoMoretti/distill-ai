@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   novel@0.1.22:
-    hash: ws7ueq3ou5rbyck2mkd7abbxzq
+    hash: tzcgmarrmdxbi7ge446nfhi3ni
     path: patches/novel@0.1.22.patch
 
 dependencies:
@@ -135,7 +135,7 @@ dependencies:
     version: 0.2.1(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)
   novel:
     specifier: 0.1.22
-    version: 0.1.22(patch_hash=ws7ueq3ou5rbyck2mkd7abbxzq)(react@18.2.0)(solid-js@1.8.7)(svelte@4.2.8)(vue@3.3.13)
+    version: 0.1.22(patch_hash=tzcgmarrmdxbi7ge446nfhi3ni)(react@18.2.0)(solid-js@1.8.7)(svelte@4.2.8)(vue@3.3.13)
   openai:
     specifier: ^4.3.1
     version: 4.24.1
@@ -5344,7 +5344,7 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /novel@0.1.22(patch_hash=ws7ueq3ou5rbyck2mkd7abbxzq)(react@18.2.0)(solid-js@1.8.7)(svelte@4.2.8)(vue@3.3.13):
+  /novel@0.1.22(patch_hash=tzcgmarrmdxbi7ge446nfhi3ni)(react@18.2.0)(solid-js@1.8.7)(svelte@4.2.8)(vue@3.3.13):
     resolution: {integrity: sha512-hdZ3iV4kvCISNjRNXqQk6fRVkMZmvzWjA3zXM1bU2SXVEufBxZL+77qsdEK/XETkJkeEdQl0mk8ERwLiL0BvRg==}
     peerDependencies:
       react: ^18.2.0
