@@ -11,18 +11,19 @@ import { Toggle } from "@/src/components/ui/toggle";
 import { Link, Sparkles } from "lucide-react";
 
 export default function MultiEditor() {
-  const [mainContent, setMainContent] = useState<string>("");
   const [titleText, setTitleText] = useState<string>("");
   const [outlineContent, setOutlineContent] = useState<string>("");
+  const [mainEditor, setMainEditor] = useState<Editor | null>(null);
   const [outlineEditor, setOutlineEditor] = useState<Editor | null>(null);
   const [summaryEditor, setSummaryEditor] = useState<Editor | null>(null);
   const [autoGenerateOutline, setAutoGenerateOutline] =
     useState<boolean>(false);
 
   function generateOutline() {
-    if (mainContent && outlineEditor) {
-      const filteredContent = extractBoldText(mainContent);
-      const titleText = extractTitle(mainContent);
+    const textString = mainEditor?.getHTML();
+    if (textString && outlineEditor) {
+      const filteredContent = extractBoldText(textString);
+      const titleText = extractTitle(textString);
       if (titleText) {
         setTitleText(titleText);
       }
@@ -35,15 +36,19 @@ export default function MultiEditor() {
     }
   }
 
-  useEffect(() => {
-    if (autoGenerateOutline) {
-      generateOutline();
+  function GenerateSummary() {
+    const textString = outlineEditor?.getText();
+    if (textString) {
+      console.log({ textString });
+      if (textString && summaryEditor) {
+        summaryEditor.commands.setContent("");
+        (async () =>
+          await complete(textString, {
+            body: { title: titleText },
+          }))().catch((err) => console.error(err));
+      }
     }
-  }, [mainContent, autoGenerateOutline]);
-
-  useEffect(() => {
-    GenerateSummary();
-  }, [outlineContent, summaryEditor]);
+  }
 
   const { complete, completion, isLoading, stop } = useCompletion({
     id: "ai_summary",
@@ -84,14 +89,12 @@ export default function MultiEditor() {
         </div>
 
         <EditorPanel
+          setEditor={setMainEditor}
           completionApi={"/api/complete"}
           completionId={"main"}
-          onDebouncedUpdate={(editor) => {
-            if (editor) {
-              const htmlSTring = editor?.getHTML();
-              if (htmlSTring != mainContent) {
-                setMainContent(htmlSTring);
-              }
+          onDebouncedUpdate={() => {
+            if (autoGenerateOutline) {
+              generateOutline();
             }
           }}
         />
@@ -109,44 +112,32 @@ export default function MultiEditor() {
           completionApi={"/api/complete"}
           completionId={"outline"}
           onDebouncedUpdate={(editor) => {
-            if (editor) {
-              // TODO not update on every update
-              const textString = editor?.getText();
-              if (textString != outlineContent) {
-                setOutlineContent(textString);
-              }
-            }
+            console.log("Outline updated");
           }}
           defaultValue={DEFAULT_OUTLINE_TEXT}
           disableLocalStorage={false}
           storageKey="novel__outline"
         />
       </div>
-      <EditorPanel
-        setEditor={setSummaryEditor}
-        completionApi={"/api/complete"}
-        completionId={"summary"}
-        // TODO: Fix this hack that produces a new editor everytime when I get access to the editor command API
-        onDebouncedUpdate={console.log}
-        defaultValue={DEFAULT_SUMMARY_TEXT}
-        disableLocalStorage={false}
-        storageKey="novel__summary"
-      />
+      <div className="flex flex-col items-center gap-2">
+        <div className="flex w-full flex-row items-center justify-end gap-1">
+          <Button onClick={() => console.log("export TBD")} disabled>
+            <div className="flex flex-row items-center gap-1">Export</div>
+          </Button>
+        </div>
+        <EditorPanel
+          setEditor={setSummaryEditor}
+          completionApi={"/api/complete"}
+          completionId={"summary"}
+          // TODO: Fix this hack that produces a new editor everytime when I get access to the editor command API
+          onDebouncedUpdate={console.log}
+          defaultValue={DEFAULT_SUMMARY_TEXT}
+          disableLocalStorage={false}
+          storageKey="novel__summary"
+        />
+      </div>
     </div>
   );
-
-  function GenerateSummary() {
-    if (outlineContent) {
-      console.log({ outlineContent, outlineEditor });
-      if (outlineContent && summaryEditor) {
-        summaryEditor.commands.setContent("");
-        (async () =>
-          await complete(outlineContent, {
-            body: { title: titleText },
-          }))().catch((err) => console.error(err));
-      }
-    }
-  }
 }
 
 const DEFAULT_OUTLINE_TEXT = {
