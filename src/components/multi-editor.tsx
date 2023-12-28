@@ -8,6 +8,7 @@ import { type Editor, extensions, generateJSON } from "@tiptap/core";
 export default function MultiEditor() {
   const [mainContent, setMainContent] = useState<string>("");
   const [outlineEditor, setOutlineEditor] = useState<Editor | null>(null);
+  const [summaryEditor, setSummaryEditor] = useState<Editor | null>(null);
 
   useEffect(() => {
     if (mainContent && outlineEditor) {
@@ -24,7 +25,7 @@ export default function MultiEditor() {
   }, [mainContent]);
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-8">
       <EditorPanel
         onDebouncedUpdate={(editor) => {
           if (editor) {
@@ -39,15 +40,23 @@ export default function MultiEditor() {
         setEditor={setOutlineEditor}
         // TODO: Fix this hack that produces a new editor everytime when I get access to the editor command API
         onDebouncedUpdate={console.log}
-        defaultValue={DEFAULT_TEXT}
+        defaultValue={DEFAULT_OUTLINE_TEXT}
         disableLocalStorage={false}
         storageKey="novel__outline"
+      />
+      <EditorPanel
+        setEditor={setSummaryEditor}
+        // TODO: Fix this hack that produces a new editor everytime when I get access to the editor command API
+        onDebouncedUpdate={console.log}
+        defaultValue={DEFAULT_SUMMARY_TEXT}
+        disableLocalStorage={false}
+        storageKey="novel__summary"
       />
     </div>
   );
 }
 
-const DEFAULT_TEXT = {
+const DEFAULT_OUTLINE_TEXT = {
   type: "doc",
   content: [
     {
@@ -68,6 +77,33 @@ const DEFAULT_TEXT = {
         {
           type: "text",
           text: "This will be completed automatically",
+        },
+      ],
+    },
+  ],
+};
+
+const DEFAULT_SUMMARY_TEXT = {
+  type: "doc",
+  content: [
+    {
+      type: "heading",
+      attrs: {
+        level: 2,
+      },
+      content: [
+        {
+          type: "text",
+          text: "Summary",
+        },
+      ],
+    },
+    {
+      type: "paragraph",
+      content: [
+        {
+          type: "text",
+          text: "This will be completed by AI",
         },
       ],
     },
