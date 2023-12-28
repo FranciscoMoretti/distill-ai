@@ -1,0 +1,84 @@
+diff --git a/dist/index.d.mts b/dist/index.d.mts
+index 9335871c389d548ed143f36a6ee775e927d7bf05..030fded32152dd21bafb61345a1a2af3bbca91c1 100644
+--- a/dist/index.d.mts
++++ b/dist/index.d.mts
+@@ -33,6 +33,12 @@ declare function Editor({ completionApi, className, defaultValue, extensions, ed
+      * Defaults to () => {}.
+      */
+     onUpdate?: (editor?: Editor$1) => void | Promise<void>;
++    /**
++     * A callback function that is called whenever the editor is created.
++     * Defaults to () => {}.
++     */
++    // eslint-disable-next-line no-unused-vars
++    onCreate?: (editor?: Editor$1) => void | Promise<void>;
+     /**
+      * A callback function that is called whenever the editor is updated, but only after the defined debounce duration.
+      * Defaults to () => {}.
+diff --git a/dist/index.d.ts b/dist/index.d.ts
+index 9335871c389d548ed143f36a6ee775e927d7bf05..030fded32152dd21bafb61345a1a2af3bbca91c1 100644
+--- a/dist/index.d.ts
++++ b/dist/index.d.ts
+@@ -33,6 +33,12 @@ declare function Editor({ completionApi, className, defaultValue, extensions, ed
+      * Defaults to () => {}.
+      */
+     onUpdate?: (editor?: Editor$1) => void | Promise<void>;
++    /**
++     * A callback function that is called whenever the editor is created.
++     * Defaults to () => {}.
++     */
++    // eslint-disable-next-line no-unused-vars
++    onCreate?: (editor?: Editor$1) => void | Promise<void>;
+     /**
+      * A callback function that is called whenever the editor is updated, but only after the defined debounce duration.
+      * Defaults to () => {}.
+diff --git a/dist/index.js b/dist/index.js
+index 43b29ad33942309793dae4c5f5dbd44abf353016..d9fa0b7d5f019c9608b07fec39fcce3946d4ccae 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -16678,6 +16678,8 @@ function Editor2({
+   editorProps = {},
+   onUpdate = () => {
+   },
++  onCreate = () => {
++  },
+   onDebouncedUpdate = () => {
+   },
+   debounceDuration = 750,
+@@ -16717,6 +16719,11 @@ function Editor2({
+         debouncedUpdates(e);
+       }
+     },
++    onCreate: (e) =>{
++      if(onCreate){
++        onCreate(e.editor)
++      }
++    },
+     autofocus: "end"
+   });
+   const { complete, completion, isLoading, stop } = (0, import_react13.useCompletion)({
+diff --git a/dist/index.mjs b/dist/index.mjs
+index 0630ce76514c591ddfda41588b518cebac7db95d..6c9d4fe9e91c8cb193c021f34233f08a3b1016f9 100644
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -16681,6 +16681,8 @@ function Editor2({
+   editorProps = {},
+   onUpdate = () => {
+   },
++  onCreate = () => {
++  },
+   onDebouncedUpdate = () => {
+   },
+   debounceDuration = 750,
+@@ -16720,6 +16722,11 @@ function Editor2({
+         debouncedUpdates(e);
+       }
+     },
++    onCreate: (e) =>{
++      if(onCreate){
++        onCreate(e.editor)
++      }
++    },
+     autofocus: "end"
+   });
+   const { complete, completion, isLoading, stop } = useCompletion2({
