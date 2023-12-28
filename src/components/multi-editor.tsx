@@ -81,7 +81,12 @@ export default function MultiEditor() {
           <Toggle
             aria-label="Toggle Auto Generate Outline"
             pressed={autoGenerateOutline}
-            onPressedChange={(pressed) => setAutoGenerateOutline(pressed)}
+            onPressedChange={(pressed) => {
+              setAutoGenerateOutline(pressed);
+              if (pressed) {
+                generateOutline();
+              }
+            }}
             variant="outline"
           >
             <Link className="h-4 w-4" />
