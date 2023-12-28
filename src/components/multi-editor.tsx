@@ -7,6 +7,8 @@ import { type Editor, extensions, generateJSON } from "@tiptap/core";
 import { useCompletion } from "ai/react";
 import { toast } from "sonner";
 import { Button } from "@/src/components/ui/button";
+import { Toggle } from "@/src/components/ui/toggle";
+import { Link } from "lucide-react";
 
 export default function MultiEditor() {
   const [mainContent, setMainContent] = useState<string>("");
@@ -14,8 +16,10 @@ export default function MultiEditor() {
   const [outlineContent, setOutlineContent] = useState<string>("");
   const [outlineEditor, setOutlineEditor] = useState<Editor | null>(null);
   const [summaryEditor, setSummaryEditor] = useState<Editor | null>(null);
+  const [autoGenerateOutline, setAutoGenerateOutline] =
+    useState<boolean>(false);
 
-  useEffect(() => {
+  function generateOutline() {
     if (mainContent && outlineEditor) {
       const filteredContent = extractBoldText(mainContent);
       const titleText = extractTitle(mainContent);
@@ -29,7 +33,13 @@ export default function MultiEditor() {
         ),
       );
     }
-  }, [mainContent]);
+  }
+
+  useEffect(() => {
+    if (autoGenerateOutline) {
+      generateOutline();
+    }
+  }, [mainContent, autoGenerateOutline]);
 
   useEffect(() => {
     if (outlineContent) {
@@ -70,7 +80,17 @@ export default function MultiEditor() {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-8">
       <div className="flex flex-col items-center gap-2">
-        <Button>Generate Outline</Button>
+        <div className="gap 2 flex flex-row justify-end">
+          <Button onClick={() => generateOutline()}>Generate Outline</Button>
+          <Toggle
+            aria-label="Toggle Auto Generate Outline"
+            pressed={autoGenerateOutline}
+            onPressedChange={(pressed) => setAutoGenerateOutline(pressed)}
+            variant="outline"
+          >
+            <Link className="h-4 w-4" />
+          </Toggle>
+        </div>
 
         <EditorPanel
           completionApi={"/api/complete"}
