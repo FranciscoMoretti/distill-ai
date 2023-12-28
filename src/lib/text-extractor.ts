@@ -96,3 +96,48 @@ export function extractBoldText(htmlString: string): string {
 
   return resultHTML;
 }
+
+// Define a unified plugin to extract the title
+const extractTitlePlugin: Plugin = () => {
+  return (tree, file) => {
+    const titleNode = findFirstTitleNode(tree);
+    file.data = { title: titleNode ? plainTextContent(titleNode) : undefined };
+  };
+};
+
+// Helper function to find the title node
+function findFirstTitleNode(tree: any): any | undefined {
+  let titleNode;
+
+  visit(tree, "element", (node) => {
+    if (
+      node.tagName === "h1" ||
+      node.tagName === "h2" ||
+      node.tagName === "h3" ||
+      node.tagName === "h4" ||
+      node.tagName === "h5" ||
+      node.tagName === "h6"
+    ) {
+      titleNode = node;
+      return false; // Stop searching once the first title is found
+    }
+  });
+
+  return titleNode;
+}
+
+// Define a function to extract bolded text
+export function extractTitle(htmlString: string): string | undefined {
+  // Parse the HTML tree
+  let resultHTML = undefined;
+  unified()
+    .use(rehypeParse, { fragment: true })
+    .use(extractTitlePlugin)
+    .use(rehypeStringify)
+    .process(htmlString, (err, file) => {
+      if (err) throw err;
+      resultHTML = file?.data?.title;
+    });
+
+  return resultHTML;
+}

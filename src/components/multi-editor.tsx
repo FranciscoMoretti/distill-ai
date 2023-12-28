@@ -2,13 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import EditorPanel from "@/components/editor";
-import { extractBoldText } from "@/lib/text-extractor";
+import { extractBoldText, extractTitle } from "@/lib/text-extractor";
 import { type Editor, extensions, generateJSON } from "@tiptap/core";
 import { useCompletion } from "ai/react";
 import { toast } from "sonner";
 
 export default function MultiEditor() {
   const [mainContent, setMainContent] = useState<string>("");
+  const [titleText, setTitleText] = useState<string>("");
   const [outlineContent, setOutlineContent] = useState<string>("");
   const [outlineEditor, setOutlineEditor] = useState<Editor | null>(null);
   const [summaryEditor, setSummaryEditor] = useState<Editor | null>(null);
@@ -16,7 +17,10 @@ export default function MultiEditor() {
   useEffect(() => {
     if (mainContent && outlineEditor) {
       const filteredContent = extractBoldText(mainContent);
-
+      const titleText = extractTitle(mainContent);
+      if (titleText) {
+        setTitleText(titleText);
+      }
       outlineEditor.commands.setContent(
         generateJSON(
           filteredContent,
@@ -33,7 +37,7 @@ export default function MultiEditor() {
         summaryEditor.commands.setContent("");
         (async () =>
           await complete(outlineContent, {
-            body: { title: "Eloquent Javascript" },
+            body: { title: titleText },
           }))().catch((err) => console.error(err));
       }
     }
