@@ -6,6 +6,7 @@ import { extractBoldText, extractTitle } from "@/lib/text-extractor";
 import { type Editor, extensions, generateJSON } from "@tiptap/core";
 import { useCompletion } from "ai/react";
 import { toast } from "sonner";
+import { Button } from "@/src/components/ui/button";
 
 export default function MultiEditor() {
   const [mainContent, setMainContent] = useState<string>("");
@@ -68,18 +69,22 @@ export default function MultiEditor() {
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-8">
-      <EditorPanel
-        completionApi={"/api/complete"}
-        completionId={"main"}
-        onDebouncedUpdate={(editor) => {
-          if (editor) {
-            const htmlSTring = editor?.getHTML();
-            if (htmlSTring != mainContent) {
-              setMainContent(htmlSTring);
+      <div className="flex flex-col items-center gap-2">
+        <Button>Generate Outline</Button>
+
+        <EditorPanel
+          completionApi={"/api/complete"}
+          completionId={"main"}
+          onDebouncedUpdate={(editor) => {
+            if (editor) {
+              const htmlSTring = editor?.getHTML();
+              if (htmlSTring != mainContent) {
+                setMainContent(htmlSTring);
+              }
             }
-          }
-        }}
-      />
+          }}
+        />
+      </div>
       <EditorPanel
         setEditor={setOutlineEditor}
         completionApi={"/api/complete"}
