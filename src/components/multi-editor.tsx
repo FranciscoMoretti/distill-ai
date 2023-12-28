@@ -28,12 +28,13 @@ export default function MultiEditor() {
 
   useEffect(() => {
     if (outlineContent) {
-      console.log({ outlineContent });
-      if (outlineContent) {
+      console.log({ outlineContent, outlineEditor });
+      if (outlineContent && summaryEditor) {
+        summaryEditor.commands.setContent("");
         complete(outlineContent);
       }
     }
-  }, [outlineContent]);
+  }, [outlineContent, summaryEditor]);
 
   const { complete, completion, isLoading, stop } = useCompletion({
     id: "ai_summary",
