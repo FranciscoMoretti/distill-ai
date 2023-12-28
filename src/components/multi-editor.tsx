@@ -6,19 +6,22 @@ import { extractBoldText } from "@/lib/text-extractor";
 import { type Editor, extensions, generateJSON } from "@tiptap/core";
 
 export default function MultiEditor() {
-  const [content, setContent] = useState<string>("");
-  const [secondEditor, setSecondEditor] = useState<Editor | null>(null);
+  const [mainContent, setMainContent] = useState<string>("");
+  const [outlineEditor, setOutlineEditor] = useState<Editor | null>(null);
 
   useEffect(() => {
-    if (content && secondEditor) {
-      const filteredContent = extractBoldText(content);
+    if (mainContent && outlineEditor) {
+      const filteredContent = extractBoldText(mainContent);
       console.log(filteredContent);
 
-      secondEditor.commands.setContent(
-        generateJSON(filteredContent, secondEditor.extensionManager.extensions),
+      outlineEditor.commands.setContent(
+        generateJSON(
+          filteredContent,
+          outlineEditor.extensionManager.extensions,
+        ),
       );
     }
-  }, [content]);
+  }, [mainContent]);
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
@@ -26,18 +29,19 @@ export default function MultiEditor() {
         onDebouncedUpdate={(editor) => {
           if (editor) {
             const htmlSTring = editor?.getHTML();
-            if (htmlSTring != content) {
-              setContent(htmlSTring);
+            if (htmlSTring != mainContent) {
+              setMainContent(htmlSTring);
             }
           }
         }}
       />
       <EditorPanel
-        setEditor={setSecondEditor}
+        setEditor={setOutlineEditor}
         // TODO: Fix this hack that produces a new editor everytime when I get access to the editor command API
         onDebouncedUpdate={console.log}
         defaultValue={DEFAULT_TEXT}
-        disableLocalStorage={true}
+        disableLocalStorage={false}
+        storageKey="novel__outline"
       />
     </div>
   );
