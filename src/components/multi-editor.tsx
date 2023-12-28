@@ -64,13 +64,14 @@ export default function MultiEditor() {
   });
 
   const prev = useRef("");
-
   // Insert chunks of the generated text
   useEffect(() => {
-    const diff = completion.slice(prev.current.length);
-    prev.current = completion;
-    summaryEditor?.commands.insertContent(diff);
-  }, [isLoading, summaryEditor, completion]);
+    // reset prev when `complete` is called again
+    if (prev?.current.length > completion.length) {
+      prev.current = "";
+    }
+    summaryEditor?.chain().setContent(completion).run();
+  }, [summaryEditor, completion]);
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-8">
