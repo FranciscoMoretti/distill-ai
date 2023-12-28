@@ -31,7 +31,10 @@ export default function MultiEditor() {
       console.log({ outlineContent, outlineEditor });
       if (outlineContent && summaryEditor) {
         summaryEditor.commands.setContent("");
-        complete(outlineContent);
+        (async () =>
+          await complete(outlineContent, {
+            body: { title: "Eloquent Javascript" },
+          }))().catch((err) => console.error(err));
       }
     }
   }, [outlineContent, summaryEditor]);

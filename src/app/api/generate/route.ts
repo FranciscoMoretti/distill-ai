@@ -48,10 +48,16 @@ export async function POST(req: Request): Promise<Response> {
     }
   }
 
-  const { prompt } = await req.json();
+  const { prompt, title } = await req.json();
 
   if (typeof prompt != "string") {
     return new Response("Incorrect argument type", {
+      status: 400,
+    });
+  }
+
+  if (!title) {
+    return new Response("Missing title argument", {
       status: 400,
     });
   }
@@ -63,7 +69,7 @@ export async function POST(req: Request): Promise<Response> {
         role: "system",
         content:
           // TODO: Make book title variable
-          "Incorporate the following excerpts from the book 'Eloquent Javascript', which I've selected based on their relevance and importance, into a summary of the book that also draws on external sources on the web. Please use as many details from the excerpts I've provided as possible.",
+          `Incorporate the following excerpts from the book '${title}', which I've selected based on their relevance and importance, into a summary of the book that also draws on external sources on the web. Please use as many details from the excerpts I've provided as possible.`,
         // we're disabling markdown for now until we can figure out a way to stream markdown text with proper formatting: https://github.com/steven-tey/novel/discussions/7
         // "Use Markdown formatting when appropriate.",
       },
