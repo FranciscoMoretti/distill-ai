@@ -27,6 +27,7 @@ export default function MultiEditor() {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-8">
       <EditorPanel
+        completionApi={"/api/complete"}
         onDebouncedUpdate={(editor) => {
           if (editor) {
             const htmlSTring = editor?.getHTML();
@@ -38,6 +39,7 @@ export default function MultiEditor() {
       />
       <EditorPanel
         setEditor={setOutlineEditor}
+        completionApi={"/api/complete"}
         // TODO: Fix this hack that produces a new editor everytime when I get access to the editor command API
         onDebouncedUpdate={console.log}
         defaultValue={DEFAULT_OUTLINE_TEXT}
@@ -46,6 +48,7 @@ export default function MultiEditor() {
       />
       <EditorPanel
         setEditor={setSummaryEditor}
+        completionApi={"/api/complete"}
         // TODO: Fix this hack that produces a new editor everytime when I get access to the editor command API
         onDebouncedUpdate={console.log}
         defaultValue={DEFAULT_SUMMARY_TEXT}

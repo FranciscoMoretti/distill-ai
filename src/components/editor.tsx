@@ -9,12 +9,14 @@ export default function EditorPanel({
   onDebouncedUpdate,
   storageKey,
   defaultValue,
+  completionApi,
   setEditor = undefined,
   disableLocalStorage = false,
 }: {
   onDebouncedUpdate:
     | ((editor?: Editor | undefined) => void | Promise<void>)
     | undefined;
+  completionApi?: string;
   storageKey?: string | undefined;
   setEditor?: (editor: Editor) => void;
   defaultValue?: string | JSONContent | undefined;
@@ -44,6 +46,7 @@ export default function EditorPanel({
             setSaveStatus("Saved");
           }, 500);
         }}
+        completionApi={completionApi}
         storageKey={storageKey}
         defaultValue={defaultValue}
         disableLocalStorage={disableLocalStorage}
