@@ -50,10 +50,6 @@ export async function POST(req: Request): Promise<Response> {
 
   const { prompt } = await req.json();
 
-  return new Response("API temporarily disabled", {
-    status: 400,
-  });
-
   if (typeof prompt != "string") {
     return new Response("Incorrect argument type", {
       status: 400,

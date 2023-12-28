@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import EditorPanel from "@/components/editor";
+import EditorPanel from "@/components/editor-panel";
 import { extractBoldText, extractTitle } from "@/lib/text-extractor";
 import { type Editor, extensions, generateJSON } from "@tiptap/core";
 import { useCompletion } from "ai/react";
@@ -70,6 +70,7 @@ export default function MultiEditor() {
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-8">
       <EditorPanel
         completionApi={"/api/complete"}
+        completionId={"main"}
         onDebouncedUpdate={(editor) => {
           if (editor) {
             const htmlSTring = editor?.getHTML();
@@ -82,7 +83,7 @@ export default function MultiEditor() {
       <EditorPanel
         setEditor={setOutlineEditor}
         completionApi={"/api/complete"}
-        // TODO: Fix this hack that produces a new editor everytime when I get access to the editor command API
+        completionId={"outline"}
         onDebouncedUpdate={(editor) => {
           if (editor) {
             // TODO not update on every update
@@ -99,6 +100,7 @@ export default function MultiEditor() {
       <EditorPanel
         setEditor={setSummaryEditor}
         completionApi={"/api/complete"}
+        completionId={"summary"}
         // TODO: Fix this hack that produces a new editor everytime when I get access to the editor command API
         onDebouncedUpdate={console.log}
         defaultValue={DEFAULT_SUMMARY_TEXT}

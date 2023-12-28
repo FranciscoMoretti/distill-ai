@@ -10,6 +10,7 @@ export default function EditorPanel({
   storageKey,
   defaultValue,
   completionApi,
+  completionId,
   setEditor = undefined,
   disableLocalStorage = false,
 }: {
@@ -17,6 +18,7 @@ export default function EditorPanel({
     | ((editor?: Editor | undefined) => void | Promise<void>)
     | undefined;
   completionApi?: string;
+  completionId?: string;
   storageKey?: string | undefined;
   setEditor?: (editor: Editor) => void;
   defaultValue?: string | JSONContent | undefined;
@@ -47,6 +49,7 @@ export default function EditorPanel({
           }, 500);
         }}
         completionApi={completionApi}
+        completionId={completionId}
         storageKey={storageKey}
         defaultValue={defaultValue}
         disableLocalStorage={disableLocalStorage}
