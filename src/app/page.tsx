@@ -5,7 +5,8 @@ import MultiEditor from "@/components/multi-editor";
 export default async function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className=" container flex min-h-screen flex-col items-center gap-12 px-4 py-16 ">
+      {/* // TODO: Consider setting a container again for nice width*/}
+      <div className="flex min-h-screen w-full flex-col items-center gap-12 px-4 py-16 ">
         <a
           href="https://github.com/FranciscoMoretti/destill-ai"
           target="_blank"
