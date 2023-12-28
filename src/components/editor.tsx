@@ -1,9 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Editor as NovelEditor } from "novel";
+import { type JSONContent } from "@tiptap/core";
+import { type Editor } from "@tiptap/core";
 
-export default function Editor() {
+export default function EditorPanel({
+  onDebouncedUpdate,
+  storageKey,
+  defaultValue,
+  setEditor = undefined,
+  disableLocalStorage = false,
+}: {
+  onDebouncedUpdate:
+    | ((editor?: Editor | undefined) => void | Promise<void>)
+    | undefined;
+  storageKey?: string | undefined;
+  setEditor?: (editor: Editor) => void;
+  defaultValue?: string | JSONContent | undefined;
+  disableLocalStorage?: boolean;
+}) {
   const [saveStatus, setSaveStatus] = useState("Saved");
 
   return (
@@ -12,16 +28,25 @@ export default function Editor() {
         {saveStatus}
       </div>
       <NovelEditor
-        onUpdate={() => {
+        onCreate={(editor) => {
           setSaveStatus("Unsaved");
+          if (editor && setEditor) {
+            setEditor(editor);
+          }
         }}
-        onDebouncedUpdate={() => {
+        onDebouncedUpdate={async (editor) => {
           setSaveStatus("Saving...");
+          if (onDebouncedUpdate) {
+            await onDebouncedUpdate(editor);
+          }
           // Simulate a delay in saving.
           setTimeout(() => {
             setSaveStatus("Saved");
           }, 500);
         }}
+        storageKey={storageKey}
+        defaultValue={defaultValue}
+        disableLocalStorage={disableLocalStorage}
       />
     </div>
   );
