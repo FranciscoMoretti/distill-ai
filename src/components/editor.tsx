@@ -31,7 +31,7 @@ export default function EditorPanel({
         onCreate={(editor) => {
           setSaveStatus("Unsaved");
           if (editor && setEditor) {
-            setEditor(editor as Editor);
+            setEditor(editor);
           }
         }}
         onDebouncedUpdate={async (editor) => {
