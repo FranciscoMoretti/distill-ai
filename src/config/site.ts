@@ -1,18 +1,17 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: 'Next.js',
-  description:
-    'Rich-text editor components built with Radix UI and Tailwind CSS.',
+  name: "Destill AI",
+  description: "Summarize your documents with progressive summarization + AI.",
   mainNav: [
     {
-      title: 'Home',
-      href: '/',
+      title: "Home",
+      href: "/",
     },
   ],
   links: {
-    twitter: 'https://twitter.com/zbeyens',
-    github: 'https://github.com/udecode/plate',
-    docs: 'https://platejs.org',
+    twitter: "https://twitter.com/franmoretti_",
+    github: "https://github.com/FranciscoMoretti/destill-ai",
+    docs: "https://github.com/FranciscoMoretti/destill-ai",
   },
 };

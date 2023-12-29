@@ -4,6 +4,10 @@ import {
   createPlugins,
   type RenderAfterEditable,
   PlateLeaf,
+  isBlockAboveEmpty,
+  isSelectionAtBlockStart,
+  PlateElement,
+  someNode,
 } from "@udecode/plate-common";
 import {
   createParagraphPlugin,
@@ -17,6 +21,7 @@ import {
   ELEMENT_H4,
   ELEMENT_H5,
   ELEMENT_H6,
+  KEYS_HEADING,
 } from "@udecode/plate-heading";
 import {
   createBlockquotePlugin,
@@ -52,7 +57,13 @@ import {
   ELEMENT_TD,
   ELEMENT_TH,
 } from "@udecode/plate-table";
-import { createTodoListPlugin, ELEMENT_TODO_LI } from "@udecode/plate-list";
+import {
+  createTodoListPlugin,
+  ELEMENT_LI,
+  ELEMENT_OL,
+  ELEMENT_TODO_LI,
+  ELEMENT_UL,
+} from "@udecode/plate-list";
 import {
   createExcalidrawPlugin,
   ELEMENT_EXCALIDRAW,
@@ -85,7 +96,10 @@ import {
 import { createKbdPlugin, MARK_KBD } from "@udecode/plate-kbd";
 import { createAlignPlugin } from "@udecode/plate-alignment";
 import { createIndentPlugin } from "@udecode/plate-indent";
-import { createIndentListPlugin } from "@udecode/plate-indent-list";
+import {
+  createIndentListPlugin,
+  KEY_LIST_STYLE_TYPE,
+} from "@udecode/plate-indent-list";
 import { createLineHeightPlugin } from "@udecode/plate-line-height";
 import { createComboboxPlugin } from "@udecode/plate-combobox";
 import { createDndPlugin } from "@udecode/plate-dnd";
@@ -118,6 +132,7 @@ import { HrElement } from "@/components/plate-ui/hr-element";
 import { ImageElement } from "@/components/plate-ui/image-element";
 import { LinkElement } from "@/components/plate-ui/link-element";
 import { LinkFloatingToolbar } from "@/components/plate-ui/link-floating-toolbar";
+import { ListElement } from "@/components/plate-ui/list-element";
 import { HeadingElement } from "@/components/plate-ui/heading-element";
 import { MediaEmbedElement } from "@/components/plate-ui/media-embed-element";
 import { MentionElement } from "@/components/plate-ui/mention-element";
@@ -137,6 +152,9 @@ import { KbdLeaf } from "@/components/plate-ui/kbd-leaf";
 import { withPlaceholders } from "@/components/plate-ui/placeholder";
 import { withDraggables } from "@/components/plate-ui/with-draggables";
 import { EmojiCombobox } from "@/components/plate-ui/emoji-combobox";
+import { autoformatPlugin } from "@/lib/plate/autoformatPlugin";
+import { TabbableElement } from "@/components/tabbable-element";
+import { dragOverCursorPlugin } from "@/lib/plate/dragOverCursorPlugin";
 
 export const plugins = createPlugins(
   [
@@ -151,16 +169,14 @@ export const plugins = createPlugins(
     createImagePlugin(),
     createMediaEmbedPlugin(),
     createCaptionPlugin({
-      options: {
-        pluginKeys: [
-          // ELEMENT_IMAGE, ELEMENT_MEDIA_EMBED
-        ],
-      },
+      options: { pluginKeys: [ELEMENT_IMAGE, ELEMENT_MEDIA_EMBED] },
     }),
     createMentionPlugin(),
     createTablePlugin(),
     createTodoListPlugin(),
     createExcalidrawPlugin(),
+
+    // Marks
     createBoldPlugin(),
     createItalicPlugin(),
     createUnderlinePlugin(),
@@ -173,13 +189,12 @@ export const plugins = createPlugins(
     createFontSizePlugin(),
     createHighlightPlugin(),
     createKbdPlugin(),
+
+    // Block Style
     createAlignPlugin({
       inject: {
         props: {
-          validTypes: [
-            ELEMENT_PARAGRAPH,
-            // ELEMENT_H1, ELEMENT_H2, ELEMENT_H3
-          ],
+          validTypes: [ELEMENT_PARAGRAPH, ELEMENT_H1, ELEMENT_H2, ELEMENT_H3],
         },
       },
     }),
@@ -188,7 +203,11 @@ export const plugins = createPlugins(
         props: {
           validTypes: [
             ELEMENT_PARAGRAPH,
-            // ELEMENT_H1, ELEMENT_H2, ELEMENT_H3, ELEMENT_BLOCKQUOTE, ELEMENT_CODE_BLOCK
+            ELEMENT_H1,
+            ELEMENT_H2,
+            ELEMENT_H3,
+            ELEMENT_BLOCKQUOTE,
+            ELEMENT_CODE_BLOCK,
           ],
         },
       },
@@ -198,7 +217,11 @@ export const plugins = createPlugins(
         props: {
           validTypes: [
             ELEMENT_PARAGRAPH,
-            // ELEMENT_H1, ELEMENT_H2, ELEMENT_H3, ELEMENT_BLOCKQUOTE, ELEMENT_CODE_BLOCK
+            ELEMENT_H1,
+            ELEMENT_H2,
+            ELEMENT_H3,
+            ELEMENT_BLOCKQUOTE,
+            ELEMENT_CODE_BLOCK,
           ],
         },
       },
@@ -208,10 +231,18 @@ export const plugins = createPlugins(
         props: {
           defaultNodeValue: 1.5,
           validNodeValues: [1, 1.2, 1.5, 2, 3],
-          validTypes: [
-            ELEMENT_PARAGRAPH,
-            // ELEMENT_H1, ELEMENT_H2, ELEMENT_H3
-          ],
+          validTypes: [ELEMENT_PARAGRAPH, ELEMENT_H1, ELEMENT_H2, ELEMENT_H3],
+        },
+      },
+    }),
+
+    // Functionality
+    createAutoformatPlugin(autoformatPlugin),
+    createBlockSelectionPlugin({
+      options: {
+        sizes: {
+          top: 0,
+          bottom: 0,
         },
       },
     }),
@@ -237,7 +268,7 @@ export const plugins = createPlugins(
             query: {
               start: true,
               end: true,
-              // allow: KEYS_HEADING,
+              allow: KEYS_HEADING,
             },
             relative: true,
             level: 1,
@@ -249,6 +280,7 @@ export const plugins = createPlugins(
     createResetNodePlugin({
       options: {
         rules: [
+          // TODO: Consider reset node plugin
           // Usage: https://platejs.org/docs/reset-node
         ],
       },
@@ -256,9 +288,7 @@ export const plugins = createPlugins(
     createSelectOnBackspacePlugin({
       options: {
         query: {
-          allow: [
-            // ELEMENT_IMAGE, ELEMENT_HR
-          ],
+          allow: [ELEMENT_IMAGE, ELEMENT_HR],
         },
       },
     }),
@@ -270,35 +300,48 @@ export const plugins = createPlugins(
           {
             hotkey: "enter",
             query: {
-              allow: [
-                // ELEMENT_CODE_BLOCK, ELEMENT_BLOCKQUOTE, ELEMENT_TD
-              ],
+              allow: [ELEMENT_CODE_BLOCK, ELEMENT_BLOCKQUOTE, ELEMENT_TD],
             },
           },
         ],
       },
     }),
-    createTabbablePlugin(),
+    createTabbablePlugin({
+      options: {
+        query: (editor) => {
+          if (isSelectionAtBlockStart(editor)) return false;
+
+          return !someNode(editor, {
+            match: (n) => {
+              return !!(
+                n.type &&
+                ([ELEMENT_TABLE, ELEMENT_LI, ELEMENT_CODE_BLOCK].includes(
+                  n.type as string,
+                ) ||
+                  n[KEY_LIST_STYLE_TYPE])
+              );
+            },
+          });
+        },
+      },
+      plugins: [
+        {
+          key: "tabbable_element",
+          isElement: true,
+          isVoid: true,
+          component: TabbableElement,
+        },
+      ],
+    }),
     createTrailingBlockPlugin({
       options: { type: ELEMENT_PARAGRAPH },
     }),
+    dragOverCursorPlugin,
+
+    // Collaboration
     createCommentsPlugin(),
-    createAutoformatPlugin({
-      options: {
-        rules: [
-          // Usage: https://platejs.org/docs/autoformat
-        ],
-        enableUndoOnDelete: true,
-      },
-    }),
-    createBlockSelectionPlugin({
-      options: {
-        sizes: {
-          top: 0,
-          bottom: 0,
-        },
-      },
-    }),
+
+    // Deserialization
     createDeserializeDocxPlugin(),
     createDeserializeCsvPlugin(),
     createDeserializeMdPlugin(),
@@ -311,28 +354,30 @@ export const plugins = createPlugins(
         [ELEMENT_CODE_BLOCK]: CodeBlockElement,
         [ELEMENT_CODE_LINE]: CodeLineElement,
         [ELEMENT_CODE_SYNTAX]: CodeSyntaxLeaf,
-        [ELEMENT_EXCALIDRAW]: ExcalidrawElement,
         [ELEMENT_HR]: HrElement,
-        [ELEMENT_IMAGE]: ImageElement,
-        [ELEMENT_LINK]: LinkElement,
         [ELEMENT_H1]: withProps(HeadingElement, { variant: "h1" }),
         [ELEMENT_H2]: withProps(HeadingElement, { variant: "h2" }),
         [ELEMENT_H3]: withProps(HeadingElement, { variant: "h3" }),
         [ELEMENT_H4]: withProps(HeadingElement, { variant: "h4" }),
         [ELEMENT_H5]: withProps(HeadingElement, { variant: "h5" }),
         [ELEMENT_H6]: withProps(HeadingElement, { variant: "h6" }),
+        [ELEMENT_IMAGE]: ImageElement,
+        [ELEMENT_LI]: withProps(PlateElement, { as: "li" }),
+        [ELEMENT_LINK]: LinkElement,
         [ELEMENT_MEDIA_EMBED]: MediaEmbedElement,
         [ELEMENT_MENTION]: MentionElement,
         [ELEMENT_MENTION_INPUT]: MentionInputElement,
+        [ELEMENT_UL]: withProps(ListElement, { variant: "ul" }),
+        [ELEMENT_OL]: withProps(ListElement, { variant: "ol" }),
         [ELEMENT_PARAGRAPH]: ParagraphElement,
         [ELEMENT_TABLE]: TableElement,
-        [ELEMENT_TR]: TableRowElement,
         [ELEMENT_TD]: TableCellElement,
         [ELEMENT_TH]: TableCellHeaderElement,
         [ELEMENT_TODO_LI]: TodoListElement,
+        [ELEMENT_TR]: TableRowElement,
+        [ELEMENT_EXCALIDRAW]: ExcalidrawElement,
         [MARK_BOLD]: withProps(PlateLeaf, { as: "strong" }),
         [MARK_CODE]: CodeLeaf,
-        [MARK_COMMENT]: CommentLeaf,
         [MARK_HIGHLIGHT]: HighlightLeaf,
         [MARK_ITALIC]: withProps(PlateLeaf, { as: "em" }),
         [MARK_KBD]: KbdLeaf,
@@ -340,6 +385,7 @@ export const plugins = createPlugins(
         [MARK_SUBSCRIPT]: withProps(PlateLeaf, { as: "sub" }),
         [MARK_SUPERSCRIPT]: withProps(PlateLeaf, { as: "sup" }),
         [MARK_UNDERLINE]: withProps(PlateLeaf, { as: "u" }),
+        [MARK_COMMENT]: CommentLeaf,
       }),
     ),
   },

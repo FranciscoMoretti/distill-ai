@@ -61,6 +61,7 @@
     "@udecode/plate-combobox": "^29.0.1",
     "@udecode/plate-comments": "^29.0.1",
     "@udecode/plate-common": "^29.0.1",
+    "@udecode/plate-cursor": "^29.0.1",
     "@udecode/plate-dnd": "^29.0.1",
     "@udecode/plate-emoji": "^29.0.1",
     "@udecode/plate-excalidraw": "^29.0.1",
