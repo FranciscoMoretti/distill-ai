@@ -1,5 +1,5 @@
-import React from 'react';
-import { cva } from 'class-variance-authority';
+import React from "react";
+import { cva } from "class-variance-authority";
 import {
   AlignCenter,
   AlignJustify,
@@ -28,11 +28,12 @@ import {
   Indent,
   Italic,
   Keyboard,
+  Laptop,
   Link2,
   Link2Off,
   List,
   ListOrdered,
-  LucideProps,
+  type LucideProps,
   MessageSquare,
   MessageSquarePlus,
   Minus,
@@ -61,9 +62,9 @@ import {
   Ungroup,
   WrapText,
   X,
-} from 'lucide-react';
+} from "lucide-react";
 
-import type { LucideIcon } from 'lucide-react';
+import type { LucideIcon } from "lucide-react";
 
 export type Icon = LucideIcon;
 
@@ -201,6 +202,7 @@ export const Icons = {
   indent: Indent,
   italic: Italic,
   kbd: Keyboard,
+  laptop: Laptop,
   lineHeight: WrapText,
   link: Link2,
   minus: Minus,
@@ -245,15 +247,15 @@ export const Icons = {
   twitter: Twitter,
 };
 
-export const iconVariants = cva('', {
+export const iconVariants = cva("", {
   variants: {
     variant: {
-      toolbar: 'h-5 w-5',
-      menuItem: 'mr-2 h-5 w-5',
+      toolbar: "h-5 w-5",
+      menuItem: "mr-2 h-5 w-5",
     },
     size: {
-      sm: 'mr-2 h-4 w-4',
-      md: 'mr-2 h-6 w-6',
+      sm: "mr-2 h-4 w-4",
+      md: "mr-2 h-6 w-6",
     },
   },
   defaultVariants: {},

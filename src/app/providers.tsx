@@ -6,7 +6,8 @@ import {
   type SetStateAction,
   createContext,
 } from "react";
-import { ThemeProvider, useTheme } from "next-themes";
+import { ThemeProvider } from "@/components/theme-provider";
+import { useTheme } from "next-themes";
 import { Toaster } from "sonner";
 import { Analytics } from "@vercel/analytics/react";
 import useLocalStorage from "@/lib/hooks/use-local-storage";
@@ -32,7 +33,12 @@ export default function Providers({ children }: { children: ReactNode }) {
 
   return (
     // TODO Modify theme provider values
-    <ThemeProvider attribute="class" defaultTheme="light">
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
       <TooltipProvider
         disableHoverableContent
         delayDuration={500}
