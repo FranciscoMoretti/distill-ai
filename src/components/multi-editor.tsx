@@ -6,8 +6,8 @@ import { extractBoldText, extractTitle } from "@/lib/text-extractor";
 import { type Editor, generateJSON } from "@tiptap/core";
 import { useCompletion } from "ai/react";
 import { toast } from "sonner";
-import { Button } from "@/src/components/ui/button";
-import { Toggle } from "@/src/components/ui/toggle";
+import { Button } from "@/components/ui/button";
+import { Toggle } from "@/components/ui/toggle";
 import { Link, Sparkles } from "lucide-react";
 
 export default function MultiEditor() {
