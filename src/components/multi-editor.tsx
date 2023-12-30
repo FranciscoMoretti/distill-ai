@@ -96,6 +96,7 @@ export default function MultiEditor() {
         <EditorPanel
           setEditor={setMainEditor}
           completionApi={"/api/complete"}
+          storageKey="plate__main"
           completionId={"main"}
           onDebouncedUpdate={() => {
             if (autoGenerateOutline) {
@@ -115,13 +116,13 @@ export default function MultiEditor() {
         <EditorPanel
           setEditor={setOutlineEditor}
           completionApi={"/api/complete"}
+          storageKey="plate__outline"
           completionId={"outline"}
           onDebouncedUpdate={(editor) => {
             console.log("Outline updated");
           }}
           defaultValue={DEFAULT_OUTLINE_TEXT}
           disableLocalStorage={false}
-          storageKey="novel__outline"
         />
       </div>
       <div className="flex flex-col items-center gap-2">
@@ -133,12 +134,12 @@ export default function MultiEditor() {
         <EditorPanel
           setEditor={setSummaryEditor}
           completionApi={"/api/complete"}
+          storageKey="plate__summary"
           completionId={"summary"}
           // TODO: Fix this hack that produces a new editor everytime when I get access to the editor command API
           onDebouncedUpdate={console.log}
           defaultValue={DEFAULT_SUMMARY_TEXT}
           disableLocalStorage={false}
-          storageKey="novel__summary"
         />
       </div>
     </div>

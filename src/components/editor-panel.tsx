@@ -1,10 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Editor as NovelEditor } from "novel";
 import { type JSONContent } from "@tiptap/core";
 import { type Editor } from "@tiptap/core";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { PlateEditor } from "@/components/plate-editor";
+import { serialize } from "remark-slate";
+import { type PlateEditor as PlateEditorType } from "@udecode/plate-common";
 
 export default function EditorPanel({
   onDebouncedUpdate,
@@ -20,12 +23,21 @@ export default function EditorPanel({
     | undefined;
   completionApi?: string;
   completionId?: string;
-  storageKey?: string | undefined;
+  storageKey: string;
   setEditor?: (editor: Editor) => void;
   defaultValue?: string | JSONContent | undefined;
   disableLocalStorage?: boolean;
 }) {
+  const editorRef = useRef<PlateEditorType | null>(null);
+
   const [saveStatus, setSaveStatus] = useState("Saved");
+
+  useEffect(() => {
+    if (editorRef.current?.value) {
+      const value = editorRef.current?.value;
+      // console.log(value.map((v) => serialize(v)).join(""));
+    }
+  });
 
   return (
     <div className="relative w-full max-w-screen-lg">
@@ -33,6 +45,12 @@ export default function EditorPanel({
         {saveStatus}
       </div>
       <ScrollArea className="h-[1000px] overflow-y-auto rounded-md border p-4">
+        <PlateEditor
+          // TODO: Implement debounced input or debounced change
+          editorRef={editorRef}
+          storageKey={storageKey}
+        />
+
         <NovelEditor
           onCreate={(editor) => {
             setSaveStatus("Unsaved");

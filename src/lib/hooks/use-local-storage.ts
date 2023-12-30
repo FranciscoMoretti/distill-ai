@@ -1,27 +1,29 @@
 import { useEffect, useState } from "react";
 
+function getStorageValue<T>(key: string, defaultValue: T): T | undefined {
+  // getting stored value
+  if (typeof window !== "undefined") {
+    const saved = localStorage.getItem(key);
+    const initial = saved !== null ? (JSON.parse(saved) as T) : defaultValue;
+    return initial;
+  }
+}
+
 const useLocalStorage = <T>(
   key: string,
-  initialValue: T,
+  defaultValue: T,
   // eslint-disable-next-line no-unused-vars
-): [T, (value: T) => void] => {
-  const [storedValue, setStoredValue] = useState(initialValue);
+): [T | undefined, (value: T) => void] => {
+  const [value, setValue] = useState(() => {
+    return getStorageValue<T>(key, defaultValue);
+  });
 
   useEffect(() => {
-    // Retrieve from localStorage
-    const item = window.localStorage.getItem(key);
-    if (item) {
-      setStoredValue(JSON.parse(item));
-    }
-  }, [key]);
+    // storing input name
+    localStorage.setItem(key, JSON.stringify(value));
+  }, [key, value]);
 
-  const setValue = (value: T) => {
-    // Save state
-    setStoredValue(value);
-    // Save to localStorage
-    window.localStorage.setItem(key, JSON.stringify(value));
-  };
-  return [storedValue, setValue];
+  return [value, setValue];
 };
 
 export default useLocalStorage;

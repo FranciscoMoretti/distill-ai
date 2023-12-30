@@ -22,10 +22,9 @@ export default async function Home() {
         {/* // TODO: Add hero section */}
 
         <div className="w-full max-w-[1336px] rounded-lg border bg-background shadow">
-          <PlateEditor />
+          {/* <PlateEditor /> */}
         </div>
-
-        {/* <MultiEditor /> */}
+        <MultiEditor />
       </div>
     </main>
   );
