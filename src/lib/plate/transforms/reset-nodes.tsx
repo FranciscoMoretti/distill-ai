@@ -1,7 +1,6 @@
 "use client";
 import { type MyValue } from "@/lib/plate/plate-types";
-import { type PlateEditor as PlateEditorType } from "@udecode/plate-common";
-import { type Editor, Node, type Location, Point, Transforms } from "slate";
+import { Node, type Location, Point, Transforms, type Editor } from "slate";
 
 /**
  * resetNodes resets the value of the editor.

@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Toggle } from "@/components/ui/toggle";
 import { Link, Sparkles } from "lucide-react";
 import { type PlateEditor as PlateEditorType } from "@udecode/plate-common";
-import { resetNodes } from "@/components/set-editor-nodes";
+import { resetNodes } from "@/lib/plate/transforms/reset-nodes";
 
 import { plateToMarkdown, markdownToPlate } from "@/components/plate-markdown";
 import { type MyValue } from "@/lib/plate/plate-types";

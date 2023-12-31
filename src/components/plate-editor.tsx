@@ -15,6 +15,7 @@ import { MentionCombobox } from "@/components/plate-ui/mention-combobox";
 import { CommentsPopover } from "@/components/plate-ui/comments-popover";
 import { CursorOverlay } from "@/components/plate-ui/cursor-overlay";
 import { Editor } from "@/components/plate-ui/editor";
+import { type Editor as EditorType } from "slate";
 import { FixedToolbar } from "@/components/plate-ui/fixed-toolbar";
 import { FixedToolbarButtons } from "@/components/plate-ui/fixed-toolbar-buttons";
 import { FloatingToolbar } from "@/components/plate-ui/floating-toolbar";
@@ -22,7 +23,7 @@ import { FloatingToolbarButtons } from "@/components/plate-ui/floating-toolbar-b
 import { plugins } from "@/lib/plate/plate-plugins";
 import { type PlateEditor as PlateEditorType } from "@udecode/plate-common";
 import useLocalStorage from "@/lib/hooks/use-local-storage";
-import { resetNodes } from "@/components/set-editor-nodes";
+import { resetNodes } from "@/lib/plate/transforms/reset-nodes";
 import { type MyValue } from "@/lib/plate/plate-types";
 
 const defaultValue: MyValue = [
@@ -89,7 +90,7 @@ export function PlateEditor({
     // Load storage content after server render
     const editor = editorRef.current;
     if (storageContent && editor) {
-      resetNodes(editor as Editor, {
+      resetNodes(editor as EditorType, {
         nodes: storageContent,
       });
     }
