@@ -35,17 +35,7 @@ const defaultValue: MyValue = [
   },
 ];
 
-export function PlateEditor({
-  editorRef,
-  storageKey = "plate__content",
-  disableLocalStorage = false,
-  initialValue,
-  onChange,
-  onDebouncedUpdate,
-  debounceDuration = 750,
-  completionApi,
-  completionId,
-}: {
+export type PlateEditorProps = {
   storageKey?: string;
   editorRef: MutableRefObject<null | PlateEditorType>;
   initialValue?: MyValue | undefined;
@@ -63,7 +53,19 @@ export function PlateEditor({
   disableLocalStorage?: boolean;
   completionApi?: string;
   completionId?: string;
-}) {
+};
+
+export function PlateEditor({
+  editorRef,
+  storageKey = "plate__content",
+  disableLocalStorage = false,
+  initialValue,
+  onChange,
+  onDebouncedUpdate,
+  debounceDuration = 750,
+  completionApi,
+  completionId,
+}: PlateEditorProps) {
   // const [editor] = useState(() => withReact(createEditor()));
   const containerRef = useRef(null);
   const [storageContent, setStorageContent] = useLocalStorage<MyValue>(

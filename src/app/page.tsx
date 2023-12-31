@@ -1,10 +1,10 @@
 import { PlateEditor } from "@/components/plate-editor";
 import { Github } from "@/components/custom-icons";
 import Menu from "@/components/menu";
-import MultiEditor from "@/components/multi-editor";
 import { siteConfig } from "@/config/site";
 import { buttonVariants } from "@/components/plate-ui/button";
 import Link from "next/link";
+import { Workspace } from "./Workspace";
 
 export default async function Home() {
   return (
@@ -24,7 +24,7 @@ export default async function Home() {
         <div className="w-full max-w-[1336px] rounded-lg border bg-background shadow">
           {/* <PlateEditor /> */}
         </div>
-        <MultiEditor />
+        <Workspace />
       </div>
     </main>
   );
