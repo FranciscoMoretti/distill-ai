@@ -17,7 +17,7 @@ export function AutoGenerateOutlineToggle() {
       onPressedChange={(pressed) => {
         setWorkspaceConfig({
           ...workspaceConfig,
-          autoGenerateOutline: autoGenerateOutline,
+          autoGenerateOutline: pressed,
         });
         if (pressed) {
           generateOutline();
