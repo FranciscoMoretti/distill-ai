@@ -33,7 +33,7 @@ export async function POST(req: Request): Promise<Response> {
     });
 
     const { success, limit, reset, remaining } = await ratelimit.limit(
-      `novel_ratelimit_${ip}`,
+      `plate_ratelimit_${ip}`,
     );
 
     if (!success) {
@@ -70,8 +70,6 @@ export async function POST(req: Request): Promise<Response> {
         content:
           // TODO: Make book title variable
           `Incorporate the following excerpts from the book '${title}', which I've selected based on their relevance and importance, into a summary of the book that also draws on external sources on the web. Please use as many details from the excerpts I provide as possible. Write the summary in rich Markdown format using h1, h2, h3, lists, tables, bold, italics, etc.`,
-        // we're disabling markdown for now until we can figure out a way to stream markdown text with proper formatting: https://github.com/steven-tey/novel/discussions/7
-        // "Use Markdown formatting when appropriate.",
       },
       {
         role: "user",
