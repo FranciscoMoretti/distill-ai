@@ -70,6 +70,8 @@ export default function Menu() {
             </button>
           ))}
         </div> */}
+
+        {/* // TODO: re-enable this theme toggle with system theme */}
         <div className="p-2">
           <p className="p-2 text-xs font-medium text-stone-500">Appearance</p>
           {appearances.map(({ theme, icon }) => (

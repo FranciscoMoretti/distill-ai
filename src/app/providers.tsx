@@ -1,10 +1,19 @@
 "use client";
 
-import { Dispatch, ReactNode, SetStateAction, createContext } from "react";
-import { ThemeProvider, useTheme } from "next-themes";
+import {
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction,
+  createContext,
+} from "react";
+import { ThemeProvider } from "@/components/theme-provider";
+import { useTheme } from "next-themes";
 import { Toaster } from "sonner";
 import { Analytics } from "@vercel/analytics/react";
 import useLocalStorage from "@/lib/hooks/use-local-storage";
+import { TooltipProvider } from "@/components/plate-ui/tooltip";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
 
 export const AppContext = createContext<{
   font: string;
@@ -22,26 +31,34 @@ const ToasterProvider = () => {
 };
 
 export default function Providers({ children }: { children: ReactNode }) {
-  const [font, setFont] = useLocalStorage<string>("novel__font", "Default");
+  const [font, setFont] = useLocalStorage<string>("plate__font", "Default");
 
   return (
+    // TODO Modify theme provider values
     <ThemeProvider
       attribute="class"
-      value={{
-        light: "light-theme",
-        dark: "dark-theme",
-      }}
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
     >
-      <AppContext.Provider
-        value={{
-          font,
-          setFont,
-        }}
+      <TooltipProvider
+        disableHoverableContent
+        delayDuration={500}
+        skipDelayDuration={0}
       >
-        <ToasterProvider />
-        {children}
-        <Analytics />
-      </AppContext.Provider>
+        <DndProvider backend={HTML5Backend}>
+          <AppContext.Provider
+            value={{
+              font,
+              setFont,
+            }}
+          >
+            <ToasterProvider />
+            {children}
+            <Analytics />
+          </AppContext.Provider>
+        </DndProvider>
+      </TooltipProvider>
     </ThemeProvider>
   );
 }
