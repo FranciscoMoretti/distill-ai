@@ -25,6 +25,7 @@ import { type PlateEditor as PlateEditorType } from "@udecode/plate-common";
 import useLocalStorage from "@/lib/hooks/use-local-storage";
 import { resetNodes } from "@/lib/plate/transforms/reset-nodes";
 import { type MyValue } from "@/lib/plate/plate-types";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const defaultValue: MyValue = [
   {
@@ -123,14 +124,15 @@ export function PlateEditor({
             <FixedToolbarButtons />
           </FixedToolbar>
 
-          <Editor
-            className="px-[96px] py-16"
-            autoFocus
-            focusRing={false}
-            variant="ghost"
-            size="md"
-          />
-
+          <ScrollArea className="h-[1000px] overflow-y-auto rounded-md border ">
+            <Editor
+              className="px-[96px] py-16"
+              autoFocus
+              focusRing={false}
+              variant="ghost"
+              size="md"
+            />
+          </ScrollArea>
           <FloatingToolbar>
             <FloatingToolbarButtons />
           </FloatingToolbar>
