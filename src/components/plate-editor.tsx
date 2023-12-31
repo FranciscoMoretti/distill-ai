@@ -9,7 +9,7 @@ import React, {
 import { cn } from "@udecode/cn";
 import { Plate } from "@udecode/plate-common";
 import { CommentsProvider } from "@udecode/plate-comments";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { useDebouncedCallback } from "use-debounce";
 
 import { MentionCombobox } from "@/components/plate-ui/mention-combobox";
 import { CommentsPopover } from "@/components/plate-ui/comments-popover";
@@ -20,93 +20,131 @@ import { FixedToolbarButtons } from "@/components/plate-ui/fixed-toolbar-buttons
 import { FloatingToolbar } from "@/components/plate-ui/floating-toolbar";
 import { FloatingToolbarButtons } from "@/components/plate-ui/floating-toolbar-buttons";
 import { plugins } from "@/lib/plate/plate-plugins";
-import { DndProvider } from "react-dnd";
 import { type PlateEditor as PlateEditorType } from "@udecode/plate-common";
 import useLocalStorage from "@/lib/hooks/use-local-storage";
+import { setEditorNodes } from "@/components/set-editor-nodes";
+import { type MyValue } from "@/lib/plate/plate-types";
 
-const initialValue = [
+const defaultValue: MyValue = [
   {
     id: "1",
     type: "p",
-    children: [{ text: "HI, World!" }],
+    children: [{ text: "Hello, World!" }],
   },
 ];
 
 export function PlateEditor({
   editorRef,
-  storageKey,
+  storageKey = "plate__content",
+  disableLocalStorage = false,
+  initialValue,
+  onChange,
+  onDebouncedUpdate,
+  debounceDuration = 750,
 }: {
-  storageKey: string;
+  storageKey?: string;
   editorRef: MutableRefObject<null | PlateEditorType>;
+  initialValue?: MyValue | undefined;
+  onChange?: (() => void | Promise<void>) | undefined;
+  onDebouncedUpdate?: (() => void | Promise<void>) | undefined;
+  /**
+   * The duration (in milliseconds) to debounce the onDebouncedUpdate callback.
+   * Defaults to 750.
+   */
+  debounceDuration?: number;
+  /**
+   * Disable local storage read/save.
+   * Defaults to false.
+   */
+  disableLocalStorage?: boolean;
 }) {
   // const [editor] = useState(() => withReact(createEditor()));
   const containerRef = useRef(null);
-  const [storageContent, setStorageContent] = useLocalStorage(
+  const [storageContent, setStorageContent] = useLocalStorage<MyValue>(
     storageKey,
-    initialValue,
+    initialValue ?? defaultValue,
   );
+  const debouncedUpdates = useDebouncedCallback<(value: MyValue) => void>(
+    async (value) => {
+      console.log({ value, storageKey });
+      if (onDebouncedUpdate) {
+        await onDebouncedUpdate();
+      }
+
+      if (!disableLocalStorage) {
+        updateLocalStorage(value);
+      }
+    },
+    debounceDuration,
+  );
+
+  function updateLocalStorage(value: MyValue) {
+    if (!editorRef.current) {
+      return;
+    }
+    const isAstChange = editorRef.current.operations.some(
+      (op) => "set_selection" !== op.type,
+    );
+    if (isAstChange) {
+      setStorageContent(value);
+    }
+  }
 
   useEffect(() => {
     // Load storage content after server render
     const editor = editorRef.current;
     if (storageContent && editor) {
-      // TODO replace with a proper Transform
-      editor.children = storageContent;
-      // Trigger a re-render
-      // Reference: https://docs.slatejs.org/walkthroughs/06-saving-to-a-database#:~:text=If%20you%20want%20to%20update,transform%20the%20value%2C%20for%20example%3A
-      editor.onChange();
+      setEditorNodes(editor, storageContent);
+      console.log("Editor node set for ", storageKey);
+      console.log({ children: editor.children });
     }
-  }, [editorRef.current]);
+  }, [editorRef]);
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <CommentsProvider users={{}} myUserId="1">
-        <Plate
-          plugins={plugins}
-          initialValue={undefined}
-          editorRef={editorRef}
-          onChange={(value) => {
-            if (!editorRef.current) {
-              return;
-            }
-            const isAstChange = editorRef.current.operations.some(
-              (op) => "set_selection" !== op.type,
-            );
-            if (isAstChange) {
-              setStorageContent(value);
-            }
-          }}
+    <CommentsProvider users={{}} myUserId="1">
+      <Plate
+        plugins={plugins}
+        initialValue={undefined}
+        editorRef={editorRef}
+        onChange={async (value) => {
+          if (!editorRef.current) {
+            return;
+          }
+          if (onChange) {
+            await onChange();
+          }
+          debouncedUpdates(value as MyValue);
+        }}
+      >
+        <div
+          ref={containerRef}
+          className={cn(
+            // Block selection
+            "[&_.slate-start-area-left]:!w-[64px] [&_.slate-start-area-right]:!w-[64px] [&_.slate-start-area-top]:!h-4",
+          )}
         >
-          <div
-            ref={containerRef}
-            className={cn(
-              // Block selection
-              "[&_.slate-start-area-left]:!w-[64px] [&_.slate-start-area-right]:!w-[64px] [&_.slate-start-area-top]:!h-4",
-            )}
-          >
-            <FixedToolbar>
-              <FixedToolbarButtons />
-            </FixedToolbar>
+          <FixedToolbar>
+            <FixedToolbarButtons />
+          </FixedToolbar>
 
-            <Editor
-              className="px-[96px] py-16"
-              autoFocus
-              focusRing={false}
-              variant="ghost"
-              size="md"
-            />
+          <Editor
+            className="px-[96px] py-16"
+            autoFocus
+            focusRing={false}
+            variant="ghost"
+            size="md"
+          />
 
-            <FloatingToolbar>
-              <FloatingToolbarButtons />
-            </FloatingToolbar>
-            {/* // TODO: add mentionables for mention combobox @my_mention */}
-            <MentionCombobox items={[]} />
-            <CommentsPopover />
+          <FloatingToolbar>
+            <FloatingToolbarButtons />
+          </FloatingToolbar>
+          {/* // TODO: add mentionables for mention combobox @my_mention */}
+          <MentionCombobox items={[]} />
+          <CommentsPopover />
 
-            <CursorOverlay containerRef={containerRef} />
-          </div>
-        </Plate>
-      </CommentsProvider>
-    </DndProvider>
+          <CursorOverlay containerRef={containerRef} />
+        </div>
+      </Plate>
+    </CommentsProvider>
   );
 }

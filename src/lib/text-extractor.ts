@@ -4,6 +4,10 @@ import rehypeStringify from "rehype-stringify";
 import { type Node, type Parent, type Element } from "hast";
 import { visit } from "unist-util-visit";
 import { type Plugin, Transformer } from "unified";
+import remarkStringify from "remark-stringify";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import rehypeRemark from "rehype-remark";
 
 // Define a unified plugin to extract and return bolded nodes
 const extractBoldNodesPlugin: Plugin = () => {
@@ -80,7 +84,28 @@ function findBoldNodes(tree) {
 }
 
 // Define a function to extract bolded text
-export function extractBoldText(htmlString: string): string {
+export function extractBoldTextMD(markdown: string): string {
+  // Parse the HTML tree
+  let resultMarkdown = undefined;
+  // TODO: simplify by operating in markdown
+  unified()
+    .use(remarkParse)
+    .use(remarkRehype)
+    .use(extractBoldNodesPlugin)
+    .use(transformToTextNodesPlugin)
+    .use(createULWithNonBoldTextPlugin)
+    .use(rehypeRemark)
+    .use(remarkStringify)
+    .process(markdown, (err, file) => {
+      if (err) throw err;
+      resultMarkdown = String(file);
+    });
+
+  return resultMarkdown;
+}
+
+// Define a function to extract bolded text
+export function extractBoldTextHMTL(htmlString: string): string {
   // Parse the HTML tree
   let resultHTML = undefined;
   unified()
@@ -127,7 +152,7 @@ function findFirstTitleNode(tree: any): any | undefined {
 }
 
 // Define a function to extract bolded text
-export function extractTitle(htmlString: string): string | undefined {
+export function extractTitleHTML(htmlString: string): string | undefined {
   // Parse the HTML tree
   let resultHTML = undefined;
   unified()
@@ -140,4 +165,23 @@ export function extractTitle(htmlString: string): string | undefined {
     });
 
   return resultHTML;
+}
+
+// Define a function to extract bolded text
+export function extractTitleMD(markdown: string): string | undefined {
+  // Parse the HTML tree
+  let resultMarkdown = undefined;
+  // TODO: simplify by operating in markdown
+  unified()
+    .use(remarkParse)
+    .use(remarkRehype)
+    .use(extractTitlePlugin)
+    .use(rehypeRemark)
+    .use(remarkStringify)
+    .process(markdown, (err, file) => {
+      if (err) throw err;
+      resultMarkdown = file?.data?.title;
+    });
+
+  return resultMarkdown;
 }

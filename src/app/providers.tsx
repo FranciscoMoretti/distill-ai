@@ -12,6 +12,8 @@ import { Toaster } from "sonner";
 import { Analytics } from "@vercel/analytics/react";
 import useLocalStorage from "@/lib/hooks/use-local-storage";
 import { TooltipProvider } from "@/components/plate-ui/tooltip";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
 
 export const AppContext = createContext<{
   font: string;
@@ -29,7 +31,7 @@ const ToasterProvider = () => {
 };
 
 export default function Providers({ children }: { children: ReactNode }) {
-  const [font, setFont] = useLocalStorage<string>("novel__font", "Default");
+  const [font, setFont] = useLocalStorage<string>("plate__font", "Default");
 
   return (
     // TODO Modify theme provider values
@@ -44,16 +46,18 @@ export default function Providers({ children }: { children: ReactNode }) {
         delayDuration={500}
         skipDelayDuration={0}
       >
-        <AppContext.Provider
-          value={{
-            font,
-            setFont,
-          }}
-        >
-          <ToasterProvider />
-          {children}
-          <Analytics />
-        </AppContext.Provider>
+        <DndProvider backend={HTML5Backend}>
+          <AppContext.Provider
+            value={{
+              font,
+              setFont,
+            }}
+          >
+            <ToasterProvider />
+            {children}
+            <Analytics />
+          </AppContext.Provider>
+        </DndProvider>
       </TooltipProvider>
     </ThemeProvider>
   );

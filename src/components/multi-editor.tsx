@@ -2,49 +2,59 @@
 
 import { useEffect, useRef, useState } from "react";
 import EditorPanel from "@/components/editor-panel";
-import { extractBoldText, extractTitle } from "@/lib/text-extractor";
-import { type Editor, generateJSON } from "@tiptap/core";
+import { extractBoldTextMD, extractTitleMD } from "@/lib/text-extractor";
 import { useCompletion } from "ai/react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Toggle } from "@/components/ui/toggle";
 import { Link, Sparkles } from "lucide-react";
+import { type PlateEditor as PlateEditorType } from "@udecode/plate-common";
+import { setEditorNodes } from "@/components/set-editor-nodes";
+
+import { plateToMarkdown, markdownToPlate } from "@/components/plate-markdown";
+import { type MyValue } from "@/lib/plate/plate-types";
 
 export default function MultiEditor() {
   const [titleText, setTitleText] = useState<string>("");
-  const [mainEditor, setMainEditor] = useState<Editor | null>(null);
-  const [outlineEditor, setOutlineEditor] = useState<Editor | null>(null);
-  const [summaryEditor, setSummaryEditor] = useState<Editor | null>(null);
+  const mainEditorRef = useRef<PlateEditorType | null>(null);
+  const outlineEditorRef = useRef<PlateEditorType | null>(null);
+  const summaryEditorRef = useRef<PlateEditorType | null>(null);
+
   const [autoGenerateOutline, setAutoGenerateOutline] =
     useState<boolean>(false);
 
   function generateOutline() {
-    const textString = mainEditor?.getHTML();
-    if (textString && outlineEditor) {
-      const filteredContent = extractBoldText(textString);
-      const titleText = extractTitle(textString);
-      if (titleText) {
-        setTitleText(titleText);
+    const mainEditor = mainEditorRef.current;
+    const outlineEditor = outlineEditorRef.current;
+    if (!(outlineEditor && mainEditor)) return;
+    const markdown = plateToMarkdown(mainEditor);
+
+    const boldedMarkdown = extractBoldTextMD(markdown);
+
+    const titleText = extractTitleMD(markdown);
+    if (titleText) {
+      setTitleText(titleText);
+    }
+    if (boldedMarkdown) {
+      const boldedNodes = markdownToPlate(boldedMarkdown);
+      if (boldedNodes) {
+        setEditorNodes(outlineEditor, boldedNodes);
       }
-      outlineEditor.commands.setContent(
-        generateJSON(
-          filteredContent,
-          outlineEditor.extensionManager.extensions,
-        ),
-      );
     }
   }
 
-  function GenerateSummary() {
-    const textString = outlineEditor?.getText();
-    if (textString) {
-      console.log({ textString });
-      if (textString && summaryEditor) {
-        summaryEditor.commands.setContent("");
-        (async () =>
-          await complete(textString, {
-            body: { title: titleText },
-          }))().catch((err) => console.error(err));
+  async function GenerateSummary() {
+    const outlineEditor = outlineEditorRef.current;
+    const summaryEditor = summaryEditorRef.current;
+    if (!(outlineEditor && summaryEditor)) return;
+
+    const markdown = plateToMarkdown(outlineEditor);
+    if (markdown) {
+      console.log({ markdown });
+      if (markdown && summaryEditor) {
+        await complete(markdown, {
+          body: { title: titleText },
+        }).catch((err) => console.error(err));
       }
     }
   }
@@ -53,10 +63,7 @@ export default function MultiEditor() {
     id: "ai_summary",
     api: "/api/generate",
     onFinish: (_prompt, completion) => {
-      summaryEditor?.commands.setTextSelection({
-        from: summaryEditor.state.selection.from - completion.length,
-        to: summaryEditor.state.selection.from,
-      });
+      // TODO: Decide behavior to do on finish
     },
     onError: (err) => {
       toast.error(err.message);
@@ -64,14 +71,21 @@ export default function MultiEditor() {
   });
 
   const prev = useRef("");
+
   // Insert chunks of the generated text
   useEffect(() => {
-    // reset prev when `complete` is called again
-    if (prev?.current.length > completion.length) {
-      prev.current = "";
+    const summaryEditor = summaryEditorRef.current;
+    if (summaryEditor && completion) {
+      // reset prev when `complete` is called again
+      if (prev?.current.length > completion.length) {
+        prev.current = "";
+      }
+      const completionNodes = markdownToPlate(completion);
+      if (completionNodes) {
+        setEditorNodes(summaryEditor, completionNodes);
+      }
     }
-    summaryEditor?.chain().setContent(completion).run();
-  }, [summaryEditor, completion]);
+  }, [summaryEditorRef, completion]);
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-8">
@@ -94,9 +108,10 @@ export default function MultiEditor() {
         </div>
 
         <EditorPanel
-          setEditor={setMainEditor}
-          completionApi={"/api/complete"}
           storageKey="plate__main"
+          editorRef={mainEditorRef}
+          initialValue={DEFAULT_MAIN_TEXT}
+          completionApi={"/api/complete"}
           completionId={"main"}
           onDebouncedUpdate={() => {
             if (autoGenerateOutline) {
@@ -107,22 +122,18 @@ export default function MultiEditor() {
       </div>
       <div className="flex flex-col items-center gap-2">
         <div className="flex w-full flex-row items-center justify-end gap-1">
-          <Button onClick={() => GenerateSummary()}>
+          <Button onClick={async () => await GenerateSummary()}>
             <div className="flex flex-row items-center gap-1">
               Generate Summary <Sparkles className="h-4 w-4" />
             </div>
           </Button>
         </div>
         <EditorPanel
-          setEditor={setOutlineEditor}
-          completionApi={"/api/complete"}
           storageKey="plate__outline"
+          editorRef={outlineEditorRef}
+          initialValue={DEFAULT_OUTLINE_TEXT}
+          completionApi={"/api/complete"}
           completionId={"outline"}
-          onDebouncedUpdate={(editor) => {
-            console.log("Outline updated");
-          }}
-          defaultValue={DEFAULT_OUTLINE_TEXT}
-          disableLocalStorage={false}
         />
       </div>
       <div className="flex flex-col items-center gap-2">
@@ -132,70 +143,37 @@ export default function MultiEditor() {
           </Button>
         </div>
         <EditorPanel
-          setEditor={setSummaryEditor}
-          completionApi={"/api/complete"}
           storageKey="plate__summary"
+          editorRef={summaryEditorRef}
+          initialValue={DEFAULT_SUMMARY_TEXT}
+          completionApi={"/api/complete"}
           completionId={"summary"}
-          // TODO: Fix this hack that produces a new editor everytime when I get access to the editor command API
-          onDebouncedUpdate={console.log}
-          defaultValue={DEFAULT_SUMMARY_TEXT}
-          disableLocalStorage={false}
         />
       </div>
     </div>
   );
 }
 
-const DEFAULT_OUTLINE_TEXT = {
-  type: "doc",
-  content: [
-    {
-      type: "heading",
-      attrs: {
-        level: 2,
-      },
-      content: [
-        {
-          type: "text",
-          text: "Outline",
-        },
-      ],
-    },
-    {
-      type: "paragraph",
-      content: [
-        {
-          type: "text",
-          text: "This will be completed automatically",
-        },
-      ],
-    },
-  ],
-};
+const DEFAULT_MAIN_TEXT: MyValue = [
+  {
+    id: "1",
+    type: "p",
+    children: [{ text: "Place your book notes here" }],
+  },
+];
 
-const DEFAULT_SUMMARY_TEXT = {
-  type: "doc",
-  content: [
-    {
-      type: "heading",
-      attrs: {
-        level: 2,
-      },
-      content: [
-        {
-          type: "text",
-          text: "Summary",
-        },
-      ],
-    },
-    {
-      type: "paragraph",
-      content: [
-        {
-          type: "text",
-          text: "This will be completed by AI",
-        },
-      ],
-    },
-  ],
-};
+const DEFAULT_OUTLINE_TEXT: MyValue = [
+  {
+    id: "1",
+    type: "p",
+    children: [{ text: "Outline text will be placed here" }],
+  },
+];
+
+const DEFAULT_SUMMARY_TEXT: MyValue = [
+  {
+    id: "1",
+    type: "p",
+    children: [{ text: "This will be completed by AI" }],
+  },
+];
