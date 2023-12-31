@@ -9,10 +9,11 @@ import { Button } from "@/components/ui/button";
 import { Toggle } from "@/components/ui/toggle";
 import { Link, Sparkles } from "lucide-react";
 import { type PlateEditor as PlateEditorType } from "@udecode/plate-common";
-import { setEditorNodes } from "@/components/set-editor-nodes";
+import { resetNodes } from "@/components/set-editor-nodes";
 
 import { plateToMarkdown, markdownToPlate } from "@/components/plate-markdown";
 import { type MyValue } from "@/lib/plate/plate-types";
+import { type Editor } from "slate";
 
 export default function MultiEditor() {
   const [titleText, setTitleText] = useState<string>("");
@@ -38,7 +39,9 @@ export default function MultiEditor() {
     if (boldedMarkdown) {
       const boldedNodes = markdownToPlate(boldedMarkdown);
       if (boldedNodes) {
-        setEditorNodes(outlineEditor, boldedNodes);
+        resetNodes(outlineEditor as Editor, {
+          nodes: boldedNodes,
+        });
       }
     }
   }
@@ -82,7 +85,9 @@ export default function MultiEditor() {
       }
       const completionNodes = markdownToPlate(completion);
       if (completionNodes) {
-        setEditorNodes(summaryEditor, completionNodes);
+        resetNodes(summaryEditor as Editor, {
+          nodes: completionNodes,
+        });
       }
     }
   }, [summaryEditorRef, completion]);

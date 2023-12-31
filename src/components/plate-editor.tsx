@@ -22,7 +22,7 @@ import { FloatingToolbarButtons } from "@/components/plate-ui/floating-toolbar-b
 import { plugins } from "@/lib/plate/plate-plugins";
 import { type PlateEditor as PlateEditorType } from "@udecode/plate-common";
 import useLocalStorage from "@/lib/hooks/use-local-storage";
-import { setEditorNodes } from "@/components/set-editor-nodes";
+import { resetNodes } from "@/components/set-editor-nodes";
 import { type MyValue } from "@/lib/plate/plate-types";
 
 const defaultValue: MyValue = [
@@ -89,7 +89,9 @@ export function PlateEditor({
     // Load storage content after server render
     const editor = editorRef.current;
     if (storageContent && editor) {
-      setEditorNodes(editor, storageContent);
+      resetNodes(editor as Editor, {
+        nodes: storageContent,
+      });
     }
   }, [editorRef]);
 
