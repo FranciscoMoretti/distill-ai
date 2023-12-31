@@ -43,6 +43,8 @@ export function PlateEditor({
   onChange,
   onDebouncedUpdate,
   debounceDuration = 750,
+  completionApi,
+  completionId,
 }: {
   storageKey?: string;
   editorRef: MutableRefObject<null | PlateEditorType>;
@@ -59,6 +61,8 @@ export function PlateEditor({
    * Defaults to false.
    */
   disableLocalStorage?: boolean;
+  completionApi?: string;
+  completionId?: string;
 }) {
   // const [editor] = useState(() => withReact(createEditor()));
   const containerRef = useRef(null);

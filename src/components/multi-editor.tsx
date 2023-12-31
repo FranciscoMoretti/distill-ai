@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import EditorPanel from "@/components/editor-panel";
 import { extractBoldTextMD, extractTitleMD } from "@/lib/text-extractor";
 import { useCompletion } from "ai/react";
 import { toast } from "sonner";
@@ -14,6 +13,7 @@ import { resetNodes } from "@/lib/plate/transforms/reset-nodes";
 import { plateToMarkdown, markdownToPlate } from "@/components/plate-markdown";
 import { type MyValue } from "@/lib/plate/plate-types";
 import { type Editor } from "slate";
+import { PlateEditor } from "@/components/plate-editor";
 
 export default function MultiEditor() {
   const [titleText, setTitleText] = useState<string>("");
@@ -112,7 +112,7 @@ export default function MultiEditor() {
           </Toggle>
         </div>
 
-        <EditorPanel
+        <PlateEditor
           storageKey="plate__main"
           editorRef={mainEditorRef}
           initialValue={DEFAULT_MAIN_TEXT}
@@ -133,7 +133,7 @@ export default function MultiEditor() {
             </div>
           </Button>
         </div>
-        <EditorPanel
+        <PlateEditor
           storageKey="plate__outline"
           editorRef={outlineEditorRef}
           initialValue={DEFAULT_OUTLINE_TEXT}
@@ -147,7 +147,7 @@ export default function MultiEditor() {
             <div className="flex flex-row items-center gap-1">Export</div>
           </Button>
         </div>
-        <EditorPanel
+        <PlateEditor
           storageKey="plate__summary"
           editorRef={summaryEditorRef}
           initialValue={DEFAULT_SUMMARY_TEXT}
