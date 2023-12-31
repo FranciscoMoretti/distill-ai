@@ -2,7 +2,7 @@
 import { type PlateEditor as PlateEditorType } from "@udecode/plate-common";
 import slate, { type NodeTypes, serialize } from "remark-slate";
 import { unified } from "unified";
-import { plateNodeTypes } from "./remarkslate-nodetypes";
+import { plateNodeTypes } from "@/lib/remarkslate-nodetypes";
 import remarkParse from "remark-parse";
 import { type MyValue } from "@/lib/plate/plate-types";
 

@@ -10,10 +10,14 @@ import { Link, Sparkles } from "lucide-react";
 import { type PlateEditor as PlateEditorType } from "@udecode/plate-common";
 import { resetNodes } from "@/lib/plate/transforms/reset-nodes";
 
-import { plateToMarkdown, markdownToPlate } from "@/components/plate-markdown";
-import { type MyValue } from "@/lib/plate/plate-types";
+import { plateToMarkdown, markdownToPlate } from "@/lib/plate-markdown";
 import { type Editor } from "slate";
 import { PlateEditor } from "@/components/plate-editor";
+import {
+  INITIAL_VALUE_MAIN,
+  INITIAL_VALUE_OUTLINE,
+  INITIAL_VALUE_SUMMARY,
+} from "../config/initial_editor_values";
 
 export default function MultiEditor() {
   const [titleText, setTitleText] = useState<string>("");
@@ -115,7 +119,7 @@ export default function MultiEditor() {
         <PlateEditor
           storageKey="plate__main"
           editorRef={mainEditorRef}
-          initialValue={DEFAULT_MAIN_TEXT}
+          initialValue={INITIAL_VALUE_MAIN}
           completionApi={"/api/complete"}
           completionId={"main"}
           onDebouncedUpdate={() => {
@@ -136,7 +140,7 @@ export default function MultiEditor() {
         <PlateEditor
           storageKey="plate__outline"
           editorRef={outlineEditorRef}
-          initialValue={DEFAULT_OUTLINE_TEXT}
+          initialValue={INITIAL_VALUE_OUTLINE}
           completionApi={"/api/complete"}
           completionId={"outline"}
         />
@@ -150,7 +154,7 @@ export default function MultiEditor() {
         <PlateEditor
           storageKey="plate__summary"
           editorRef={summaryEditorRef}
-          initialValue={DEFAULT_SUMMARY_TEXT}
+          initialValue={INITIAL_VALUE_SUMMARY}
           completionApi={"/api/complete"}
           completionId={"summary"}
         />
@@ -158,27 +162,3 @@ export default function MultiEditor() {
     </div>
   );
 }
-
-const DEFAULT_MAIN_TEXT: MyValue = [
-  {
-    id: "1",
-    type: "p",
-    children: [{ text: "Place your book notes here" }],
-  },
-];
-
-const DEFAULT_OUTLINE_TEXT: MyValue = [
-  {
-    id: "1",
-    type: "p",
-    children: [{ text: "Outline text will be placed here" }],
-  },
-];
-
-const DEFAULT_SUMMARY_TEXT: MyValue = [
-  {
-    id: "1",
-    type: "p",
-    children: [{ text: "This will be completed by AI" }],
-  },
-];
