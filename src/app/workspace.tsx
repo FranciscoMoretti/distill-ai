@@ -1,3 +1,5 @@
+"use client";
+
 import MultiEditor from "@/components/multi-editor";
 import {
   type WorkspaceConfig,
@@ -5,8 +7,8 @@ import {
 } from "@/lib/workspace-config-context";
 import React from "react";
 
-const DEFAULT_WORKSPACE_CONFIG = {
-  autoCreateOutline: true,
+const DEFAULT_WORKSPACE_CONFIG: WorkspaceConfig = {
+  autoGenerateOutline: true,
 };
 
 export function Workspace() {

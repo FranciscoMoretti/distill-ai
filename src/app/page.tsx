@@ -1,10 +1,4 @@
-import { PlateEditor } from "@/components/plate-editor";
-import { Github } from "@/components/custom-icons";
-import Menu from "@/components/menu";
-import { siteConfig } from "@/config/site";
-import { buttonVariants } from "@/components/plate-ui/button";
-import Link from "next/link";
-import { Workspace } from "./Workspace";
+import { Workspace } from "./workspace";
 
 export default async function Home() {
   return (

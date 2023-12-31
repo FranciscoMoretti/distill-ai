@@ -1,10 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Toggle } from "@/components/ui/toggle";
-import { Link, Sparkles } from "lucide-react";
-
 import {
   INITIAL_VALUE_MAIN,
   INITIAL_VALUE_OUTLINE,
@@ -12,21 +7,22 @@ import {
 } from "../config/initial_editor_values";
 import { MultiEditorProvider } from "@/lib/multi-editor-context";
 import { useMultiEditorRefs } from "../lib/hooks/use-multi-editor-refs";
-import { PortablePlateEditor } from "./portable-plate-editor";
-import { useEditorsInteractions } from "../lib/hooks/use-editors-interactions";
+import { useEditorsInteractionsWithRefs } from "../lib/hooks/use-editors-interactions";
+import { useWorkspaceConfigContext } from "@/lib/workspace-config-context";
+import { MultiEditorUi } from "./multi-editor-ui";
 
 export default function MultiEditor() {
   const { mainEditorRef, outlineEditorRef, summaryEditorRef } =
     useMultiEditorRefs();
 
-  const { GenerateSummary, generateOutline } = useEditorsInteractions({
+  const { generateOutline } = useEditorsInteractionsWithRefs({
     mainEditorRef,
     outlineEditorRef,
     summaryEditorRef,
   });
 
-  const [autoGenerateOutline, setAutoGenerateOutline] =
-    useState<boolean>(false);
+  const { workspaceConfig } = useWorkspaceConfigContext();
+  const { autoGenerateOutline } = workspaceConfig;
 
   return (
     <MultiEditorProvider
@@ -57,45 +53,7 @@ export default function MultiEditor() {
         completionId: "summary",
       }}
     >
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-8">
-        <div className="flex flex-col items-center gap-2">
-          <div className="flex w-full flex-row justify-end gap-2">
-            <Button onClick={() => generateOutline()}>Generate Outline</Button>
-            <Toggle
-              aria-label="Toggle Auto Generate Outline"
-              pressed={autoGenerateOutline}
-              onPressedChange={(pressed) => {
-                setAutoGenerateOutline(pressed);
-                if (pressed) {
-                  generateOutline();
-                }
-              }}
-              variant="outline"
-            >
-              <Link className="h-4 w-4" />
-            </Toggle>
-          </div>
-          <PortablePlateEditor editorId="mainEditor" />
-        </div>
-        <div className="flex flex-col items-center gap-2">
-          <div className="flex w-full flex-row items-center justify-end gap-1">
-            <Button onClick={async () => await GenerateSummary()}>
-              <div className="flex flex-row items-center gap-1">
-                Generate Summary <Sparkles className="h-4 w-4" />
-              </div>
-            </Button>
-          </div>
-          <PortablePlateEditor editorId="outlineEditor" />
-        </div>
-        <div className="flex flex-col items-center gap-2">
-          <div className="flex w-full flex-row items-center justify-end gap-1">
-            <Button onClick={() => console.log("export TBD")} disabled>
-              <div className="flex flex-row items-center gap-1">Export</div>
-            </Button>
-          </div>
-          <PortablePlateEditor editorId="summaryEditor" />
-        </div>
-      </div>
+      <MultiEditorUi />
     </MultiEditorProvider>
   );
 }

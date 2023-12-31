@@ -1,3 +1,4 @@
+"use client";
 import React, {
   createContext,
   useContext,
@@ -7,7 +8,7 @@ import React, {
 } from "react";
 
 export interface WorkspaceConfig {
-  autoCreateOutline: boolean;
+  autoGenerateOutline: boolean;
   // Add more configuration properties as needed
 }
 

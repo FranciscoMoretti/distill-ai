@@ -7,8 +7,22 @@ import { resetNodes } from "@/lib/plate/transforms/reset-nodes";
 import { plateToMarkdown, markdownToPlate } from "@/lib/plate-markdown";
 import { type Editor } from "slate";
 import { type PlateEditor as PlateEditorType } from "@udecode/plate-common";
+import { useMultiEditorContext } from "@/lib/multi-editor-context";
 
-export function useEditorsInteractions({
+export function useEditorsInteractions() {
+  const { mainEditor, outlineEditor, summaryEditor } = useMultiEditorContext();
+  const { editorRef: mainEditorRef } = mainEditor;
+  const { editorRef: outlineEditorRef } = outlineEditor;
+  const { editorRef: summaryEditorRef } = summaryEditor;
+
+  return useEditorsInteractionsWithRefs({
+    mainEditorRef,
+    outlineEditorRef,
+    summaryEditorRef,
+  });
+}
+
+export function useEditorsInteractionsWithRefs({
   mainEditorRef,
   outlineEditorRef,
   summaryEditorRef,
@@ -19,6 +33,7 @@ export function useEditorsInteractions({
 }) {
   const [titleText, setTitleText] = useState<string>("");
 
+  // TODO Func should be lowercase
   async function GenerateSummary() {
     const outlineEditor = outlineEditorRef.current;
     const summaryEditor = summaryEditorRef.current;
