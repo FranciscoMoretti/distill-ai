@@ -78,6 +78,7 @@ export function PlateEditor({
     },
     debounceDuration,
   );
+  const [saveStatus, setSaveStatus] = useState("Saved");
 
   function updateLocalStorage(value: MyValue) {
     if (!editorRef.current) {
@@ -111,6 +112,12 @@ export function PlateEditor({
             await onChange();
           }
           debouncedUpdates(value as MyValue);
+          setSaveStatus("Saving...");
+
+          // Simulate a delay in saving.
+          setTimeout(() => {
+            setSaveStatus("Saved");
+          }, 500);
         }}
       >
         <div
@@ -120,7 +127,10 @@ export function PlateEditor({
             "[&_.slate-start-area-left]:!w-[64px] [&_.slate-start-area-right]:!w-[64px] [&_.slate-start-area-top]:!h-4",
           )}
         >
-          <FixedToolbar>
+          <FixedToolbar className="flex-col">
+            <div className="flex flex-row gap-2 px-4 py-2">
+              <div className="text-sm ">{saveStatus}</div>
+            </div>
             <FixedToolbarButtons />
           </FixedToolbar>
 
