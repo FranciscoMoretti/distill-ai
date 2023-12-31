@@ -66,7 +66,6 @@ export function PlateEditor({
   );
   const debouncedUpdates = useDebouncedCallback<(value: MyValue) => void>(
     async (value) => {
-      console.log({ value, storageKey });
       if (onDebouncedUpdate) {
         await onDebouncedUpdate();
       }
@@ -82,12 +81,8 @@ export function PlateEditor({
     if (!editorRef.current) {
       return;
     }
-    const isAstChange = editorRef.current.operations.some(
-      (op) => "set_selection" !== op.type,
-    );
-    if (isAstChange) {
-      setStorageContent(value);
-    }
+
+    setStorageContent(value);
   }
 
   useEffect(() => {
@@ -95,8 +90,6 @@ export function PlateEditor({
     const editor = editorRef.current;
     if (storageContent && editor) {
       setEditorNodes(editor, storageContent);
-      console.log("Editor node set for ", storageKey);
-      console.log({ children: editor.children });
     }
   }, [editorRef]);
 
