@@ -11,7 +11,7 @@ const DEFAULT_WORKSPACE_CONFIG: WorkspaceConfig = {
   autoGenerateOutline: true,
 };
 
-export function Workspace() {
+export function Workspace({ className = "" }: { className?: string }) {
   const [workspaceConfig, setWorkspaceConfig] = React.useState<WorkspaceConfig>(
     DEFAULT_WORKSPACE_CONFIG,
   );
@@ -23,7 +23,7 @@ export function Workspace() {
       workspaceConfig={workspaceConfig}
       setWorkspaceConfig={setWorkspaceConfig}
     >
-      <MultiEditor />
+      <MultiEditor className={className} />
     </WorkspaceConfigProvider>
   );
 }

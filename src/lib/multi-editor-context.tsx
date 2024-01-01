@@ -1,8 +1,6 @@
 import React, { createContext, useContext } from "react";
 import { type PlateEditorProps } from "@/components/plate-editor";
 
-export type editorsIds = "mainEditor" | "outlineEditor" | "summaryEditor";
-
 interface MultiEditorContextProps {
   mainEditor: PlateEditorProps;
   outlineEditor: PlateEditorProps;

@@ -1,9 +1,7 @@
 "use client";
 import { PlateEditor } from "@/components/plate-editor";
-import {
-  type editorsIds,
-  useMultiEditorContext,
-} from "@/lib/multi-editor-context";
+import { useMultiEditorContext } from "@/lib/multi-editor-context";
+import { type editorsIds } from "@/lib/editorsIds";
 
 export function PortablePlateEditor({ editorId }: { editorId: editorsIds }) {
   const context = useMultiEditorContext();

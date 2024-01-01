@@ -9,107 +9,136 @@ import {
   OutlineEditorPanel,
   SummaryEditorPanel,
 } from "./editor-panels";
-import React from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import React, { useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
+import { useWindowSize } from "usehooks-ts";
+import { Bold, Italic, Underline } from "lucide-react";
 
-export function DualPanel({
-  panel1,
-  panel2,
-}: {
-  panel1: React.ReactNode;
-  panel2: React.ReactNode;
-}) {
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { LoadingSpinner } from "@/components/loading-spinner";
+
+export function MultiEditorUi({ className = "" }: { className?: string }) {
+  type EditorType =
+    | "source"
+    | "outline"
+    | "summary"
+    | "source_outline"
+    | "outline_summary";
+
+  const [tabValue, setTabValue] = useState<EditorType>("source");
+
+  const showSourceEditor = ["source", "source_outline"].includes(tabValue);
+  const showOutlineEditor = [
+    "outline",
+    "source_outline",
+    "outline_summary",
+  ].includes(tabValue);
+  const showSummaryEditor = ["summary", "outline_summary"].includes(tabValue);
   const defaultLayout = [50, 50];
+  const { width } = useWindowSize();
+  useEffect(() => {
+    if (width >= 1024) {
+      setTabValue("source_outline");
+    } else {
+      setTabValue("source");
+    }
+  }, [width]);
 
   return (
-    <ResizablePanelGroup
-      direction="horizontal"
-      onLayout={(sizes: number[]) => {
-        document.cookie = `react-resizable-panels:layout=${JSON.stringify(
-          sizes,
-        )}`;
-      }}
-      className="h-full items-stretch "
+    <div
+      className={cn(
+        "flex h-full w-full flex-col items-stretch justify-stretch rounded bg-background",
+        className,
+      )}
     >
-      <ResizablePanel defaultSize={defaultLayout[0]} minSize={30}>
-        {panel1}
-      </ResizablePanel>
-      <ResizableHandle withHandle />
-      <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
-        {panel2}
-      </ResizablePanel>
-    </ResizablePanelGroup>
-  );
-}
+      <ToggleGroup
+        className="block lg:hidden"
+        type="single"
+        value={tabValue}
+        onValueChange={(value) => setTabValue(value as EditorType)}
+      >
+        {/* // TODO: Create a style like tabs and fix fallback loading UI*/}
+        <ToggleGroupItem value="source" aria-label="Toggle bold">
+          <Bold className="h-4 w-4" />
+        </ToggleGroupItem>
+        <ToggleGroupItem value="outline" aria-label="Toggle italic">
+          <Italic className="h-4 w-4" />
+        </ToggleGroupItem>
+        <ToggleGroupItem value="summary" aria-label="Toggle strikethrough">
+          <Underline className="h-4 w-4" />
+        </ToggleGroupItem>
+      </ToggleGroup>
 
-export function MultiEditorUi() {
-  const mainPanel = <MainEditorPanel />;
-  const outlinePanel = <OutlineEditorPanel />;
-  const summaryPanel = <SummaryEditorPanel />;
+      <ToggleGroup
+        className="hidden lg:block"
+        type="single"
+        value={tabValue}
+        onValueChange={(value) => setTabValue(value as EditorType)}
+      >
+        <ToggleGroupItem value="source_outline" aria-label="Toggle bold">
+          <Bold className="h-4 w-4" />
+          <Italic className="h-4 w-4" />
+        </ToggleGroupItem>
 
-  // TODO: When panels unmount editors refs are lost!
-  return (
-    <div className=" rounded bg-background">
-      <Tabs defaultValue="Source" className="block md:hidden">
-        <div className="flex items-center px-4 py-2">
-          <TabsList className="m-auto">
-            <TabsTrigger
-              value="Source"
-              className="text-zinc-600 dark:text-zinc-200"
-            >
-              {"Source"}
-            </TabsTrigger>
-            <TabsTrigger
-              value="Outline"
-              className="text-zinc-600 dark:text-zinc-200"
-            >
-              {"Outline"}
-            </TabsTrigger>
-            <TabsTrigger
-              value="Summary"
-              className="text-zinc-600 dark:text-zinc-200"
-            >
-              {"Summary"}
-            </TabsTrigger>
-          </TabsList>
+        <ToggleGroupItem
+          value="outline_summary"
+          aria-label="Toggle strikethrough"
+        >
+          <Italic className="h-4 w-4" />
+          <Underline className="h-4 w-4" />
+        </ToggleGroupItem>
+      </ToggleGroup>
+
+      <Separator />
+      {/* // TODO: Fix this workaround that prevents hydration error (same first render on client and server) */}
+      {width != 0 ? (
+        <ResizablePanelGroup
+          direction="horizontal"
+          onLayout={(sizes: number[]) => {
+            document.cookie = `react-resizable-panels:layout=${JSON.stringify(
+              sizes,
+            )}`;
+          }}
+          className="h-full items-stretch "
+        >
+          <ResizablePanel
+            defaultSize={50}
+            minSize={30}
+            className={cn(!showSourceEditor && "hidden")}
+          >
+            <MainEditorPanel />
+          </ResizablePanel>
+          <ResizableHandle
+            withHandle
+            className={cn(!(showSourceEditor && showOutlineEditor) && "hidden")}
+          />
+          <ResizablePanel
+            defaultSize={50}
+            minSize={30}
+            className={cn(!showOutlineEditor && "hidden")}
+          >
+            <OutlineEditorPanel />
+          </ResizablePanel>
+          <ResizableHandle
+            withHandle
+            className={cn(
+              !(showOutlineEditor && showSummaryEditor) && "hidden",
+            )}
+          />
+          <ResizablePanel
+            defaultSize={50}
+            minSize={30}
+            className={cn(!showSummaryEditor && "hidden")}
+          >
+            <SummaryEditorPanel />
+          </ResizablePanel>
+        </ResizablePanelGroup>
+      ) : (
+        <div className="flex h-full w-full flex-1 flex-col items-center justify-center">
+          <LoadingSpinner />
         </div>
-        <Separator />
-        <TabsContent value="Source" className="m-0">
-          {mainPanel}
-        </TabsContent>
-        <TabsContent value="Outline" className="m-0">
-          {outlinePanel}
-        </TabsContent>
-        <TabsContent value="Summary" className="m-0">
-          {summaryPanel}
-        </TabsContent>
-      </Tabs>
-      <Tabs defaultValue="SourceOutline" className="hidden md:block">
-        <div className="flex items-center px-4 py-4">
-          <TabsList className="m-auto">
-            <TabsTrigger
-              value="SourceOutline"
-              className="text-zinc-600 dark:text-zinc-200"
-            >
-              {"Source -> Outline"}
-            </TabsTrigger>
-            <TabsTrigger
-              value="OutlineSummary"
-              className="text-zinc-600 dark:text-zinc-200"
-            >
-              {"Outline -> Summary"}
-            </TabsTrigger>
-          </TabsList>
-        </div>
-        <Separator />
-        <TabsContent value="SourceOutline" className="m-0">
-          <DualPanel panel1={mainPanel} panel2={outlinePanel} />
-        </TabsContent>
-        <TabsContent value="OutlineSummary" className="m-0">
-          <DualPanel panel1={outlinePanel} panel2={summaryPanel} />
-        </TabsContent>
-      </Tabs>
+      )}
     </div>
   );
 }

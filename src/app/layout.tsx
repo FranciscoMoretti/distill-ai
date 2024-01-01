@@ -62,8 +62,8 @@ export default function RootLayout({
         <TRPCReactProvider cookies={cookies().toString()}>
           <Providers>
             <div className="relative flex min-h-screen flex-col">
-              <SiteHeader />
-              <div className="flex-1">{children}</div>
+              <SiteHeader className="" />
+              <div className="flex flex-1 flex-col">{children}</div>
             </div>
             <TailwindIndicator />
           </Providers>

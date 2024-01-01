@@ -11,7 +11,11 @@ import { useEditorsInteractionsWithRefs } from "../lib/hooks/use-editors-interac
 import { useWorkspaceConfigContext } from "@/lib/workspace-config-context";
 import { MultiEditorUi } from "./multi-editor-ui";
 
-export default function MultiEditor() {
+export default function MultiEditor({
+  className = "",
+}: {
+  className?: string;
+}) {
   const { mainEditorRef, outlineEditorRef, summaryEditorRef } =
     useMultiEditorRefs();
 
@@ -53,7 +57,7 @@ export default function MultiEditor() {
         completionId: "summary",
       }}
     >
-      <MultiEditorUi />
+      <MultiEditorUi className={className} />
     </MultiEditorProvider>
   );
 }
