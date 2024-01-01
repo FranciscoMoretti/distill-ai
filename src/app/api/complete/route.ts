@@ -5,7 +5,7 @@ import { Ratelimit } from "@upstash/ratelimit";
 
 // Create an OpenAI API client (that's edge friendly!)
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY || "",
+  apiKey: process.env.OPENAI_API_KEY ?? "",
 });
 
 // IMPORTANT! Set the runtime to edge: https://vercel.com/docs/functions/edge-functions/edge-runtime
@@ -48,7 +48,7 @@ export async function POST(req: Request): Promise<Response> {
     }
   }
 
-  const { prompt } = await req.json();
+  const { prompt } = (await req.json()) as { prompt: string };
 
   if (typeof prompt != "string") {
     return new Response("Incorrect argument type", {

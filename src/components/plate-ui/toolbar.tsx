@@ -1,14 +1,14 @@
 'use client';
 
 import * as React from 'react';
-import { ComponentPropsWithoutRef, ReactNode } from 'react';
+import { type ComponentPropsWithoutRef, type ReactNode } from 'react';
 import * as ToolbarPrimitive from '@radix-ui/react-toolbar';
 import { cn, withCn, withRef, withVariants } from '@udecode/cn';
 
 import { Icons } from '@/components/icons';
 
 import { Separator } from './separator';
-import { Toggle, toggleVariants } from './toggle';
+import { type Toggle, toggleVariants } from './toggle';
 import {
   Tooltip,
   TooltipContent,

@@ -64,6 +64,9 @@
     "classname",
     "clsx",
     "contentlayer",
+    "coub",
+    "dailymotion",
+    "Excalidraw",
     "fmoretti",
     "franmoretti",
     "hookform",
@@ -71,13 +74,17 @@
     "Lucide",
     "OPENAI",
     "outro",
+    "playbtn",
+    "rehype",
     "roboto",
     "routepath",
+    "superjson",
     "tailwindcss",
+    "tiptap",
+    "trpc",
+    "udecode",
     "upsert",
     "vaul",
-    "superjson",
-    "tiptap",
-    "trpc"
+    "youku"
   ]
 }

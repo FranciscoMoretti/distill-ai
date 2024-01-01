@@ -1,18 +1,23 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { cn } from '@udecode/cn';
+import React from "react";
+import { cn } from "@udecode/cn";
 import {
-  TCommentText,
+  type TCommentText,
   useCommentLeaf,
   useCommentLeafState,
-} from '@udecode/plate-comments';
-import { PlateLeaf, PlateLeafProps, Value } from '@udecode/plate-common';
+} from "@udecode/plate-comments";
+import {
+  PlateLeaf,
+  type PlateLeafProps,
+  type Value,
+} from "@udecode/plate-common";
 
 export function CommentLeaf({
   className,
   ...props
 }: PlateLeafProps<Value, TCommentText>) {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { children, nodeProps, leaf } = props;
 
   const state = useCommentLeafState({ leaf });
@@ -32,9 +37,9 @@ export function CommentLeaf({
     <PlateLeaf
       {...props}
       className={cn(
-        'border-b-2 border-b-primary/40',
-        state.isActive ? 'bg-primary/40' : 'bg-primary/20',
-        className
+        "border-b-2 border-b-primary/40",
+        state.isActive ? "bg-primary/40" : "bg-primary/20",
+        className,
       )}
       nodeProps={{
         ...rootProps,

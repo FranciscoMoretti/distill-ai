@@ -1,4 +1,4 @@
-import { findEventRange, PlatePlugin } from '@udecode/plate-common';
+import { findEventRange, type PlatePlugin } from '@udecode/plate-common';
 
 import { cursorStore } from '@/components/plate-ui/cursor-overlay';
 

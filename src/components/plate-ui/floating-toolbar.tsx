@@ -5,7 +5,7 @@ import { cn, withRef } from '@udecode/cn';
 import { PortalBody, useComposedRef } from '@udecode/plate-common';
 import {
   flip,
-  FloatingToolbarState,
+  type FloatingToolbarState,
   offset,
   useFloatingToolbar,
   useFloatingToolbarState,

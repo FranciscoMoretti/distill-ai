@@ -1,13 +1,14 @@
-import React from 'react';
-import { cn, withRef } from '@udecode/cn';
-import { getHandler, PlateElement, useElement } from '@udecode/plate-common';
-import { TMentionElement } from '@udecode/plate-mention';
-import { useFocused, useSelected } from 'slate-react';
+import React from "react";
+import { cn, withRef } from "@udecode/cn";
+import { getHandler, PlateElement, useElement } from "@udecode/plate-common";
+import { type TMentionElement } from "@udecode/plate-mention";
+import { useFocused, useSelected } from "slate-react";
 
 export const MentionElement = withRef<
   typeof PlateElement,
   {
     prefix?: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onClick?: (mentionNode: any) => void;
     renderLabel?: (mentionable: TMentionElement) => string;
   }
@@ -20,12 +21,12 @@ export const MentionElement = withRef<
     <PlateElement
       ref={ref}
       className={cn(
-        'inline-block cursor-pointer rounded-md bg-muted px-1.5 py-0.5 align-baseline text-sm font-medium',
-        selected && focused && 'ring-2 ring-ring',
-        element.children[0].bold === true && 'font-bold',
-        element.children[0].italic === true && 'italic',
-        element.children[0].underline === true && 'underline',
-        className
+        "inline-block cursor-pointer rounded-md bg-muted px-1.5 py-0.5 align-baseline text-sm font-medium",
+        selected && focused && "ring-2 ring-ring",
+        element.children[0]?.bold === true && "font-bold",
+        element.children[0]?.italic === true && "italic",
+        element.children[0]?.underline === true && "underline",
+        className,
       )}
       data-slate-value={element.value}
       contentEditable={false}

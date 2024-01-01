@@ -1,18 +1,22 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { cn, withRef } from '@udecode/cn';
-import { ClassNames, PlateElementProps, TEditor } from '@udecode/plate-common';
+import React from "react";
+import { cn, withRef } from "@udecode/cn";
 import {
-  DragItemNode,
+  type ClassNames,
+  type PlateElementProps,
+  type TEditor,
+} from "@udecode/plate-common";
+import {
+  type DragItemNode,
   useDraggable,
   useDraggableState,
-} from '@udecode/plate-dnd';
-import { DropTargetMonitor } from 'react-dnd';
+} from "@udecode/plate-dnd";
+import { type DropTargetMonitor } from "react-dnd";
 
-import { Icons } from '@/components/icons';
+import { Icons } from "@/components/icons";
 
-import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip";
 
 export interface DraggableProps
   extends PlateElementProps,
@@ -71,9 +75,9 @@ export interface DraggableProps
     props: {
       monitor: DropTargetMonitor<DragItemNode, unknown>;
       dragItem: DragItemNode;
-      nodeRef: any;
+      nodeRef: unknown;
       id: string;
-    }
+    },
   ) => boolean;
 }
 
@@ -86,8 +90,9 @@ const dragHandle = (
   </Tooltip>
 );
 
-export const Draggable = withRef<'div', DraggableProps>(
+export const Draggable = withRef<"div", DraggableProps>(
   ({ className, classNames = {}, onDropHandler, ...props }, ref) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { children, element } = props;
 
     const state = useDraggableState({ element, onDropHandler });
@@ -104,25 +109,25 @@ export const Draggable = withRef<'div', DraggableProps>(
       <div
         ref={ref}
         className={cn(
-          'relative',
-          isDragging && 'opacity-50',
-          'group',
-          className
+          "relative",
+          isDragging && "opacity-50",
+          "group",
+          className,
         )}
         {...groupProps}
       >
         <div
           className={cn(
-            'pointer-events-none absolute top-0 flex h-full -translate-x-full cursor-text opacity-0 group-hover:opacity-100',
-            classNames.gutterLeft
+            "pointer-events-none absolute top-0 flex h-full -translate-x-full cursor-text opacity-0 group-hover:opacity-100",
+            classNames.gutterLeft,
           )}
           {...gutterLeftProps}
         >
-          <div className={cn('flex h-[1.5em]', classNames.blockToolbarWrapper)}>
+          <div className={cn("flex h-[1.5em]", classNames.blockToolbarWrapper)}>
             <div
               className={cn(
-                'pointer-events-auto mr-1 flex items-center',
-                classNames.blockToolbar
+                "pointer-events-auto mr-1 flex items-center",
+                classNames.blockToolbar,
               )}
             >
               <div ref={handleRef} className="h-4 w-4">
@@ -138,11 +143,11 @@ export const Draggable = withRef<'div', DraggableProps>(
           {!!dropLine && (
             <div
               className={cn(
-                'absolute inset-x-0 h-0.5 opacity-100',
-                'bg-ring',
-                dropLine === 'top' && '-top-px',
-                dropLine === 'bottom' && '-bottom-px',
-                classNames.dropLine
+                "absolute inset-x-0 h-0.5 opacity-100",
+                "bg-ring",
+                dropLine === "top" && "-top-px",
+                dropLine === "bottom" && "-bottom-px",
+                classNames.dropLine,
               )}
               {...droplineProps}
             />
@@ -150,5 +155,5 @@ export const Draggable = withRef<'div', DraggableProps>(
         </div>
       </div>
     );
-  }
+  },
 );

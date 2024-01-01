@@ -1,5 +1,5 @@
 import React from 'react';
-import { DropdownMenuProps } from '@radix-ui/react-dropdown-menu';
+import { type DropdownMenuProps } from '@radix-ui/react-dropdown-menu';
 import { ELEMENT_BLOCKQUOTE } from '@udecode/plate-block-quote';
 import {
   collapseSelection,
@@ -7,7 +7,7 @@ import {
   focusEditor,
   isBlock,
   isCollapsed,
-  TElement,
+  type TElement,
   toggleNodeType,
   useEditorRef,
   useEditorSelector,

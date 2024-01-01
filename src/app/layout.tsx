@@ -53,7 +53,7 @@ export default function RootLayout({
       <body
         className={cn(
           `font-sans ${inter.variable}`,
-          "min-h-screen bg-background font-sans antialiased",
+          "min-h-screen bg-background antialiased",
           "[&_.slate-selected]:!bg-primary/20 [&_.slate-selection-area]:border [&_.slate-selection-area]:border-primary [&_.slate-selection-area]:bg-primary/10",
 
           fontSans.variable,
@@ -62,8 +62,8 @@ export default function RootLayout({
         <TRPCReactProvider cookies={cookies().toString()}>
           <Providers>
             <div className="relative flex min-h-screen flex-col">
-              <SiteHeader />
-              <div className="flex-1">{children}</div>
+              <SiteHeader className="" />
+              <div className="flex flex-1 flex-col">{children}</div>
             </div>
             <TailwindIndicator />
           </Providers>

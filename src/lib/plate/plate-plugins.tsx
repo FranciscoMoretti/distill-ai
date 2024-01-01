@@ -348,6 +348,7 @@ export const plugins = createPlugins(
     createJuicePlugin(),
   ],
   {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     components: withDraggables(
       withPlaceholders({
         [ELEMENT_BLOCKQUOTE]: BlockquoteElement,
