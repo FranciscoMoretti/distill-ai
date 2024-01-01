@@ -1,12 +1,5 @@
 import { visit } from "unist-util-visit";
-import { type Plugin } from "unified";
-import {
-  type Node,
-  type Element,
-  type Comment,
-  type Root,
-  type Text,
-} from "hast";
+import { type Element, type Comment, type Root, type Text } from "hast";
 import { type VFile } from "node_modules/rehype-remark/lib";
 
 // Define a unified plugin to extract and return bolded nodes
@@ -47,7 +40,7 @@ function transformToTextNodes(nodes: Element[]): Text[] {
 
 // Define a unified plugin to transform bold nodes into text nodes
 export const transformToTextNodesPlugin = () => {
-  return (tree: Root, file: VFile) => {
+  return (tree: Root) => {
     const boldNodes = findBoldNodes(tree);
 
     // Transform each bold node into a text node

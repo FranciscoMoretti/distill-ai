@@ -26,7 +26,7 @@ export function extractTitleHTML(htmlString: string): string | undefined {
   return resultHTML;
 } // Define a function to extract bolded text
 
-export function extractBoldTextHMTL(htmlString: string): string {
+export function extractBoldTextHTML(htmlString: string): string {
   // Parse the HTML tree
   let resultHTML = undefined;
   unified()
