@@ -61,13 +61,11 @@ export function useEditorsInteractionsWithRefs({
 
     const boldedMarkdown = extractBoldTextMD(markdown);
 
-    if (boldedMarkdown) {
-      const boldedNodes = markdownToPlate(boldedMarkdown);
-      if (boldedNodes) {
-        resetNodes(outlineEditor as Editor, {
-          nodes: boldedNodes,
-        });
-      }
+    const boldedNodes = markdownToPlate(boldedMarkdown);
+    if (boldedNodes) {
+      resetNodes(outlineEditor as Editor, {
+        nodes: boldedNodes,
+      });
     }
   }
 
