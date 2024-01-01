@@ -31,14 +31,17 @@ export function useEditorsInteractionsWithRefs({
   outlineEditorRef: MutableRefObject<PlateEditorType | null>;
   summaryEditorRef: MutableRefObject<PlateEditorType | null>;
 }) {
-  const [titleText, setTitleText] = useState<string>("");
-
   // TODO Func should be lowercase
   async function GenerateSummary() {
     const outlineEditor = outlineEditorRef.current;
     const summaryEditor = summaryEditorRef.current;
-    if (!(outlineEditor && summaryEditor)) return;
+    const mainEditor = mainEditorRef.current;
+    console.log({ mainEditor });
 
+    if (!(outlineEditor && summaryEditor && mainEditor)) return;
+    const mainMd = plateToMarkdown(mainEditor);
+    const titleText = extractTitleMD(mainMd);
+    console.log({ mainMd, titleText });
     const markdown = plateToMarkdown(outlineEditor);
     if (markdown) {
       console.log({ markdown });
@@ -58,10 +61,6 @@ export function useEditorsInteractionsWithRefs({
 
     const boldedMarkdown = extractBoldTextMD(markdown);
 
-    const titleText = extractTitleMD(markdown);
-    if (titleText) {
-      setTitleText(titleText);
-    }
     if (boldedMarkdown) {
       const boldedNodes = markdownToPlate(boldedMarkdown);
       if (boldedNodes) {

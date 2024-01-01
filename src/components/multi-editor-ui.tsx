@@ -48,6 +48,7 @@ export function MultiEditorUi() {
   const outlinePanel = <OutlineEditorPanel />;
   const summaryPanel = <SummaryEditorPanel />;
 
+  // TODO: When panels unmount editors refs are lost!
   return (
     <div className=" rounded bg-background">
       <Tabs defaultValue="Source" className="block md:hidden">

@@ -26,6 +26,7 @@ import useLocalStorage from "@/lib/hooks/use-local-storage";
 import { resetNodes } from "@/lib/plate/transforms/reset-nodes";
 import { type MyValue } from "@/lib/plate/plate-types";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useLogLifecycle } from "@/lib/hooks/use-component-lifecycle";
 
 const defaultValue: MyValue = [
   {
@@ -67,6 +68,7 @@ export function PlateEditor({
   completionId,
 }: PlateEditorProps) {
   // const [editor] = useState(() => withReact(createEditor()));
+  useLogLifecycle("Editor " + storageKey);
   const containerRef = useRef(null);
   const [storageContent, setStorageContent] = useLocalStorage<MyValue>(
     storageKey,

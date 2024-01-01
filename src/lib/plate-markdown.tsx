@@ -21,8 +21,9 @@ export function markdownToPlate(markdown: string): MyValue | undefined {
     });
   return plateNodes as MyValue | undefined;
 }
-export function plateToMarkdown(mainEditor: PlateEditorType): string {
-  return mainEditor.children
+
+export function plateToMarkdown(editor: PlateEditorType): string {
+  return editor.children
     .map((v) =>
       serialize(v, {
         nodeTypes: plateNodeTypes as NodeTypes,
