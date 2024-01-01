@@ -113,7 +113,7 @@ export const MediaEmbedElement = withHOC(
                       '[&_.react-tweet-theme]:ring-2 [&_.react-tweet-theme]:ring-ring [&_.react-tweet-theme]:ring-offset-2'
                   )}
                 >
-                  <Tweet id={embed!.id!} />
+                  <Tweet id={embed!.id} />
                 </div>
               )}
 

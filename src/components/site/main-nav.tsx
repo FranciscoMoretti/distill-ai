@@ -2,7 +2,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { cn } from '@udecode/cn';
 
-import { NavItem } from '@/types/nav';
+import { type NavItem } from '@/types/nav';
 import { siteConfig } from '@/config/site';
 import { Icons } from '@/components/icons';
 

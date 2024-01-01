@@ -1,13 +1,13 @@
-import React from 'react';
-import { DropdownMenuProps } from '@radix-ui/react-dropdown-menu';
+import React from "react";
+import { type DropdownMenuProps } from "@radix-ui/react-dropdown-menu";
 import {
   focusEditor,
   useEditorReadOnly,
   useEditorRef,
   usePlateStore,
-} from '@udecode/plate-common';
+} from "@udecode/plate-common";
 
-import { Icons } from '@/components/icons';
+import { Icons } from "@/components/icons";
 
 import {
   DropdownMenu,
@@ -16,8 +16,8 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
   useOpenState,
-} from './dropdown-menu';
-import { ToolbarButton } from './toolbar';
+} from "./dropdown-menu";
+import { ToolbarButton } from "./toolbar";
 
 export function ModeDropdownMenu(props: DropdownMenuProps) {
   const editor = useEditorRef();
@@ -25,9 +25,10 @@ export function ModeDropdownMenu(props: DropdownMenuProps) {
   const readOnly = useEditorReadOnly();
   const openState = useOpenState();
 
-  let value = 'editing';
-  if (readOnly) value = 'viewing';
+  let value = "editing";
+  if (readOnly) value = "viewing";
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const item: any = {
     editing: (
       <>
@@ -52,7 +53,10 @@ export function ModeDropdownMenu(props: DropdownMenuProps) {
           isDropdown
           className="min-w-[auto] lg:min-w-[130px]"
         >
-          {item[value]}
+          {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            item[value]
+          }
         </ToolbarButton>
       </DropdownMenuTrigger>
 
@@ -61,27 +65,33 @@ export function ModeDropdownMenu(props: DropdownMenuProps) {
           className="flex flex-col gap-0.5"
           value={value}
           onValueChange={(newValue) => {
-            if (newValue !== 'viewing') {
+            if (newValue !== "viewing") {
               setReadOnly(false);
             }
 
-            if (newValue === 'viewing') {
+            if (newValue === "viewing") {
               setReadOnly(true);
               return;
             }
 
-            if (newValue === 'editing') {
+            if (newValue === "editing") {
               focusEditor(editor);
               return;
             }
           }}
         >
           <DropdownMenuRadioItem value="editing">
-            {item.editing}
+            {
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+              item.editing
+            }
           </DropdownMenuRadioItem>
 
           <DropdownMenuRadioItem value="viewing">
-            {item.viewing}
+            {
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+              item.viewing
+            }
           </DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>
       </DropdownMenuContent>

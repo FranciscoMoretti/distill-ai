@@ -5,11 +5,11 @@ import { cn } from '@udecode/cn';
 import {
   flip,
   offset,
-  UseVirtualFloatingOptions,
+  type UseVirtualFloatingOptions,
 } from '@udecode/plate-floating';
 import {
   FloatingLinkUrlInput,
-  LinkFloatingToolbarState,
+  type LinkFloatingToolbarState,
   LinkOpenButton,
   useFloatingLinkEdit,
   useFloatingLinkEditState,

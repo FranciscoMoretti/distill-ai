@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 import {
   CommentProvider,
   useCommentById,
   useCommentItemContentState,
-} from '@udecode/plate-comments';
-import { formatDistance } from 'date-fns';
+} from "@udecode/plate-comments";
+import { formatDistance } from "date-fns";
 
-import { CommentAvatar } from './comment-avatar';
-import { CommentMoreDropdown } from './comment-more-dropdown';
-import { CommentResolveButton } from './comment-resolve-button';
-import { CommentValue } from './comment-value';
+import { CommentAvatar } from "./comment-avatar";
+import { CommentMoreDropdown } from "./comment-more-dropdown";
+import { CommentResolveButton } from "./comment-resolve-button";
+import { CommentValue } from "./comment-value";
 
 type PlateCommentProps = {
   commentId: string;
@@ -35,7 +35,11 @@ function CommentItemContent() {
         <h4 className="text-sm font-semibold leading-none">{user?.name}</h4>
 
         <div className="text-xs leading-none text-muted-foreground">
-          {formatDistance(comment.createdAt, Date.now())} ago
+          {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+            formatDistance(comment.createdAt, Date.now())
+          }{" "}
+          ago
         </div>
 
         {isMyComment && (

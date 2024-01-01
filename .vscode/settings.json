@@ -64,6 +64,7 @@
     "classname",
     "clsx",
     "contentlayer",
+    "Excalidraw",
     "fmoretti",
     "franmoretti",
     "hookform",
@@ -73,11 +74,11 @@
     "outro",
     "roboto",
     "routepath",
-    "tailwindcss",
-    "upsert",
-    "vaul",
     "superjson",
+    "tailwindcss",
     "tiptap",
-    "trpc"
+    "trpc",
+    "upsert",
+    "vaul"
   ]
 }

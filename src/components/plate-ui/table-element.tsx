@@ -1,5 +1,5 @@
 import React from 'react';
-import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
+import type * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 import { PopoverAnchor } from '@radix-ui/react-popover';
 import { cn, withRef } from '@udecode/cn';
 import {
@@ -12,7 +12,7 @@ import {
 } from '@udecode/plate-common';
 import {
   mergeTableCells,
-  TTableElement,
+  type TTableElement,
   unmergeTableCells,
   useTableBordersDropdownMenuContentState,
   useTableElement,

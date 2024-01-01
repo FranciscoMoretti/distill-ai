@@ -1,13 +1,13 @@
-import React from 'react';
-import { ComboboxItemProps } from '@udecode/plate-combobox';
+import React from "react";
+import { type ComboboxItemProps } from "@udecode/plate-combobox";
 import {
-  EmojiItemData,
+  type EmojiItemData,
   KEY_EMOJI,
-  TEmojiCombobox,
+  type TEmojiCombobox,
   useEmojiComboboxState,
-} from '@udecode/plate-emoji';
+} from "@udecode/plate-emoji";
 
-import { Combobox } from './combobox';
+import { Combobox } from "./combobox";
 
 export function EmojiComboboxItem({ item }: ComboboxItemProps<EmojiItemData>) {
   const {
@@ -33,6 +33,7 @@ export function EmojiCombobox({
       id={id}
       trigger={trigger}
       controlled
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
       onSelectItem={onSelectItem as any}
       onRenderItem={EmojiComboboxItem}
       {...props}

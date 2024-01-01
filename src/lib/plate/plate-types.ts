@@ -1,92 +1,92 @@
-import React from 'react';
-import { AutoformatRule } from '@udecode/plate-autoformat';
-import { ELEMENT_BLOCKQUOTE } from '@udecode/plate-block-quote';
+import type React from 'react';
+import { type AutoformatRule } from '@udecode/plate-autoformat';
+import { type ELEMENT_BLOCKQUOTE } from '@udecode/plate-block-quote';
 import {
-  ELEMENT_CODE_BLOCK,
-  ELEMENT_CODE_LINE,
+  type ELEMENT_CODE_BLOCK,
+  type ELEMENT_CODE_LINE,
 } from '@udecode/plate-code-block';
-import { TCommentText } from '@udecode/plate-comments';
+import { type TCommentText } from '@udecode/plate-comments';
 import {
   createPlateEditor,
-  CreatePlateEditorOptions,
+  type CreatePlateEditorOptions,
   createPluginFactory,
   createPlugins,
   createTEditor,
-  Decorate,
-  DecorateEntry,
-  DOMHandler,
-  EDescendant,
-  EElement,
-  EElementEntry,
-  EElementOrText,
-  EMarks,
-  ENode,
-  ENodeEntry,
-  EText,
-  ETextEntry,
+  type Decorate,
+  type DecorateEntry,
+  type DOMHandler,
+  type EDescendant,
+  type EElement,
+  type EElementEntry,
+  type EElementOrText,
+  type EMarks,
+  type ENode,
+  type ENodeEntry,
+  type EText,
+  type ETextEntry,
   getTEditor,
-  InjectComponent,
-  InjectProps,
-  KeyboardHandler,
-  NoInfer,
-  OnChange,
-  OverrideByKey,
-  PlateEditor,
-  PlateId,
-  PlatePlugin,
-  PlatePluginComponent,
-  PlatePluginInsertData,
-  PlatePluginProps,
-  PlateProps,
-  PluginOptions,
-  SerializeHtml,
-  TElement,
-  TNodeEntry,
-  TReactEditor,
-  TText,
+  type InjectComponent,
+  type InjectProps,
+  type KeyboardHandler,
+  type NoInfer,
+  type OnChange,
+  type OverrideByKey,
+  type PlateEditor,
+  type PlateId,
+  type PlatePlugin,
+  type PlatePluginComponent,
+  type PlatePluginInsertData,
+  type PlatePluginProps,
+  type PlateProps,
+  type PluginOptions,
+  type SerializeHtml,
+  type TElement,
+  type TNodeEntry,
+  type TReactEditor,
+  type TText,
   useEditorRef,
   useEditorState,
-  WithOverride,
+  type WithOverride,
 } from '@udecode/plate-common';
 import {
-  ELEMENT_EXCALIDRAW,
-  TExcalidrawElement,
+  type ELEMENT_EXCALIDRAW,
+  type TExcalidrawElement,
 } from '@udecode/plate-excalidraw';
 import {
-  ELEMENT_H1,
-  ELEMENT_H2,
-  ELEMENT_H3,
-  ELEMENT_H4,
-  ELEMENT_H5,
-  ELEMENT_H6,
+  type ELEMENT_H1,
+  type ELEMENT_H2,
+  type ELEMENT_H3,
+  type ELEMENT_H4,
+  type ELEMENT_H5,
+  type ELEMENT_H6,
 } from '@udecode/plate-heading';
-import { ELEMENT_HR } from '@udecode/plate-horizontal-rule';
-import { ELEMENT_LINK, TLinkElement } from '@udecode/plate-link';
+import { type ELEMENT_HR } from '@udecode/plate-horizontal-rule';
+import { type ELEMENT_LINK, type TLinkElement } from '@udecode/plate-link';
 import {
-  ELEMENT_LI,
-  ELEMENT_OL,
-  ELEMENT_TODO_LI,
-  ELEMENT_UL,
-  TTodoListItemElement,
+  type ELEMENT_LI,
+  type ELEMENT_OL,
+  type ELEMENT_TODO_LI,
+  type ELEMENT_UL,
+  type TTodoListItemElement,
 } from '@udecode/plate-list';
 import {
-  ELEMENT_IMAGE,
-  ELEMENT_MEDIA_EMBED,
-  TImageElement,
-  TMediaEmbedElement,
+  type ELEMENT_IMAGE,
+  type ELEMENT_MEDIA_EMBED,
+  type TImageElement,
+  type TMediaEmbedElement,
 } from '@udecode/plate-media';
 import {
-  ELEMENT_MENTION,
-  ELEMENT_MENTION_INPUT,
-  TMentionElement,
-  TMentionInputElement,
+  type ELEMENT_MENTION,
+  type ELEMENT_MENTION_INPUT,
+  type TMentionElement,
+  type TMentionInputElement,
 } from '@udecode/plate-mention';
-import { ELEMENT_PARAGRAPH } from '@udecode/plate-paragraph';
+import { type ELEMENT_PARAGRAPH } from '@udecode/plate-paragraph';
 import {
-  ELEMENT_TABLE,
-  ELEMENT_TD,
-  ELEMENT_TR,
-  TTableElement,
+  type ELEMENT_TABLE,
+  type ELEMENT_TD,
+  type ELEMENT_TR,
+  type TTableElement,
 } from '@udecode/plate-table';
 
 /**
