@@ -1,6 +1,7 @@
 "use client";
 import { type MutableRefObject, useEffect, useRef, useState } from "react";
-import { extractBoldTextMD, extractTitleMD } from "@/lib/text-extractor";
+import { extractBoldTextMD } from "../unified/markdown-processor";
+import { extractTitleMD } from "../unified/markdown-processor";
 import { useCompletion } from "ai/react";
 import { toast } from "sonner";
 import { resetNodes } from "@/lib/plate/transforms/reset-nodes";
