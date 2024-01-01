@@ -45,50 +45,81 @@ export function MultiEditorUi({ className = "" }: { className?: string }) {
     }
   }, [width]);
 
+  const TAB_CN =
+    "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-background data-[state=on]:text-foreground data-[state=on]:shadow-sm";
+
   return (
     <div
       className={cn(
-        "flex h-full w-full flex-col items-stretch justify-stretch rounded bg-background",
+        "flex h-full w-full flex-col justify-stretch rounded bg-background",
         className,
       )}
     >
-      <ToggleGroup
-        className="block lg:hidden"
-        type="single"
-        value={tabValue}
-        onValueChange={(value) => setTabValue(value as EditorType)}
-      >
-        {/* // TODO: Create a style like tabs and fix fallback loading UI*/}
-        <ToggleGroupItem value="source" aria-label="Toggle bold">
-          <Bold className="h-4 w-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem value="outline" aria-label="Toggle italic">
-          <Italic className="h-4 w-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem value="summary" aria-label="Toggle strikethrough">
-          <Underline className="h-4 w-4" />
-        </ToggleGroupItem>
-      </ToggleGroup>
-
-      <ToggleGroup
-        className="hidden lg:block"
-        type="single"
-        value={tabValue}
-        onValueChange={(value) => setTabValue(value as EditorType)}
-      >
-        <ToggleGroupItem value="source_outline" aria-label="Toggle bold">
-          <Bold className="h-4 w-4" />
-          <Italic className="h-4 w-4" />
-        </ToggleGroupItem>
-
-        <ToggleGroupItem
-          value="outline_summary"
-          aria-label="Toggle strikethrough"
+      <div className="flex w-full flex-col items-center py-2">
+        <ToggleGroup
+          className={cn(
+            "h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground",
+            "inline-flex lg:hidden ",
+          )}
+          type="single"
+          value={tabValue}
+          onValueChange={(value) => setTabValue(value as EditorType)}
         >
-          <Italic className="h-4 w-4" />
-          <Underline className="h-4 w-4" />
-        </ToggleGroupItem>
-      </ToggleGroup>
+          <ToggleGroupItem
+            size={"sm"}
+            className={TAB_CN}
+            value="source"
+            aria-label="Toggle bold"
+          >
+            {"Main"}
+          </ToggleGroupItem>
+          <ToggleGroupItem
+            size={"sm"}
+            className={TAB_CN}
+            value="outline"
+            aria-label="Toggle italic"
+          >
+            {"Outline"}
+          </ToggleGroupItem>
+          <ToggleGroupItem
+            size={"sm"}
+            className={TAB_CN}
+            value="summary"
+            aria-label="Toggle strikethrough"
+          >
+            {"Summary"}
+          </ToggleGroupItem>
+        </ToggleGroup>
+
+        <ToggleGroup
+          className={cn(
+            "h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground",
+            "inline-flex",
+            "hidden lg:inline-flex",
+          )}
+          type="single"
+          value={tabValue}
+          onValueChange={(value) => setTabValue(value as EditorType)}
+        >
+          <ToggleGroupItem
+            size={"sm"}
+            className={TAB_CN}
+            value="source_outline"
+            aria-label="Toggle bold"
+          >
+            {"Source -> Outline"}
+          </ToggleGroupItem>
+
+          <ToggleGroupItem
+            size={"sm"}
+            className={TAB_CN}
+            value="outline_summary"
+            aria-label="Toggle strikethrough"
+          >
+            {"Outline -> Summary"}
+          </ToggleGroupItem>
+        </ToggleGroup>
+      </div>
 
       <Separator />
       {/* // TODO: Fix this workaround that prevents hydration error (same first render on client and server) */}
