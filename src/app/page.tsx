@@ -2,7 +2,7 @@ import { Workspace } from "./workspace";
 
 export default async function Home() {
   return (
-    <main className="flex h-full flex-1 flex-col items-center justify-stretch bg-gradient-to-b from-[#2e026d] to-[rgb(21,22,44)]">
+    <main className="flex h-full flex-1 flex-col items-center justify-stretch bg-muted">
       {/* // TODO: Consider setting a container again for nice width*/}
       <div className=" flex w-full flex-1 flex-col items-center gap-12 px-4 py-16 ">
         {/* <a
