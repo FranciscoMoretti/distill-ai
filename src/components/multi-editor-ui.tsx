@@ -51,7 +51,7 @@ export function MultiEditorUi({ className = "" }: { className?: string }) {
   return (
     <div
       className={cn(
-        "flex h-full w-full flex-col justify-stretch rounded bg-background",
+        "flex h-full w-full max-w-screen-2xl flex-col justify-stretch rounded bg-background",
         className,
       )}
     >
