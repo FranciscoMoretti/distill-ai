@@ -132,7 +132,7 @@ export function PlateEditor({
           ref={containerRef}
           className={cn(
             // Block selection
-            "[&_.slate-start-area-left]:!w-[64px] [&_.slate-start-area-right]:!w-[64px] [&_.slate-start-area-top]:!h-4",
+            "flex h-full flex-col [&_.slate-start-area-left]:!w-[64px] [&_.slate-start-area-right]:!w-[64px] [&_.slate-start-area-top]:!h-4",
           )}
         >
           <FixedToolbar className="flex-col">
@@ -141,8 +141,7 @@ export function PlateEditor({
             </div>
             <FixedToolbarButtons />
           </FixedToolbar>
-
-          <ScrollArea className="h-[1000px] overflow-y-auto">
+          <ScrollArea className="max-h-[1000px] flex-1 overflow-y-auto">
             <Editor
               className="px-[96px] py-16"
               autoFocus
