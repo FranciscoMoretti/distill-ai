@@ -131,12 +131,15 @@ export function MultiEditorUi({ className = "" }: { className?: string }) {
               sizes,
             )}`;
           }}
-          className="h-full items-stretch "
+          className="flex h-full w-full flex-1 flex-col"
         >
           <ResizablePanel
             defaultSize={50}
             minSize={30}
-            className={cn(!showSourceEditor && "hidden")}
+            className={cn(
+              "flex h-full w-full flex-1 flex-col",
+              !showSourceEditor && "hidden",
+            )}
           >
             <MainEditorPanel />
           </ResizablePanel>
@@ -147,7 +150,11 @@ export function MultiEditorUi({ className = "" }: { className?: string }) {
           <ResizablePanel
             defaultSize={50}
             minSize={30}
-            className={cn(!showOutlineEditor && "hidden")}
+            className={cn(
+              "flex h-full w-full flex-1 flex-col",
+
+              !showOutlineEditor && "hidden",
+            )}
           >
             <OutlineEditorPanel />
           </ResizablePanel>
@@ -160,7 +167,11 @@ export function MultiEditorUi({ className = "" }: { className?: string }) {
           <ResizablePanel
             defaultSize={50}
             minSize={30}
-            className={cn(!showSummaryEditor && "hidden")}
+            className={cn(
+              "flex h-full w-full flex-1 flex-col",
+
+              !showSummaryEditor && "hidden",
+            )}
           >
             <SummaryEditorPanel />
           </ResizablePanel>

@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 
 export function MainEditorPanel({ className = "" }: { className?: string }) {
   return (
-    <div className={cn("", className)}>
+    <div className={cn("flex h-full w-full flex-1 flex-col", className)}>
       <div className="flex min-w-[600] items-center px-4 py-2">
         <h1 className="text-xl font-bold">Source</h1>
         <div className="flex w-full flex-row items-center justify-end gap-1">
@@ -24,7 +24,7 @@ export function MainEditorPanel({ className = "" }: { className?: string }) {
 }
 export function OutlineEditorPanel({ className = "" }: { className?: string }) {
   return (
-    <div className={cn("", className)}>
+    <div className={cn("flex h-full w-full flex-1 flex-col", className)}>
       <div className="flex items-center px-4 py-2">
         <h1 className="text-xl font-bold">Outline</h1>
         <div className="flex w-full flex-row items-center justify-end gap-1">
@@ -38,7 +38,7 @@ export function OutlineEditorPanel({ className = "" }: { className?: string }) {
 }
 export function SummaryEditorPanel({ className = "" }: { className?: string }) {
   return (
-    <div className={cn("", className)}>
+    <div className={cn("flex h-full w-full flex-1 flex-col", className)}>
       <div className="flex items-center px-4 py-2">
         <h1 className="text-xl font-bold">Summary</h1>
         <div className="flex w-full flex-row items-center justify-end gap-1">
