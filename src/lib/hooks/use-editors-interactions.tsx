@@ -5,7 +5,7 @@ import { extractTitleMD } from "../unified/markdown-processor";
 import { useCompletion } from "ai/react";
 import { toast } from "sonner";
 import { resetNodes } from "@/lib/plate/transforms/reset-nodes";
-import { plateToMarkdown, markdownToPlate } from "@/lib/plate-markdown";
+import { plateToMarkdown, markdownToPlate } from "@/lib/unified/plate-markdown";
 import { type Editor } from "slate";
 import { type PlateEditor as PlateEditorType } from "@udecode/plate-common";
 import { useMultiEditorContext } from "@/lib/multi-editor-context";
