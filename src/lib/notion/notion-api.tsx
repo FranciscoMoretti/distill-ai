@@ -1,13 +1,30 @@
 "use server";
 import { Client } from "@notionhq/client";
-import { type Block } from "@/lib/notion/notion-types";
+import {
+  type CreatePageParametersProperties,
+  type Block,
+} from "@/lib/notion/notion-types";
 import { env } from "@/env";
 
-const pageId = env.NOTION_PAGE_ID;
 const apiKey = env.NOTION_API_KEY;
 
-export async function addBlocksToPage(blocks: Block[]) {
-  const notion = new Client({ auth: apiKey });
+const notion = new Client({ auth: apiKey });
+
+export async function addNotionPageToDatabase(
+  databaseId: string,
+  pageProperties: CreatePageParametersProperties,
+) {
+  const newPage = await notion.pages.create({
+    parent: {
+      database_id: databaseId,
+    },
+    properties: pageProperties,
+  });
+  console.log(newPage);
+  return newPage;
+}
+
+export async function addBlocksToPage(pageId: string, blocks: Block[]) {
   // TODO Fill with notion types
   const blockId = pageId; // Blocks can be appended to other blocks *or* pages. Therefore, a page ID can be used for the block_id parameter
   const appendedBlocksResponse = await notion.blocks.children.append({

@@ -17,7 +17,12 @@ export function ExportButton() {
       toast("No summary text");
       return;
     }
-    await exportSummaryToNotion(markdown);
+    const title = getDocumentTitle();
+    if (!title) {
+      toast("No document title");
+      return;
+    }
+    await exportSummaryToNotion(markdown, title);
   }
 
   return (

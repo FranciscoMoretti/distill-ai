@@ -1,11 +1,27 @@
 "use server";
 import { markdownToBlocks } from "@tryfabric/martian";
-import { addBlocksToPage } from "../lib/notion/notion-api";
+import {
+  addBlocksToPage,
+  addNotionPageToDatabase,
+} from "../lib/notion/notion-api";
 import { type Block } from "@/lib/notion/notion-types";
+import { env } from "@/env";
 
-export async function exportSummaryToNotion(markdown: string) {
-  const blocks = markdownToBlocks(markdown);
-  console.log(blocks);
-  const response = await addBlocksToPage(blocks as Block[]);
+const mainDbId = env.NOTION_PAGE_ID;
+
+export async function exportSummaryToNotion(
+  bodyMarkdown: string,
+  titleMarkdown: string,
+) {
+  const bodyBlocks = markdownToBlocks(bodyMarkdown);
+  const addPageResponse = await addNotionPageToDatabase(mainDbId, {
+    Title: {
+      type: "title",
+      title: [{ type: "text", text: { content: titleMarkdown } }],
+    },
+  });
+  console.log(addPageResponse);
+  const { id: pageId } = addPageResponse;
+  const response = await addBlocksToPage(pageId, bodyBlocks as Block[]);
   return response;
 }
