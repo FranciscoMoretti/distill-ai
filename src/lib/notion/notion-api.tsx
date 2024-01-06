@@ -10,6 +10,37 @@ const apiKey = env.NOTION_API_KEY;
 
 const notion = new Client({ auth: apiKey });
 
+export async function createNotionDatabase(
+  parentPageId: string,
+  title: string,
+) {
+  return await notion.databases.create({
+    parent: {
+      type: "page_id",
+      page_id: parentPageId,
+    },
+    title: [
+      {
+        type: "text",
+        text: {
+          content: title,
+        },
+      },
+    ],
+    properties: {
+      // These properties represent columns in the database (i.e. its schema)
+      Title: {
+        type: "title",
+        title: {},
+      },
+      "Last Synced": {
+        type: "date",
+        date: {},
+      },
+    },
+  });
+}
+
 export async function addNotionPageToDatabase(
   databaseId: string,
   pageProperties: CreatePageParametersProperties,

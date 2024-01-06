@@ -5,21 +5,23 @@ import {
   addNotionPageToDatabase,
 } from "../lib/notion/notion-api";
 import { type Block } from "@/lib/notion/notion-types";
-import { env } from "@/env";
-
-const mainDbId = env.NOTION_PAGE_ID;
+import { createMainDatabases } from "@/lib/notion/create-main-databases";
 
 export async function exportSummaryToNotion(
   bodyMarkdown: string,
   titleMarkdown: string,
 ) {
+  const { summaryDatabaseResponse } = await createMainDatabases();
   const bodyBlocks = markdownToBlocks(bodyMarkdown);
-  const addPageResponse = await addNotionPageToDatabase(mainDbId, {
-    Title: {
-      type: "title",
-      title: [{ type: "text", text: { content: titleMarkdown } }],
+  const addPageResponse = await addNotionPageToDatabase(
+    summaryDatabaseResponse.id,
+    {
+      Title: {
+        type: "title",
+        title: [{ type: "text", text: { content: titleMarkdown } }],
+      },
     },
-  });
+  );
   console.log(addPageResponse);
   const { id: pageId } = addPageResponse;
   const response = await addBlocksToPage(pageId, bodyBlocks as Block[]);
