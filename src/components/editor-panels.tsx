@@ -7,6 +7,7 @@ import { GenerateSummaryButton } from "./generate-summary-button";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { DownloadSummaryButton } from "@/components/download-summary-button";
+import { ExportButton } from "@/components/export-button";
 
 export function MainEditorPanel({ className = "" }: { className?: string }) {
   return (
@@ -44,9 +45,7 @@ export function SummaryEditorPanel({ className = "" }: { className?: string }) {
         <h1 className="text-xl font-bold">Summary</h1>
         <div className="flex w-full flex-row items-center justify-end gap-2">
           <DownloadSummaryButton />
-          <Button onClick={() => console.log("export TBD")} disabled>
-            <div className="flex flex-row items-center gap-1">Export</div>
-          </Button>
+          <ExportButton />
         </div>
       </div>
       <Separator />
