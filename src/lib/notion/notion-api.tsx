@@ -10,6 +10,14 @@ const apiKey = env.NOTION_API_KEY;
 
 const notion = new Client({ auth: apiKey });
 
+export async function getNotionBlockChildren(blockId: string) {
+  const blockChildrenListResponse = await notion.blocks.children.list({
+    block_id: blockId,
+  });
+  console.log(blockChildrenListResponse);
+  return blockChildrenListResponse;
+}
+
 export async function createNotionDatabase(
   parentPageId: string,
   title: string,
