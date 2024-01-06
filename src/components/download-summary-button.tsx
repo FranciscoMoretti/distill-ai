@@ -4,10 +4,10 @@ import { Sparkles } from "lucide-react";
 import { useEditorsInteractions } from "../lib/hooks/use-editors-interactions";
 
 export function DownloadSummaryButton() {
-  const { GenerateSummary } = useEditorsInteractions();
+  const { generateSummary } = useEditorsInteractions();
 
   return (
-    <Button onClick={async () => await GenerateSummary()}>
+    <Button onClick={async () => await generateSummary()}>
       <div className="flex flex-row items-center gap-1">
         Generate Summary <Sparkles className="h-4 w-4" />
       </div>

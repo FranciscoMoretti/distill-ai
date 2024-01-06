@@ -33,7 +33,7 @@ export function useEditorsInteractionsWithRefs({
   summaryEditorRef: MutableRefObject<PlateEditorType | null>;
 }) {
   // TODO Func should be lowercase
-  async function GenerateSummary() {
+  async function generateSummary() {
     const outlineEditor = outlineEditorRef.current;
     const summaryEditor = summaryEditorRef.current;
     const mainEditor = mainEditorRef.current;
@@ -100,5 +100,5 @@ export function useEditorsInteractionsWithRefs({
     }
   }, [summaryEditorRef, completion]);
 
-  return { GenerateSummary, generateOutline };
+  return { generateSummary, generateOutline };
 }
