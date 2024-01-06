@@ -1,10 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
 import { useEditorsInteractions } from "@/lib/hooks/use-editors-interactions";
 import { toast } from "sonner";
-import { downloadMarkdownFile } from "@/lib/download-markdown";
-import { markdownToRichText } from "@tryfabric/martian";
 
 import { exportSummaryToNotion } from "./export-summary-to-notion";
 

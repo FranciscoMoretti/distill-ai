@@ -13,7 +13,6 @@ import React, { useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { useWindowSize } from "usehooks-ts";
-import { Bold, Italic, Underline } from "lucide-react";
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { LoadingSpinner } from "@/components/loading-spinner";
@@ -129,7 +128,6 @@ export function MultiEditorUi({ className = "" }: { className?: string }) {
           </ToggleGroupItem>
         </ToggleGroup>
       </div>
-
       <Separator />
       {/* // TODO: Fix this workaround that prevents hydration error (same first render on client and server) */}
       {width != 0 ? (
