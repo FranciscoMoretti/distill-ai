@@ -2,8 +2,8 @@
 import { Button } from "@/components/ui/button";
 import { PortablePlateEditor } from "./portable-plate-editor";
 import { AutoGenerateOutlineToggle } from "@/components/auto-generate-outline-toggle";
-import { GenerateOutlineButton } from "./plate-ui/generate-outline-button";
-import { GenerateSummaryButton } from "./plate-ui/generate-summary-button";
+import { GenerateOutlineButton } from "./generate-outline-button";
+import { GenerateSummaryButton } from "./generate-summary-button";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 

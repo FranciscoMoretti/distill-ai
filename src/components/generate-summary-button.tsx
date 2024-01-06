@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Sparkles } from "lucide-react";
-import { useEditorsInteractions } from "../../lib/hooks/use-editors-interactions";
+import { useEditorsInteractions } from "../lib/hooks/use-editors-interactions";
 
 export function GenerateSummaryButton() {
   const { GenerateSummary } = useEditorsInteractions();
