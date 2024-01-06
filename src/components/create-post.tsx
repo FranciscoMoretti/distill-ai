@@ -16,11 +16,20 @@ export function CreatePost() {
     },
   });
 
+  const source = "1";
+  const outline = "2";
+  const summary = "3";
+
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        createPost.mutate({ name });
+        createPost.mutate({
+          name,
+          source,
+          outline,
+          summary,
+        });
       }}
       className="flex flex-col gap-2"
     >

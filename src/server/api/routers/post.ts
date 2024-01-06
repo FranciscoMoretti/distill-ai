@@ -15,8 +15,16 @@ export const postRouter = createTRPCRouter({
       };
     }),
 
+  // TODO: Login with provider to get user in protected procedure
   create: protectedProcedure
-    .input(z.object({ name: z.string().min(1) }))
+    .input(
+      z.object({
+        name: z.string().min(1),
+        source: z.string(),
+        outline: z.string(),
+        summary: z.string(),
+      }),
+    )
     .mutation(async ({ ctx, input }) => {
       // simulate a slow db call
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -24,6 +32,9 @@ export const postRouter = createTRPCRouter({
       return ctx.db.post.create({
         data: {
           name: input.name,
+          source: input.source,
+          outline: input.outline,
+          summary: input.summary,
           createdBy: { connect: { id: ctx.session.user.id } },
         },
       });
