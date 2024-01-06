@@ -3,23 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 import { useEditorsInteractions } from "@/lib/hooks/use-editors-interactions";
 import { toast } from "sonner";
-
-const downloadMarkdownFile = (markdown: string, fileName: string) => {
-  // create file in browser
-  const blob = new Blob([markdown], { type: "text/x-markdown" });
-  const href = URL.createObjectURL(blob);
-
-  // create "a" HTLM element with href to file
-  const link = document.createElement("a");
-  link.href = href;
-  link.download = fileName + ".md";
-  document.body.appendChild(link);
-  link.click();
-
-  // clean up "a" element & remove ObjectURL
-  document.body.removeChild(link);
-  URL.revokeObjectURL(href);
-};
+import { downloadMarkdownFile } from "@/lib/download-markdown";
 
 export function DownloadSummaryButton() {
   const { getSummaryMarkdown, getDocumentTitle } = useEditorsInteractions();
