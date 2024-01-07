@@ -1,5 +1,5 @@
-import { CrudShowcase } from "@/app/CrudShowcase";
-import { Workspace } from "./workspace";
+import { CrudShowcase } from "@/components/CrudShowcase";
+import { Workspace } from "@/components/workspace";
 import { api } from "@/trpc/server";
 import { getServerAuthSession } from "@/server/auth";
 import Link from "next/link";
