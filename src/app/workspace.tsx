@@ -19,7 +19,7 @@ export function Workspace({ className = "" }: { className?: string }) {
   // TODO Save workspace config in localstorage and retrieve
 
   // TODO This id should come from the doc creation in the db
-  const documentId = "1";
+  const documentId = "";
 
   return (
     <WorkspaceConfigProvider
