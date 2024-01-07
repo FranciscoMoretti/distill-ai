@@ -40,6 +40,24 @@ export const postRouter = createTRPCRouter({
       });
     }),
 
+  update: protectedProcedure
+    .input(
+      z.object({
+        id: z.number(),
+        source: z.string().optional(),
+        outline: z.string().optional(),
+        summary: z.string().optional(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.post.update({
+        where: {
+          id: input.id,
+        },
+        data: input,
+      });
+    }),
+
   getLatest: protectedProcedure.query(({ ctx }) => {
     return ctx.db.post.findFirst({
       orderBy: { createdAt: "desc" },
