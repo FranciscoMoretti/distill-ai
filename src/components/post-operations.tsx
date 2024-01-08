@@ -25,7 +25,7 @@ import {
 import { toast } from "@/components/ui/use-toast";
 import { Icons } from "@/components/icons";
 
-async function deletePost(postId: string) {
+async function deletePost(postId: number) {
   const response = await fetch(`/api/posts/${postId}`, {
     method: "DELETE",
   });

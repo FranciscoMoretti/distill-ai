@@ -15,11 +15,9 @@ async function initDatabases() {
   const blockChildrenListResponse = await getNotionBlockChildren(mainDbId);
   const pageChilds = blockChildrenListResponse.results.filter((block) => {
     return Object.hasOwn(block, "type")
-      ? block.type == "child_database"
+      ? // @ts-expect-error type present in object
+        block.type == "child_database"
       : false;
-    // if(block.object){
-    //   block.type ==
-    // }
   });
   // TODO Improve the logic of this init function databases ID retrieval
   const childIds = pageChilds.map((block) => block.id);

@@ -9,6 +9,7 @@ import { plateToMarkdown, markdownToPlate } from "@/lib/unified/plate-markdown";
 import { type Editor } from "slate";
 import { type PlateEditor as PlateEditorType } from "@udecode/plate-common";
 import { useMultiEditorContext } from "@/lib/multi-editor-context";
+import { type MyValue } from "@/lib/plate/plate-types";
 
 export function useEditorsInteractions() {
   const { mainEditor, outlineEditor, summaryEditor } = useMultiEditorContext();
@@ -28,9 +29,9 @@ export function useEditorsInteractionsWithRefs({
   outlineEditorRef,
   summaryEditorRef,
 }: {
-  mainEditorRef: MutableRefObject<PlateEditorType | null>;
-  outlineEditorRef: MutableRefObject<PlateEditorType | null>;
-  summaryEditorRef: MutableRefObject<PlateEditorType | null>;
+  mainEditorRef: MutableRefObject<PlateEditorType<MyValue> | null>;
+  outlineEditorRef: MutableRefObject<PlateEditorType<MyValue> | null>;
+  summaryEditorRef: MutableRefObject<PlateEditorType<MyValue> | null>;
 }) {
   // TODO Func should be lowercase
 

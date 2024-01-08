@@ -61,6 +61,7 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async session({ token, session }) {
       if (token) {
+        // @ts-expect-error user injected to token in jwt
         session.user.id = token.id;
         session.user.name = token.name;
         session.user.email = token.email;

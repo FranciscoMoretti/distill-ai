@@ -37,7 +37,7 @@ const defaultValue: MyValue = [
 
 export type PlateEditorProps = {
   storageKey?: string;
-  editorRef: MutableRefObject<null | PlateEditorType>;
+  editorRef: MutableRefObject<null | PlateEditorType<MyValue>>;
   initialValue?: MyValue | undefined;
   onChange?: ((value: MyValue) => void | Promise<void>) | undefined;
   onDebouncedUpdate?: ((value: MyValue) => void | Promise<void>) | undefined;

@@ -22,7 +22,7 @@ export function markdownToPlate(markdown: string): MyValue | undefined {
   return plateNodes as MyValue | undefined;
 }
 
-export function plateToMarkdown(editor: PlateEditorType): string {
+export function plateToMarkdown(editor: PlateEditorType<MyValue>): string {
   return editor.children
     .map((v) =>
       serialize(v, {

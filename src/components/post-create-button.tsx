@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { type ButtonProps, buttonVariants } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { Icons } from "@/components/icons";
+import { type Post } from "@prisma/client";
 
 type PostCreateButtonProps = ButtonProps;
 
@@ -50,7 +51,7 @@ export function PostCreateButton({
       });
     }
 
-    const post = await response.json();
+    const post = (await response.json()) as Post;
 
     // This forces a cache invalidation.
     router.refresh();

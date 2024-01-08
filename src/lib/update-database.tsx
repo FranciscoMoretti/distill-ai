@@ -4,7 +4,7 @@ import { getServerAuthSession } from "@/server/auth";
 import { api } from "@/trpc/server";
 
 export async function updateDatabase(
-  documentId: string,
+  documentId: number,
   editor: "source" | "outline" | "summary",
   value: MyValue,
 ) {
@@ -13,6 +13,7 @@ export async function updateDatabase(
     // TODO Complete database update logic by updating only part of the document
 
     // TODO improve update preparation logic
+    // @ts-expect-error update login is incomplete
     const updateProps: Record<"source" | "outline" | "summary", string> = {};
     updateProps[editor] = JSON.stringify(value);
 

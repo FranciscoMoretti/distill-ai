@@ -248,7 +248,7 @@ export const Icons = {
   warning: AlertTriangle,
 
   // www
-  gitHub: (psrops: LucideProps) => (
+  gitHub: (props: LucideProps) => (
     <svg viewBox="0 0 438.549 438.549" {...props}>
       <path
         fill="currentColor"

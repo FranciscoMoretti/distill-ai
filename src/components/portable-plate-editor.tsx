@@ -1,5 +1,5 @@
 "use client";
-import { PlateEditor, type PlateEditorProps } from "@/components/plate-editor";
+import { PlateEditor } from "@/components/plate-editor";
 import { useMultiEditorContext } from "@/lib/multi-editor-context";
 import { type editorsIds } from "@/lib/editors-ids";
 
