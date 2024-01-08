@@ -6,7 +6,7 @@ import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
 
 import { TRPCReactProvider } from "@/trpc/react";
-import Providers from "./providers";
+import Providers from "@/app/providers";
 import { type Metadata, type Viewport } from "next";
 import { cn } from "@udecode/cn";
 import { SiteHeader } from "@/components/site/site-header";
@@ -43,11 +43,7 @@ export const metadata = {
 //   },
 // };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body
@@ -55,16 +51,12 @@ export default function RootLayout({
           `font-sans ${inter.variable}`,
           "min-h-screen bg-background antialiased",
           "[&_.slate-selected]:!bg-primary/20 [&_.slate-selection-area]:border [&_.slate-selection-area]:border-primary [&_.slate-selection-area]:bg-primary/10",
-
           fontSans.variable,
         )}
       >
         <TRPCReactProvider cookies={cookies().toString()}>
           <Providers>
-            <div className="relative flex min-h-screen flex-col">
-              <SiteHeader className="" />
-              <div className="flex flex-1 flex-col">{children}</div>
-            </div>
+            {children}
             <TailwindIndicator />
           </Providers>
         </TRPCReactProvider>

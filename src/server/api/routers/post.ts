@@ -15,7 +15,6 @@ export const postRouter = createTRPCRouter({
       };
     }),
 
-  // TODO: Login with provider to get user in protected procedure
   create: protectedProcedure
     .input(
       z.object({
@@ -58,10 +57,42 @@ export const postRouter = createTRPCRouter({
       });
     }),
 
+  get: protectedProcedure
+    .input(
+      z.object({
+        id: z.number(),
+      }),
+    )
+    .query(({ ctx, input }) => {
+      return ctx.db.post.findFirst({
+        orderBy: { createdAt: "desc" },
+        where: {
+          id: input.id,
+          createdBy: { id: ctx.session.user.id },
+        },
+      });
+    }),
+
   getLatest: protectedProcedure.query(({ ctx }) => {
     return ctx.db.post.findFirst({
       orderBy: { createdAt: "desc" },
       where: { createdBy: { id: ctx.session.user.id } },
+    });
+  }),
+
+  getAll: protectedProcedure.query(({ ctx }) => {
+    return ctx.db.post.findMany({
+      where: { createdBy: { id: ctx.session.user.id } },
+
+      // select: {
+      //   id: true,
+      //   title: true,
+      //   published: true,
+      //   createdAt: true,
+      // },
+      orderBy: {
+        updatedAt: "desc",
+      },
     });
   }),
 

@@ -6,7 +6,7 @@ import { buttonVariants } from "@/components/plate-ui/button";
 import { MainNav } from "@/components/site/main-nav";
 import { ThemeToggle } from "@/components/site/theme-toggle";
 import { cn } from "@/lib/utils";
-import { getServerAuthSession } from "@/server/auth";
+import { authOptions, getServerAuthSession } from "@/server/auth";
 
 function NavCommonButtons() {
   return (
@@ -54,7 +54,11 @@ export async function SiteHeader({ className = "" }: { className?: string }) {
           <NavCommonButtons />
           <nav>
             <Link
-              href={session ? "/api/auth/signout" : "/api/auth/signin"}
+              href={
+                session
+                  ? authOptions?.pages?.signOut ?? "/api/auth/signout"
+                  : authOptions?.pages?.signIn ?? "/api/auth/signin"
+              }
               className={cn(
                 buttonVariants({ variant: "secondary", size: "sm" }),
                 "px-4",
