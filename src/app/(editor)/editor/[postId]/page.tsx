@@ -52,6 +52,14 @@ export default async function EditorPage({ params }: EditorPageProps) {
           </Link>
         </div>
       </div>
+      <div className="flex w-full flex-col items-center">
+        <h1 className="text-2xl">
+          {
+            // TODO Make this an input to update the document name / title
+            post.name
+          }
+        </h1>
+      </div>
       <PostProvider initialValue={post}>
         <Workspace className="h-full flex-1" />
       </PostProvider>
