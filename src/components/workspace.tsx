@@ -18,15 +18,12 @@ export function Workspace({ className = "" }: { className?: string }) {
 
   // TODO Save workspace config in localstorage and retrieve
 
-  // TODO This id should come from the doc creation in the db
-  const documentId = "";
-
   return (
     <WorkspaceConfigProvider
       workspaceConfig={workspaceConfig}
       setWorkspaceConfig={setWorkspaceConfig}
     >
-      <MultiEditor className={className} documentId={documentId} />
+      <MultiEditor className={className} />
     </WorkspaceConfigProvider>
   );
 }

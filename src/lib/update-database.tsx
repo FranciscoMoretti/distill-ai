@@ -11,7 +11,6 @@ export async function updateDatabase(
   const session = await getServerAuthSession();
   if (session) {
     // TODO Complete database update logic by updating only part of the document
-    console.log(documentId, editor, JSON.stringify(value));
 
     // TODO improve update preparation logic
     const updateProps: Record<"source" | "outline" | "summary", string> = {};

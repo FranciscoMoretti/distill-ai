@@ -8,6 +8,7 @@ import { api } from "@/trpc/server";
 import { Workspace } from "@/components/workspace";
 import { buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
+import { PostProvider } from "@/lib/post-context";
 
 async function getPostForUser(postId: Post["id"]) {
   const post = await api.post.get.query({
@@ -33,6 +34,9 @@ export default async function EditorPage({ params }: EditorPageProps) {
     notFound();
   }
 
+  // TODO: For some reason the post found in the dB is not getting updated and this line is not printing
+  console.error(post.outline);
+
   return (
     <div className="grid w-full gap-10">
       <div className="flex w-full items-center justify-between">
@@ -48,16 +52,9 @@ export default async function EditorPage({ params }: EditorPageProps) {
           </Link>
         </div>
       </div>
-      <Workspace className="h-full flex-1" />
+      <PostProvider initialValue={post}>
+        <Workspace className="h-full flex-1" />
+      </PostProvider>
     </div>
-    // TODO Since post is already fetched, use these properties as well like Editor does
-    // <Editor
-    //   post={{
-    //     id: post.id,
-    //     // title: post.title,
-    //     // content: post.content,
-    //     // published: post.published,
-    //   }}
-    // />
   );
 }

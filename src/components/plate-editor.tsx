@@ -94,7 +94,7 @@ export function PlateEditor({
   useEffect(() => {
     // Load storage content after server render
     const editor = editorRef.current;
-    if (storageContent && editor) {
+    if (!disableLocalStorage && storageContent && editor) {
       resetNodes(editor as EditorType, {
         nodes: storageContent,
       });
@@ -105,7 +105,7 @@ export function PlateEditor({
     <CommentsProvider users={{}} myUserId="1">
       <Plate
         plugins={plugins}
-        initialValue={undefined}
+        initialValue={disableLocalStorage ? initialValue : undefined}
         editorRef={editorRef}
         onChange={async (value: MyValue) => {
           if (!editorRef.current) {

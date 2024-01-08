@@ -12,16 +12,17 @@ import { useWorkspaceConfigContext } from "@/lib/workspace-config-context";
 import { MultiEditorUi } from "./multi-editor-ui";
 import { type MyValue } from "@/lib/plate/plate-types";
 import { updateDatabase } from "@/lib/update-database";
+import { usePostContext } from "@/lib/post-context";
 
 export default function MultiEditor({
-  documentId,
   className = "",
 }: {
-  documentId?: string;
   className?: string;
 }) {
   const { mainEditorRef, outlineEditorRef, summaryEditorRef } =
     useMultiEditorRefs();
+  const { post, setPost } = usePostContext();
+  const documentId = post.id;
 
   const { generateOutline } = useEditorsInteractionsWithRefs({
     mainEditorRef,
@@ -36,8 +37,11 @@ export default function MultiEditor({
     <MultiEditorProvider
       mainEditor={{
         storageKey: "plate__main",
+        disableLocalStorage: true,
         editorRef: mainEditorRef,
-        initialValue: INITIAL_VALUE_MAIN,
+        initialValue: post.source
+          ? (JSON.parse(post.source) as MyValue)
+          : INITIAL_VALUE_MAIN,
         completionApi: "/api/complete",
         completionId: "main",
         onDebouncedUpdate: async (value: MyValue) => {
@@ -53,8 +57,11 @@ export default function MultiEditor({
       }}
       outlineEditor={{
         storageKey: "plate__outline",
+        disableLocalStorage: true,
         editorRef: outlineEditorRef,
-        initialValue: INITIAL_VALUE_OUTLINE,
+        initialValue: post.outline
+          ? (JSON.parse(post.outline) as MyValue)
+          : INITIAL_VALUE_MAIN,
         completionApi: "/api/complete",
         completionId: "outline",
         onDebouncedUpdate: async (value: MyValue) => {
@@ -65,8 +72,11 @@ export default function MultiEditor({
       }}
       summaryEditor={{
         storageKey: "plate__summary",
+        disableLocalStorage: true,
         editorRef: summaryEditorRef,
-        initialValue: INITIAL_VALUE_SUMMARY,
+        initialValue: post.summary
+          ? (JSON.parse(post.summary) as MyValue)
+          : INITIAL_VALUE_SUMMARY,
         completionApi: "/api/complete",
         completionId: "summary",
         onDebouncedUpdate: async (value: MyValue) => {
