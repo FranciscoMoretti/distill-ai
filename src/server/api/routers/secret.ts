@@ -31,7 +31,7 @@ export const secretRouter = createTRPCRouter({
   get: protectedProcedure
     .input(
       z.object({
-        names: z.array(z.string()),
+        names: z.array(SecretsNamesSchema),
       }),
     )
     .query(({ ctx, input }) => {

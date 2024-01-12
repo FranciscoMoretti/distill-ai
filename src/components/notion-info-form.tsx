@@ -24,6 +24,7 @@ import { toast } from "@/components/ui/use-toast";
 import { Icons } from "@/components/icons";
 import { api } from "@/trpc/react";
 import { secretRouter } from "@/server/api/routers/secret";
+import { getSecretKeyValueMap } from "@/lib/secret-utils";
 
 type UserNameFormProps = React.HTMLAttributes<HTMLFormElement>;
 
@@ -38,14 +39,7 @@ export function NotionInfoForm({ className, ...props }: UserNameFormProps) {
   const { data, isSuccess } = api.secret.get.useQuery({
     names: ["notionApiKey", "notionRootPageId"],
   });
-  const secretNameValueMap: Record<string, string> =
-    data?.reduce(
-      (acc, secret) => {
-        acc[secret.name] = secret.value;
-        return acc;
-      },
-      {} as Record<string, string>,
-    ) ?? {};
+  const secretNameValueMap: Record<string, string> = getSecretKeyValueMap(data);
 
   const {
     handleSubmit,

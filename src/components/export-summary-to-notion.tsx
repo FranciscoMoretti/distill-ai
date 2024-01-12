@@ -1,18 +1,15 @@
 "use server";
 import { markdownToBlocks } from "@tryfabric/martian";
-import {
-  addBlocksToPage,
-  addNotionPageToDatabase,
-  getNotionBlockChildren,
-} from "../lib/notion/notion-api";
+import { NotionClient } from "../lib/notion/notion-api";
 import { type Block } from "@/lib/notion/notion-types";
 import { createMainDatabases } from "@/lib/notion/create-main-databases";
-import { env } from "@/env";
+import { api } from "@/trpc/server";
+import { getSecretKeyValueMap } from "@/lib/secret-utils";
 
-async function initDatabases() {
-  const mainDbId = env.NOTION_PAGE_ID;
-  // Otherwise simply use the stored databases ids
-  const blockChildrenListResponse = await getNotionBlockChildren(mainDbId);
+async function initDatabases(notionClient: NotionClient) {
+  const blockChildrenListResponse = await notionClient.getNotionBlockChildren(
+    notionClient.rootPageId,
+  );
   const pageChilds = blockChildrenListResponse.results.filter((block) => {
     return Object.hasOwn(block, "type")
       ? // @ts-expect-error type present in object
@@ -28,7 +25,7 @@ async function initDatabases() {
       summaryDatabaseId: childIds[2]!,
     };
   } else {
-    const response = await createMainDatabases();
+    const response = await createMainDatabases(notionClient);
     return {
       sourceDatabaseId: response.sourceDatabaseResponse.id,
       outlineDatabaseId: response.outlineDatabaseResponse.id,
@@ -41,16 +38,40 @@ export async function exportSummaryToNotion(
   bodyMarkdown: string,
   titleMarkdown: string,
 ) {
-  const { summaryDatabaseId } = await initDatabases();
-  const bodyBlocks = markdownToBlocks(bodyMarkdown);
-  const addPageResponse = await addNotionPageToDatabase(summaryDatabaseId, {
-    Title: {
-      type: "title",
-      title: [{ type: "text", text: { content: titleMarkdown } }],
-    },
+  const secrets = await api.secret.get.query({
+    names: ["notionRootPageId", "notionApiKey"],
   });
+
+  console.log({ secrets });
+  const secretKeyValue = getSecretKeyValueMap(secrets);
+
+  console.log({ secretKeyValue });
+
+  if (!secretKeyValue.notionApiKey || !secretKeyValue.notionRootPageId) {
+    throw Error("Using Notion client without notion config");
+  }
+
+  const notionClient = new NotionClient(
+    secretKeyValue.notionApiKey,
+    secretKeyValue.notionRootPageId,
+  );
+
+  const { summaryDatabaseId } = await initDatabases(notionClient);
+  const bodyBlocks = markdownToBlocks(bodyMarkdown);
+  const addPageResponse = await notionClient.addNotionPageToDatabase(
+    summaryDatabaseId,
+    {
+      Title: {
+        type: "title",
+        title: [{ type: "text", text: { content: titleMarkdown } }],
+      },
+    },
+  );
   console.log(addPageResponse);
   const { id: pageId } = addPageResponse;
-  const response = await addBlocksToPage(pageId, bodyBlocks as Block[]);
+  const response = await notionClient.addBlocksToPage(
+    pageId,
+    bodyBlocks as Block[],
+  );
   return response;
 }

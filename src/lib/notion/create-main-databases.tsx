@@ -1,20 +1,15 @@
 "use server";
-import { env } from "@/env";
-import { createNotionDatabase } from "./notion-api";
+import { type NotionClient } from "./notion-api";
 
-const mainDbId = env.NOTION_PAGE_ID;
-export async function createMainDatabases() {
-  const sourceDatabaseResponse = await createNotionDatabase(mainDbId, "Source");
-  const outlineDatabaseResponse = await createNotionDatabase(
-    mainDbId,
-    "Outline",
-  );
-  const summaryDatabaseResponse = await createNotionDatabase(
-    mainDbId,
-    "Summary",
-  );
+export async function createMainDatabases(notionClient: NotionClient) {
+  const sourceDatabaseResponse =
+    await notionClient.createNotionDatabase("Source");
+  const outlineDatabaseResponse =
+    await notionClient.createNotionDatabase("Outline");
+  const summaryDatabaseResponse =
+    await notionClient.createNotionDatabase("Summary");
 
-  console.log(summaryDatabaseResponse);
+  console.log(sourceDatabaseResponse);
   return {
     sourceDatabaseResponse,
     outlineDatabaseResponse,
