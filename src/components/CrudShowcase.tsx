@@ -1,4 +1,5 @@
-import { CreatePost } from "@/app/_components/create-post";
+"use server";
+import { CreatePost } from "@/components/create-post";
 import { getServerAuthSession } from "@/server/auth";
 import { api } from "@/trpc/server";
 
@@ -11,7 +12,7 @@ export async function CrudShowcase() {
   const latestPost = await api.post.getLatest.query();
 
   return (
-    <div className="w-full max-w-xs">
+    <div className="min-h-[300px] w-full max-w-xs">
       {latestPost ? (
         <p className="truncate">Your most recent post: {latestPost.name}</p>
       ) : (

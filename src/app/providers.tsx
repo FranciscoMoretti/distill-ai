@@ -13,6 +13,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { TooltipProvider } from "@/components/plate-ui/tooltip";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
+import { Toaster as ShadcnToaster } from "@/components/ui/toaster";
 
 const ToasterProvider = () => {
   const { theme } = useTheme() as {
@@ -38,6 +39,7 @@ export default function Providers({ children }: { children: ReactNode }) {
         <DndProvider backend={HTML5Backend}>
           <ToasterProvider />
           {children}
+          <ShadcnToaster />
           <Analytics />
         </DndProvider>
       </TooltipProvider>

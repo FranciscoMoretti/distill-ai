@@ -9,6 +9,7 @@ import { plateToMarkdown, markdownToPlate } from "@/lib/unified/plate-markdown";
 import { type Editor } from "slate";
 import { type PlateEditor as PlateEditorType } from "@udecode/plate-common";
 import { useMultiEditorContext } from "@/lib/multi-editor-context";
+import { type MyValue } from "@/lib/plate/plate-types";
 
 export function useEditorsInteractions() {
   const { mainEditor, outlineEditor, summaryEditor } = useMultiEditorContext();
@@ -28,21 +29,26 @@ export function useEditorsInteractionsWithRefs({
   outlineEditorRef,
   summaryEditorRef,
 }: {
-  mainEditorRef: MutableRefObject<PlateEditorType | null>;
-  outlineEditorRef: MutableRefObject<PlateEditorType | null>;
-  summaryEditorRef: MutableRefObject<PlateEditorType | null>;
+  mainEditorRef: MutableRefObject<PlateEditorType<MyValue> | null>;
+  outlineEditorRef: MutableRefObject<PlateEditorType<MyValue> | null>;
+  summaryEditorRef: MutableRefObject<PlateEditorType<MyValue> | null>;
 }) {
   // TODO Func should be lowercase
-  async function GenerateSummary() {
+
+  function getDocumentTitle() {
+    const mainEditor = mainEditorRef.current;
+    if (!mainEditor) return;
+    const mainMd = plateToMarkdown(mainEditor);
+    const titleText = extractTitleMD(mainMd);
+    return titleText;
+  }
+
+  async function generateSummary() {
     const outlineEditor = outlineEditorRef.current;
     const summaryEditor = summaryEditorRef.current;
     const mainEditor = mainEditorRef.current;
-    console.log({ mainEditor });
-
     if (!(outlineEditor && summaryEditor && mainEditor)) return;
-    const mainMd = plateToMarkdown(mainEditor);
-    const titleText = extractTitleMD(mainMd);
-    console.log({ mainMd, titleText });
+    const titleText = getDocumentTitle();
     const markdown = plateToMarkdown(outlineEditor);
     if (markdown) {
       console.log({ markdown });
@@ -68,6 +74,13 @@ export function useEditorsInteractionsWithRefs({
         nodes: boldedNodes,
       });
     }
+  }
+
+  function getSummaryMarkdown() {
+    const summary = summaryEditorRef.current;
+    if (!summary) return;
+    const markdown = plateToMarkdown(summary);
+    return markdown;
   }
 
   const { complete, completion, isLoading, stop } = useCompletion({
@@ -100,5 +113,10 @@ export function useEditorsInteractionsWithRefs({
     }
   }, [summaryEditorRef, completion]);
 
-  return { GenerateSummary, generateOutline };
+  return {
+    generateSummary,
+    generateOutline,
+    getSummaryMarkdown,
+    getDocumentTitle,
+  };
 }

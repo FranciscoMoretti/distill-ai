@@ -26,7 +26,6 @@ import useLocalStorage from "@/lib/hooks/use-local-storage";
 import { resetNodes } from "@/lib/plate/transforms/reset-nodes";
 import { type MyValue } from "@/lib/plate/plate-types";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useLogLifecycle } from "@/lib/hooks/use-component-lifecycle";
 
 const defaultValue: MyValue = [
   {
@@ -38,10 +37,10 @@ const defaultValue: MyValue = [
 
 export type PlateEditorProps = {
   storageKey?: string;
-  editorRef: MutableRefObject<null | PlateEditorType>;
+  editorRef: MutableRefObject<null | PlateEditorType<MyValue>>;
   initialValue?: MyValue | undefined;
-  onChange?: (() => void | Promise<void>) | undefined;
-  onDebouncedUpdate?: (() => void | Promise<void>) | undefined;
+  onChange?: ((value: MyValue) => void | Promise<void>) | undefined;
+  onDebouncedUpdate?: ((value: MyValue) => void | Promise<void>) | undefined;
   /**
    * The duration (in milliseconds) to debounce the onDebouncedUpdate callback.
    * Defaults to 750.
@@ -67,39 +66,35 @@ export function PlateEditor({
   completionApi,
   completionId,
 }: PlateEditorProps) {
-  // const [editor] = useState(() => withReact(createEditor()));
-  useLogLifecycle("Editor " + storageKey);
   const containerRef = useRef(null);
   const [storageContent, setStorageContent] = useLocalStorage<MyValue>(
     storageKey,
     initialValue ?? defaultValue,
   );
-  const debouncedUpdates = useDebouncedCallback<(value: MyValue) => void>(
-    async (value) => {
-      if (onDebouncedUpdate) {
-        await onDebouncedUpdate();
-      }
+  const debouncedUpdates = useDebouncedCallback<
+    (value: MyValue) => void | Promise<void>
+  >(async (value) => {
+    if (onDebouncedUpdate) {
+      await onDebouncedUpdate(value);
+    }
 
-      if (!disableLocalStorage) {
-        updateLocalStorage(value);
-      }
-    },
-    debounceDuration,
-  );
+    if (!disableLocalStorage) {
+      updateLocalStorage(value);
+    }
+  }, debounceDuration);
   const [saveStatus, setSaveStatus] = useState("Saved");
 
   function updateLocalStorage(value: MyValue) {
     if (!editorRef.current) {
       return;
     }
-
     setStorageContent(value);
   }
 
   useEffect(() => {
     // Load storage content after server render
     const editor = editorRef.current;
-    if (storageContent && editor) {
+    if (!disableLocalStorage && storageContent && editor) {
       resetNodes(editor as EditorType, {
         nodes: storageContent,
       });
@@ -110,16 +105,16 @@ export function PlateEditor({
     <CommentsProvider users={{}} myUserId="1">
       <Plate
         plugins={plugins}
-        initialValue={undefined}
+        initialValue={disableLocalStorage ? initialValue : undefined}
         editorRef={editorRef}
-        onChange={async (value) => {
+        onChange={async (value: MyValue) => {
           if (!editorRef.current) {
             return;
           }
           if (onChange) {
-            await onChange();
+            await onChange(value);
           }
-          debouncedUpdates(value as MyValue);
+          await debouncedUpdates(value);
           setSaveStatus("Saving...");
 
           // Simulate a delay in saving.

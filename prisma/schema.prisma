@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-    provider = "sqlite"
+    provider = "postgresql"
     // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
     // Further reading:
     // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
@@ -22,6 +22,10 @@ model Post {
 
     createdBy   User   @relation(fields: [createdById], references: [id])
     createdById String
+
+    source      String
+    outline     String
+    summary     String
 
     @@index([name])
 }
@@ -40,6 +44,7 @@ model Account {
     scope             String?
     id_token          String? // @db.Text
     session_state     String?
+
     user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@unique([provider, providerAccountId])
@@ -53,15 +58,28 @@ model Session {
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model Secret {
+    id            String   @id @default(cuid())
+    name          String   @unique
+    value         String
+    userId        String
+    user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@index([name])
+}
+
 model User {
     id            String    @id @default(cuid())
     name          String?
     email         String?   @unique
     emailVerified DateTime?
     image         String?
+
     accounts      Account[]
     sessions      Session[]
     posts         Post[]
+
+    secrets       Secret[]
 }
 
 model VerificationToken {
