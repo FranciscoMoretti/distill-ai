@@ -4,7 +4,7 @@ import {
   INITIAL_VALUE_MAIN,
   INITIAL_VALUE_OUTLINE,
   INITIAL_VALUE_SUMMARY,
-} from "../config/initial_editor_values";
+} from "../config/editor-initial-values";
 import { MultiEditorProvider } from "@/lib/multi-editor-context";
 import { useMultiEditorRefs } from "../lib/hooks/use-multi-editor-refs";
 import { useEditorsInteractionsWithRefs } from "../lib/hooks/use-editors-interactions";
@@ -61,7 +61,7 @@ export default function MultiEditor({
         editorRef: outlineEditorRef,
         initialValue: post.outline
           ? (JSON.parse(post.outline) as MyValue)
-          : INITIAL_VALUE_MAIN,
+          : INITIAL_VALUE_OUTLINE,
         completionApi: "/api/complete",
         completionId: "outline",
         onDebouncedUpdate: async (value: MyValue) => {
