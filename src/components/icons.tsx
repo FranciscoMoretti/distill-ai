@@ -73,6 +73,7 @@ import {
   Sparkles,
   DownloadCloud,
   FolderTree,
+  EyeOff,
 } from "lucide-react";
 
 import type { LucideIcon } from "lucide-react";
@@ -245,6 +246,7 @@ export const Icons = {
   unlink: Link2Off,
   user: User,
   viewing: Eye,
+  viewingOff: EyeOff,
   warning: AlertTriangle,
 
   // www
