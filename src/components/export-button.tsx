@@ -4,9 +4,12 @@ import { useEditorsInteractions } from "@/lib/hooks/use-editors-interactions";
 import { toast } from "sonner";
 
 import { exportSummaryToNotion } from "./export-summary-to-notion";
+import { Icons } from "@/components/icons";
+import React from "react";
 
 export function ExportButton() {
   const { getSummaryMarkdown, getDocumentTitle } = useEditorsInteractions();
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   async function handleExport() {
     const markdown = getSummaryMarkdown();
@@ -27,10 +30,19 @@ export function ExportButton() {
 
     <Button
       onClick={async () => {
+        setIsLoading(true);
         await handleExport();
+        setIsLoading(false);
       }}
     >
-      <div className="flex flex-row items-center gap-1">Export</div>
+      <div className="flex flex-row items-center gap-1">
+        <div className="flex flex-row items-center gap-2">Export</div>
+        {isLoading ? (
+          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+        ) : (
+          <Icons.export className="mr-2 h-4 w-4" />
+        )}
+      </div>
     </Button>
   );
 }

@@ -74,6 +74,7 @@ import {
   DownloadCloud,
   FolderTree,
   EyeOff,
+  ArrowRightFromLine,
 } from "lucide-react";
 
 import type { LucideIcon } from "lucide-react";
@@ -209,6 +210,7 @@ export const Icons = {
   editing: Edit2,
   ellipsis: MoreVertical,
   emoji: Smile,
+  export: ArrowRightFromLine,
   externalLink: ExternalLink,
   h1: Heading1,
   h2: Heading2,

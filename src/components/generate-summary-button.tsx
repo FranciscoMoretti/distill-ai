@@ -8,7 +8,7 @@ export function GenerateSummaryButton() {
 
   return (
     <Button onClick={async () => await generateSummary()}>
-      <div className="flex flex-row items-center gap-1">
+      <div className="flex flex-row items-center gap-2">
         Generate Summary <Sparkles className="h-4 w-4" />
       </div>
     </Button>

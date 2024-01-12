@@ -72,12 +72,14 @@ export function PostCreateButton({
       disabled={isLoading}
       {...props}
     >
-      {isLoading ? (
-        <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-      ) : (
-        <Icons.add className="mr-2 h-4 w-4" />
-      )}
-      New post
+      <div className="flex flex-row items-center gap-2">
+        {isLoading ? (
+          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+        ) : (
+          <Icons.add className="mr-2 h-4 w-4" />
+        )}
+        New post
+      </div>
     </button>
   );
 }
