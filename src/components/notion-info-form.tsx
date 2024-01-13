@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 import { Icons } from "@/components/icons";
 import { api } from "@/trpc/react";
 import { secretRouter } from "@/server/api/routers/secret";
@@ -76,14 +76,11 @@ export function NotionInfoForm({ className, ...props }: UserNameFormProps) {
     onSuccess: async () => {
       setIsSaving(false);
       // Invalidate query/tag for Notion secrets?
-      toast({
-        description: "Your notion configuration has been updated.",
-      });
+      toast("Your notion configuration has been updated.");
       await utils.secret.invalidate();
     },
     onError: () => {
-      toast({
-        title: "Something went wrong.",
+      toast.error("Something went wrong.", {
         description: "Your configuration was not updated. Please try again.",
         variant: "destructive",
       });

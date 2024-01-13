@@ -321,7 +321,7 @@ dependencies:
     specifier: ^0.101.5
     version: 0.101.5(react-dom@18.2.0)(react@18.2.0)(slate@0.101.5)
   sonner:
-    specifier: ^0.7.0
+    specifier: ^0.7.4
     version: 0.7.4(react-dom@18.2.0)(react@18.2.0)
   superjson:
     specifier: ^2.2.1

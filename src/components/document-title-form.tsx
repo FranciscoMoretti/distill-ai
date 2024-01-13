@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 import { postTitleSchema } from "@/lib/validations/post";
 import { useDebouncedCallback } from "use-debounce";
 import { type FormEventHandler } from "react";
@@ -55,15 +55,11 @@ export function TitleForm({
   const updatePost = api.post.update.useMutation({
     onSuccess: () => {
       router.refresh();
-      toast({
-        title: "Title updated",
-      });
+      toast("Title updated");
     },
     onError: () => {
-      toast({
-        title: "Something went wrong.",
+      toast.error("Something went wrong.", {
         description: "Your title was not updated. Please try again.",
-        variant: "destructive",
       });
     },
   });

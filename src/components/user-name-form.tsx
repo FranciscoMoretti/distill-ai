@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 import { Icons } from "@/components/icons";
 import { api } from "@/trpc/react";
 
@@ -46,16 +46,12 @@ export function UserNameForm({ user, className, ...props }: UserNameFormProps) {
 
   const updateName = api.user.updateName.useMutation({
     onSuccess: () => {
-      toast({
-        description: "Your name has been updated.",
-      });
+      toast("Your name has been updated.");
       router.refresh();
     },
     onError: () => {
-      toast({
-        title: "Something went wrong.",
+      toast.error("Something went wrong.", {
         description: "Your name was not updated. Please try again.",
-        variant: "destructive",
       });
     },
   });

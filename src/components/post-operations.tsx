@@ -22,7 +22,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 import { Icons } from "@/components/icons";
 import { api } from "@/trpc/react";
 
@@ -41,11 +41,12 @@ export function PostOperations({ post }: PostOperationsProps) {
       router.refresh();
     },
     onError: () => {
-      toast({
-        title: "Something went wrong.",
+      toast.error("Something went wrong.", {
         description: "Your post was not deleted. Please try again.",
-        variant: "destructive",
       });
+      setIsDeleteLoading(false);
+      setShowDeleteAlert(false);
+      router.refresh();
     },
   });
 

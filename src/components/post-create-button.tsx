@@ -5,9 +5,8 @@ import { useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { type ButtonProps, buttonVariants } from "@/components/ui/button";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 import { Icons } from "@/components/icons";
-import { type Post } from "@prisma/client";
 import { api } from "@/trpc/react";
 import {
   INITIAL_VALUE_MAIN,
@@ -41,10 +40,8 @@ export function PostCreateButton({
       //   });
       // }
       setIsLoading(false);
-      return toast({
-        title: "Something went wrong.",
+      return toast.error("Something went wrong.", {
         description: "Your post was not created. Please try again.",
-        variant: "destructive",
       });
     },
   });
