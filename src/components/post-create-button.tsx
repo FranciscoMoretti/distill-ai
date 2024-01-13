@@ -27,7 +27,8 @@ export function PostCreateButton({
   const createPost = api.post.create.useMutation({
     onSuccess: (data) => {
       router.refresh();
-
+      // Should invalidate the queryKey that loads posts
+      setIsLoading(false);
       router.push(`/editor/${data.id}`);
     },
     onError: () => {
@@ -39,6 +40,7 @@ export function PostCreateButton({
       //     variant: "destructive",
       //   });
       // }
+      setIsLoading(false);
       return toast({
         title: "Something went wrong.",
         description: "Your post was not created. Please try again.",
@@ -54,8 +56,6 @@ export function PostCreateButton({
       outline: JSON.stringify(INITIAL_VALUE_OUTLINE),
       summary: JSON.stringify(INITIAL_VALUE_SUMMARY),
     });
-
-    setIsLoading(false);
   }
 
   return (

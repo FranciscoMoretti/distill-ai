@@ -14,11 +14,13 @@ export function ExportButton() {
   async function handleExport() {
     const markdown = getSummaryMarkdown();
     if (!markdown) {
+      // TODO replace with common toast
       toast("No summary text");
       return;
     }
     const title = getDocumentTitle();
     if (!title) {
+      // TODO replace with common toast
       toast("No document title");
       return;
     }
