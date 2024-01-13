@@ -9,6 +9,7 @@ import { Workspace } from "@/components/workspace";
 import { buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
 import { PostProvider } from "@/lib/post-context";
+import { TitleForm } from "@/components/document-title-form";
 
 async function getPostForUser(postId: Post["id"]) {
   const post = await api.post.get.query({
@@ -53,6 +54,7 @@ export default async function EditorPage({ params }: EditorPageProps) {
         </div>
       </div>
       <div className="flex w-full flex-col items-center">
+        <TitleForm title={post.name} />
         <h1 className="text-2xl">
           {
             // TODO Make this an input to update the document name / title
