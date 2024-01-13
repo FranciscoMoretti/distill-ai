@@ -4,7 +4,7 @@ import { type Post } from "@prisma/client";
 
 interface PostContextProps {
   post: Post;
-  setPost: (post: Post) => void;
+  setPost: React.Dispatch<React.SetStateAction<Post>>;
 }
 
 const PostContext = createContext<PostContextProps | undefined>(undefined);

@@ -6,9 +6,12 @@ import { toast } from "sonner";
 import { exportSummaryToNotion } from "./export-summary-to-notion";
 import { Icons } from "@/components/icons";
 import React from "react";
+import { usePostContext } from "@/lib/post-context";
 
 export function ExportButton() {
-  const { getSummaryMarkdown, getDocumentTitle } = useEditorsInteractions();
+  const { getSummaryMarkdown } = useEditorsInteractions();
+  const { post } = usePostContext();
+
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   async function handleExport() {
@@ -18,7 +21,7 @@ export function ExportButton() {
       toast("No summary text");
       return;
     }
-    const title = getDocumentTitle();
+    const title = post.name;
     if (!title) {
       // TODO replace with common toast
       toast("No document title");

@@ -6,9 +6,11 @@ import { toast } from "sonner";
 import { downloadMarkdownFile } from "@/lib/download-markdown";
 import React from "react";
 import { Icons } from "@/components/icons";
+import { usePostContext } from "@/lib/post-context";
 
 export function DownloadSummaryButton() {
-  const { getSummaryMarkdown, getDocumentTitle } = useEditorsInteractions();
+  const { getSummaryMarkdown } = useEditorsInteractions();
+  const { post } = usePostContext();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   function handleExport() {
@@ -17,11 +19,7 @@ export function DownloadSummaryButton() {
       toast("No summary text");
       return;
     }
-    const title = getDocumentTitle();
-    if (!title) {
-      toast("No document title");
-      return;
-    }
+    const title = post.name;
     // TODO convert title to kebabcase
     downloadMarkdownFile(markdown, title + "-summary");
   }

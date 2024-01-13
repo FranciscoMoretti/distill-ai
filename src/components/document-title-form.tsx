@@ -21,6 +21,8 @@ import { useDebouncedCallback } from "use-debounce";
 import { type FormEventHandler } from "react";
 import { api } from "@/trpc/react";
 import { useRouter } from "next/navigation";
+import { usePostContext } from "@/lib/post-context";
+import { type Post } from "@prisma/client";
 
 const FormSchema = z.object({
   title: postTitleSchema,
@@ -36,6 +38,8 @@ export function TitleForm({
   postId: number;
 }) {
   const router = useRouter();
+  const { setPost } = usePostContext();
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -66,6 +70,9 @@ export function TitleForm({
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     updatePost.mutate({ id: postId, name: data.title });
+    setPost((post: Post) => {
+      return { ...post, name: data.title };
+    });
   }
 
   return (

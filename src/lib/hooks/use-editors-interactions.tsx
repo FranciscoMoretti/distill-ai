@@ -33,29 +33,17 @@ export function useEditorsInteractionsWithRefs({
   outlineEditorRef: MutableRefObject<PlateEditorType<MyValue> | null>;
   summaryEditorRef: MutableRefObject<PlateEditorType<MyValue> | null>;
 }) {
-  // TODO Func should be lowercase
-
-  // TODO: TITLE SHOULD COME FROM document.title db
-  function getDocumentTitle() {
-    const mainEditor = mainEditorRef.current;
-    if (!mainEditor) return;
-    const mainMd = plateToMarkdown(mainEditor);
-    const titleText = extractTitleMD(mainMd);
-    return titleText;
-  }
-
-  async function generateSummary() {
+  async function generateSummary(title: string) {
     const outlineEditor = outlineEditorRef.current;
     const summaryEditor = summaryEditorRef.current;
     const mainEditor = mainEditorRef.current;
     if (!(outlineEditor && summaryEditor && mainEditor)) return;
-    const titleText = getDocumentTitle();
     const markdown = plateToMarkdown(outlineEditor);
     if (markdown) {
       console.log({ markdown });
       if (markdown && summaryEditor) {
         await complete(markdown, {
-          body: { title: titleText },
+          body: { title: title },
         }).catch((err) => console.error(err));
       }
     }
@@ -118,6 +106,5 @@ export function useEditorsInteractionsWithRefs({
     generateSummary,
     generateOutline,
     getSummaryMarkdown,
-    getDocumentTitle,
   };
 }

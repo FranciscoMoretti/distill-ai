@@ -53,10 +53,11 @@ export default async function EditorPage({ params }: EditorPageProps) {
           </Link>
         </div>
       </div>
-      <div className="flex w-full flex-col items-center">
-        <TitleForm title={post.name} postId={post.id} />
-      </div>
+      {/* // TODO Consider not using any context locally and relying on DB only. Or consider a state manager redux/jotai */}
       <PostProvider initialValue={post}>
+        <div className="flex w-full flex-col items-center">
+          <TitleForm title={post.name} postId={post.id} />
+        </div>
         <Workspace className="h-full flex-1" />
       </PostProvider>
     </div>
