@@ -24,22 +24,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { toast } from "@/components/ui/use-toast";
 import { Icons } from "@/components/icons";
-
-async function deletePost(postId: number) {
-  const response = await fetch(`/api/posts/${postId}`, {
-    method: "DELETE",
-  });
-
-  if (!response?.ok) {
-    toast({
-      title: "Something went wrong.",
-      description: "Your post was not deleted. Please try again.",
-      variant: "destructive",
-    });
-  }
-
-  return true;
-}
+import { api } from "@/trpc/react";
 
 interface PostOperationsProps {
   post: Pick<Post, "id" | "name">;
@@ -49,6 +34,20 @@ export function PostOperations({ post }: PostOperationsProps) {
   const router = useRouter();
   const [showDeleteAlert, setShowDeleteAlert] = React.useState<boolean>(false);
   const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false);
+  const deletePost = api.post.delete.useMutation({
+    onSuccess: () => {
+      setIsDeleteLoading(false);
+      setShowDeleteAlert(false);
+      router.refresh();
+    },
+    onError: () => {
+      toast({
+        title: "Something went wrong.",
+        description: "Your post was not deleted. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
 
   return (
     <>
@@ -89,13 +88,7 @@ export function PostOperations({ post }: PostOperationsProps) {
                 event.preventDefault();
                 setIsDeleteLoading(true);
 
-                const deleted = await deletePost(post.id);
-
-                if (deleted) {
-                  setIsDeleteLoading(false);
-                  setShowDeleteAlert(false);
-                  router.refresh();
-                }
+                deletePost.mutate({ id: post.id });
               }}
               className="bg-red-600 focus:ring-red-600"
             >

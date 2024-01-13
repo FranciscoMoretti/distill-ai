@@ -95,8 +95,18 @@ export const postRouter = createTRPCRouter({
       },
     });
   }),
-
-  getSecretMessage: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
-  }),
+  delete: protectedProcedure
+    .input(
+      z.object({
+        id: z.number(),
+      }),
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.db.post.delete({
+        where: {
+          createdBy: { id: ctx.session.user.id },
+          id: input.id,
+        },
+      });
+    }),
 });
