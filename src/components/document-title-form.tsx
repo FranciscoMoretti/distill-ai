@@ -19,6 +19,8 @@ import { toast } from "@/components/ui/use-toast";
 import { postTitleSchema } from "@/lib/validations/post";
 import { useDebouncedCallback } from "use-debounce";
 import { type FormEventHandler } from "react";
+import { api } from "@/trpc/react";
+import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
   title: postTitleSchema,
@@ -26,7 +28,14 @@ const FormSchema = z.object({
 
 const debounceDuration = 1000;
 
-export function TitleForm({ title }: { title: string }) {
+export function TitleForm({
+  title,
+  postId,
+}: {
+  title: string;
+  postId: number;
+}) {
+  const router = useRouter();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -39,15 +48,24 @@ export function TitleForm({ title }: { title: string }) {
     await form.handleSubmit(onSubmit)(event);
   }, debounceDuration);
 
+  const updatePost = api.post.update.useMutation({
+    onSuccess: () => {
+      router.refresh();
+      toast({
+        title: "Title updated",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Something went wrong.",
+        description: "Your title was not updated. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+    updatePost.mutate({ id: postId, name: data.title });
   }
 
   return (

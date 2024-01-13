@@ -5,6 +5,7 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "@/server/api/trpc";
+import { postTitleSchema } from "@/lib/validations/post";
 
 export const postRouter = createTRPCRouter({
   hello: publicProcedure
@@ -43,17 +44,19 @@ export const postRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.number(),
+        name: postTitleSchema.optional(),
         source: z.string().optional(),
         outline: z.string().optional(),
         summary: z.string().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      const { id, ...updateData } = input;
       return ctx.db.post.update({
         where: {
-          id: input.id,
+          id: id,
         },
-        data: input,
+        data: updateData,
       });
     }),
 
