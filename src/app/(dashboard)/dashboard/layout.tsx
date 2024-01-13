@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 
 import { dashboardConfig } from "@/config/dashboard";
 import { MainNav } from "@/components/main-nav";
-import { DashboardNav } from "@/components/nav";
+import { DashboardNav } from "@/components/dashboard-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { UserAccountNav } from "@/components/user-account-nav";
 import { getServerAuthSession } from "@/server/auth";
