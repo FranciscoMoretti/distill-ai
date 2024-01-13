@@ -73,7 +73,7 @@ export function TitleForm({
 
   return (
     <Form {...form}>
-      <form onChange={debouncedUpdates} className="space-y-6">
+      <form onChange={debouncedUpdates} className="w-full space-y-6">
         <FormField
           control={form.control}
           name="title"
@@ -83,7 +83,7 @@ export function TitleForm({
               <FormControl>
                 <Input
                   placeholder="Document title"
-                  className="w-fit border-transparent p-4 text-center text-3xl"
+                  className="m-auto w-full border-transparent p-4 text-center text-3xl"
                   {...field}
                 />
               </FormControl>
