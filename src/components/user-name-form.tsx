@@ -22,6 +22,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/use-toast";
 import { Icons } from "@/components/icons";
+import { api } from "@/trpc/react";
 
 interface UserNameFormProps extends React.HTMLAttributes<HTMLFormElement> {
   user: Pick<User, "id" | "name">;
@@ -43,32 +44,30 @@ export function UserNameForm({ user, className, ...props }: UserNameFormProps) {
   });
   const [isSaving, setIsSaving] = React.useState<boolean>(false);
 
-  async function onSubmit(data: FormData) {
-    setIsSaving(true);
-
-    const response = await fetch(`/api/users/${user.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: data.name,
-      }),
-    });
-
-    setIsSaving(false);
-
-    if (!response?.ok) {
-      return toast({
+  const updateName = api.user.updateName.useMutation({
+    onSuccess: () => {
+      toast({
+        description: "Your name has been updated.",
+      });
+      router.refresh();
+    },
+    onError: () => {
+      toast({
         title: "Something went wrong.",
         description: "Your name was not updated. Please try again.",
         variant: "destructive",
       });
-    }
+    },
+  });
 
-    toast({
-      description: "Your name has been updated.",
+  async function onSubmit(data: FormData) {
+    setIsSaving(true);
+
+    updateName.mutate({
+      name: data.name,
     });
+
+    setIsSaving(false);
 
     router.refresh();
   }
