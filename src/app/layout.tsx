@@ -9,8 +9,7 @@ import { TRPCReactProvider } from "@/trpc/react";
 import Providers from "@/app/providers";
 import { type Metadata, type Viewport } from "next";
 import { cn } from "@udecode/cn";
-import { SiteHeader } from "@/components/site/site-header";
-import { TailwindIndicator } from "@/components/site/tailwind-indicator";
+import { TailwindIndicator } from "@/components/tailwind-indicator";
 
 export const viewport: Viewport = {
   themeColor: [
