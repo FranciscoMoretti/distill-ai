@@ -11,23 +11,29 @@ export function DownloadSummaryButton() {
   const { getSummaryMarkdown, getDocumentTitle } = useEditorsInteractions();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
+  function handleExport() {
+    const markdown = getSummaryMarkdown();
+    if (!markdown) {
+      toast("No summary text");
+      return;
+    }
+    const title = getDocumentTitle();
+    if (!title) {
+      toast("No document title");
+      return;
+    }
+    // TODO convert title to kebabcase
+    downloadMarkdownFile(markdown, title + "-summary");
+  }
+
   return (
     // TODO replace download with cloud download https://stackoverflow.com/a/50695407/12822155
 
     <Button
       onClick={async () => {
-        const markdown = getSummaryMarkdown();
-        if (!markdown) {
-          toast("No summary text");
-          return;
-        }
-        const title = getDocumentTitle();
-        if (!title) {
-          toast("No document title");
-          return;
-        }
-        // TODO convert title to kebabcase
-        downloadMarkdownFile(markdown, title + "-summary");
+        setIsLoading(true);
+        handleExport();
+        setIsLoading(false);
       }}
     >
       <div className="flex flex-row items-center gap-2">
