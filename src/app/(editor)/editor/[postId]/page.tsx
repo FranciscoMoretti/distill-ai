@@ -1,5 +1,5 @@
 import { notFound, redirect } from "next/navigation";
-import { type Post, type User } from "@prisma/client";
+import { type Post } from "@prisma/client";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 

@@ -82,7 +82,6 @@ export function NotionInfoForm({ className, ...props }: UserNameFormProps) {
     onError: () => {
       toast.error("Something went wrong.", {
         description: "Your configuration was not updated. Please try again.",
-        variant: "destructive",
       });
     },
   });
