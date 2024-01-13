@@ -35,6 +35,7 @@ export function useEditorsInteractionsWithRefs({
 }) {
   // TODO Func should be lowercase
 
+  // TODO: TITLE SHOULD COME FROM document.title db
   function getDocumentTitle() {
     const mainEditor = mainEditorRef.current;
     if (!mainEditor) return;
