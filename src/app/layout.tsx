@@ -50,7 +50,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         className={cn(
           `font-sans ${inter.variable}`,
           "min-h-screen bg-background antialiased",
-          "[&_.slate-selected]:!bg-primary/20 [&_.slate-selection-area]:border [&_.slate-selection-area]:border-primary [&_.slate-selection-area]:bg-primary/10",
+          "flex flex-col [&_.slate-selected]:!bg-primary/20 [&_.slate-selection-area]:border [&_.slate-selection-area]:border-primary [&_.slate-selection-area]:bg-primary/10",
           fontSans.variable,
         )}
       >

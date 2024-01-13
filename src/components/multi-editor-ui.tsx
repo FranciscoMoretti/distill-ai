@@ -138,7 +138,7 @@ export function MultiEditorUi({ className = "" }: { className?: string }) {
               sizes,
             )}`;
           }}
-          className="flex h-full w-full flex-1 flex-col"
+          className="h-full min-h-[800px] w-full flex-1"
         >
           <ResizablePanel
             defaultSize={50}

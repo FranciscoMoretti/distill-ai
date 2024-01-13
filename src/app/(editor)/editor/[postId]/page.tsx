@@ -39,7 +39,7 @@ export default async function EditorPage({ params }: EditorPageProps) {
   console.error(post.outline);
 
   return (
-    <div className="grid w-full gap-10">
+    <div className="flex h-full w-full flex-1 flex-col gap-10">
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center space-x-10">
           <Link
@@ -54,12 +54,14 @@ export default async function EditorPage({ params }: EditorPageProps) {
         </div>
       </div>
       {/* // TODO Consider not using any context locally and relying on DB only. Or consider a state manager redux/jotai */}
-      <PostProvider initialValue={post}>
-        <div className="flex w-full flex-col items-center">
-          <TitleForm title={post.name} postId={post.id} />
-        </div>
-        <Workspace className="h-full flex-1" />
-      </PostProvider>
+      <div className="flex w-full flex-1 flex-col items-center gap-10">
+        <PostProvider initialValue={post}>
+          <div className="flex w-full flex-col items-center">
+            <TitleForm title={post.name} postId={post.id} />
+          </div>
+          <Workspace className="h-full flex-1" />
+        </PostProvider>
+      </div>
     </div>
   );
 }
