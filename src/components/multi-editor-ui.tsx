@@ -25,6 +25,7 @@ export function MultiEditorUi({ className = "" }: { className?: string }) {
     | "source_outline"
     | "outline_summary";
 
+  // TODO Add tab value to editor context to change view when generating
   const [tabValue, setTabValue] = useState<EditorType>("source");
 
   const showSourceEditor = ["source", "source_outline"].includes(tabValue);
