@@ -40,7 +40,6 @@ export function useEditorsInteractionsWithRefs({
     if (!(outlineEditor && summaryEditor && mainEditor)) return;
     const markdown = plateToMarkdown(outlineEditor);
     if (markdown) {
-      console.log({ markdown });
       if (markdown && summaryEditor) {
         await complete(markdown, {
           body: { title: title },

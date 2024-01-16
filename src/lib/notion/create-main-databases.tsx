@@ -9,7 +9,6 @@ export async function createMainDatabases(notionClient: NotionClient) {
   const summaryDatabaseResponse =
     await notionClient.createNotionDatabase("Summary");
 
-  console.log(sourceDatabaseResponse);
   return {
     sourceDatabaseResponse,
     outlineDatabaseResponse,

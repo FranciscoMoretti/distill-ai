@@ -42,10 +42,7 @@ export async function exportSummaryToNotion(
     names: ["notionRootPageId", "notionApiKey"],
   });
 
-  console.log({ secrets });
   const secretKeyValue = getSecretKeyValueMap(secrets);
-
-  console.log({ secretKeyValue });
 
   if (!secretKeyValue.notionApiKey || !secretKeyValue.notionRootPageId) {
     throw Error("Using Notion client without notion config");

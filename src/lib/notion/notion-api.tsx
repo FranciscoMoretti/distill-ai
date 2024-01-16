@@ -19,7 +19,6 @@ export class NotionClient {
     const blockChildrenListResponse = await this.notion.blocks.children.list({
       block_id: blockId,
     });
-    console.log(blockChildrenListResponse);
     return blockChildrenListResponse;
   }
 
@@ -60,7 +59,6 @@ export class NotionClient {
       },
       properties: pageProperties,
     });
-    console.log(newPage);
     return newPage;
   }
 
@@ -72,7 +70,6 @@ export class NotionClient {
       children: blocks,
     });
 
-    console.log(appendedBlocksResponse);
     return appendedBlocksResponse;
   }
 }
