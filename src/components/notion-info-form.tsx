@@ -23,7 +23,6 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Icons } from "@/components/icons";
 import { api } from "@/trpc/react";
-import { secretRouter } from "@/server/api/routers/secret";
 import { getSecretKeyValueMap } from "@/lib/secret-utils";
 
 type UserNameFormProps = React.HTMLAttributes<HTMLFormElement>;
@@ -56,7 +55,7 @@ export function NotionInfoForm({ className, ...props }: UserNameFormProps) {
   });
 
   React.useEffect(() => {
-    console.log(secretNameValueMap);
+    if (!isSuccess) return;
     if (
       secretNameValueMap.notionApiKey &&
       secretNameValueMap.notionApiKey != getValues("apiKey")
@@ -77,7 +76,7 @@ export function NotionInfoForm({ className, ...props }: UserNameFormProps) {
       setIsSaving(false);
       // Invalidate query/tag for Notion secrets?
       toast("Your notion configuration has been updated.");
-      await utils.secret.invalidate();
+      await utils.secret.get.invalidate();
     },
     onError: () => {
       toast.error("Something went wrong.", {
