@@ -6,7 +6,7 @@ import {
   INITIAL_VALUE_SUMMARY,
 } from "../config/editor-initial-values";
 import { MultiEditorConfigProvider } from "@/lib/multi-editor-config-context";
-import { useEditorsInteractionsWithRefs } from "../lib/hooks/use-editors-interactions";
+import { useEditorsInteractionsWithRefs } from "@/lib/hooks/useEditorsInteractionsWithRefs";
 import { useWorkspaceConfigContext } from "@/lib/workspace-config-context";
 import { type MyValue } from "@/lib/plate/plate-types";
 import { updateDatabase } from "@/lib/update-database";
@@ -21,13 +21,15 @@ export default function MultiEditor({
 }) {
   const { post, setPost } = usePostContext();
   const documentId = post.id;
-  const { mainEditorRef, outlineEditorRef, summaryEditorRef } =
+  const { mainEditorRef, outlineEditorRef, summaryEditorRef, view, setView } =
     useMultiEditorStateContext();
 
   const { generateOutline } = useEditorsInteractionsWithRefs({
     mainEditorRef,
     outlineEditorRef,
     summaryEditorRef,
+    view,
+    setView,
   });
 
   const { workspaceConfig } = useWorkspaceConfigContext();

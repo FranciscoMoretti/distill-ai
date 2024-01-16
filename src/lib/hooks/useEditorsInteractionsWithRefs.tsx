@@ -1,7 +1,6 @@
 "use client";
-import { type MutableRefObject, useEffect, useRef, useState } from "react";
+import { type MutableRefObject, useEffect, useRef } from "react";
 import { extractBoldTextMD } from "../unified/markdown-processor";
-import { extractTitleMD } from "../unified/markdown-processor";
 import { useCompletion } from "ai/react";
 import { toast } from "sonner";
 import { resetNodes } from "@/lib/plate/transforms/reset-nodes";
@@ -9,15 +8,7 @@ import { plateToMarkdown, markdownToPlate } from "@/lib/unified/plate-markdown";
 import { type Editor } from "slate";
 import { type PlateEditor as PlateEditorType } from "@udecode/plate-common";
 import { type MyValue } from "@/lib/plate/plate-types";
-import { useMultiEditorStateContext } from "@/lib/multi-editor-state-context";
-import { type MultiEditorView } from "@/lib/editor-view";
-import { focusOnView } from "./focus-on-view";
-
-export function useEditorsInteractions() {
-  const stateContext = useMultiEditorStateContext();
-
-  return useEditorsInteractionsWithRefs(stateContext);
-}
+import { type SingleEditorView, type MultiEditorView } from "@/lib/editor-view";
 
 export function useEditorsInteractionsWithRefs({
   mainEditorRef,
@@ -32,6 +23,56 @@ export function useEditorsInteractionsWithRefs({
   view: MultiEditorView;
   setView: (view: MultiEditorView) => void;
 }) {
+  function focusOnView(
+    view: MultiEditorView,
+    setView: (view: MultiEditorView) => void,
+    newView: SingleEditorView,
+  ) {
+    // Join into a single transitionToView that takes a newView and checks current to decide if needed
+    // No need to pass view and setView
+    if (newView === "source") {
+      transitionToSourceViewIfNeeded(view, setView);
+    } else if (newView === "outline") {
+      transitionToOutlineViewIfNeeded(view, setView);
+    } else if (newView === "summary") {
+      transitionToSummaryViewIfNeeded(view, setView);
+    }
+  }
+
+  function transitionToSourceViewIfNeeded(
+    view: MultiEditorView,
+    setView: (view: MultiEditorView) => void,
+  ) {
+    if (view === "outline" || view === "summary") {
+      setView("source");
+    } else if (view === "outline_summary") {
+      setView("source_outline");
+    }
+  }
+
+  function transitionToOutlineViewIfNeeded(
+    view: MultiEditorView,
+    setView: (view: MultiEditorView) => void,
+  ) {
+    if (view === "source" || view === "summary") {
+      setView("outline");
+    } else if (view === "outline_summary") {
+      setView("source_outline");
+    }
+  }
+
+  function transitionToSummaryViewIfNeeded(
+    view: MultiEditorView,
+    setView: (view: MultiEditorView) => void,
+  ) {
+    // TODO make some smooth transition logic with CSS
+    if (view === "source" || view === "outline") {
+      setView("summary");
+    } else if (view === "source_outline") {
+      setView("outline_summary");
+    }
+  }
+
   async function generateSummary(title: string) {
     const outlineEditor = outlineEditorRef.current;
     const summaryEditor = summaryEditorRef.current;
