@@ -9,10 +9,10 @@ import { MultiEditorProvider } from "@/lib/multi-editor-context";
 import { useMultiEditorRefs } from "../lib/hooks/use-multi-editor-refs";
 import { useEditorsInteractionsWithRefs } from "../lib/hooks/use-editors-interactions";
 import { useWorkspaceConfigContext } from "@/lib/workspace-config-context";
-import { MultiEditorUi } from "./multi-editor-ui";
 import { type MyValue } from "@/lib/plate/plate-types";
 import { updateDatabase } from "@/lib/update-database";
 import { usePostContext } from "@/lib/post-context";
+import { MultiEditorUi } from "@/components/multi-editor-ui";
 
 export default function MultiEditor({
   className = "",
@@ -21,6 +21,7 @@ export default function MultiEditor({
 }) {
   const { mainEditorRef, outlineEditorRef, summaryEditorRef } =
     useMultiEditorRefs();
+
   const { post, setPost } = usePostContext();
   const documentId = post.id;
 

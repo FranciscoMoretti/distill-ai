@@ -16,18 +16,15 @@ import { useWindowSize } from "usehooks-ts";
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { LoadingSpinner } from "@/components/loading-spinner";
+import { type MultiEditorView } from "@/lib/editor-view";
+import { useMultiEditorContext } from "@/lib/multi-editor-context";
 
 export function MultiEditorUi({ className = "" }: { className?: string }) {
-  type EditorType =
-    | "source"
-    | "outline"
-    | "summary"
-    | "source_outline"
-    | "outline_summary";
-
   // TODO Add tab value to editor context to change view when generating
-  const [tabValue, setTabValue] = useState<EditorType>("source");
+  // const [tabValue, setTabValue] = useState<MultiEditorView>("source");
+  const { view: tabValue, setView: setTabValue } = useMultiEditorContext();
 
+  // TODO Replace strings with enum
   const showSourceEditor = ["source", "source_outline"].includes(tabValue);
   const showOutlineEditor = [
     "outline",
@@ -49,7 +46,7 @@ export function MultiEditorUi({ className = "" }: { className?: string }) {
     return (value) => {
       if (value) {
         // Only change if another is being selected (don't deselect current)
-        setTabValue(value as EditorType);
+        setTabValue(value as MultiEditorView);
       }
     };
   }
