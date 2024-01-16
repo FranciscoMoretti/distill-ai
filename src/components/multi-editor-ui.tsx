@@ -17,12 +17,10 @@ import { useWindowSize } from "usehooks-ts";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { type MultiEditorView } from "@/lib/editor-view";
-import { useMultiEditorContext } from "@/lib/multi-editor-context";
+import { useMultiEditorStateContext } from "@/lib/multi-editor-state-context";
 
 export function MultiEditorUi({ className = "" }: { className?: string }) {
-  // TODO Add tab value to editor context to change view when generating
-  // const [tabValue, setTabValue] = useState<MultiEditorView>("source");
-  const { view: tabValue, setView: setTabValue } = useMultiEditorContext();
+  const { view: tabValue, setView: setTabValue } = useMultiEditorStateContext();
 
   // TODO Replace strings with enum
   const showSourceEditor = ["source", "source_outline"].includes(tabValue);

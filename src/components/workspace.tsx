@@ -1,6 +1,7 @@
 "use client";
 
 import MultiEditor from "@/components/multi-editor";
+import { MultiEditorRefsProvider } from "@/lib/multi-editor-state-context";
 import {
   type WorkspaceConfig,
   WorkspaceConfigProvider,
@@ -23,7 +24,9 @@ export function Workspace({ className = "" }: { className?: string }) {
       workspaceConfig={workspaceConfig}
       setWorkspaceConfig={setWorkspaceConfig}
     >
-      <MultiEditor className={className} />
+      <MultiEditorRefsProvider>
+        <MultiEditor className={className} />
+      </MultiEditorRefsProvider>
     </WorkspaceConfigProvider>
   );
 }

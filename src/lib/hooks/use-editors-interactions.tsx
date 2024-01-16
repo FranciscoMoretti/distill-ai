@@ -8,30 +8,28 @@ import { resetNodes } from "@/lib/plate/transforms/reset-nodes";
 import { plateToMarkdown, markdownToPlate } from "@/lib/unified/plate-markdown";
 import { type Editor } from "slate";
 import { type PlateEditor as PlateEditorType } from "@udecode/plate-common";
-import { useMultiEditorContext } from "@/lib/multi-editor-context";
 import { type MyValue } from "@/lib/plate/plate-types";
+import { useMultiEditorStateContext } from "@/lib/multi-editor-state-context";
+import { type MultiEditorView } from "@/lib/editor-view";
 
 export function useEditorsInteractions() {
-  const { mainEditor, outlineEditor, summaryEditor } = useMultiEditorContext();
-  const { editorRef: mainEditorRef } = mainEditor;
-  const { editorRef: outlineEditorRef } = outlineEditor;
-  const { editorRef: summaryEditorRef } = summaryEditor;
+  const stateContext = useMultiEditorStateContext();
 
-  return useEditorsInteractionsWithRefs({
-    mainEditorRef,
-    outlineEditorRef,
-    summaryEditorRef,
-  });
+  return useEditorsInteractionsWithRefs(stateContext);
 }
 
 export function useEditorsInteractionsWithRefs({
   mainEditorRef,
   outlineEditorRef,
   summaryEditorRef,
+  view,
+  setView,
 }: {
   mainEditorRef: MutableRefObject<PlateEditorType<MyValue> | null>;
   outlineEditorRef: MutableRefObject<PlateEditorType<MyValue> | null>;
   summaryEditorRef: MutableRefObject<PlateEditorType<MyValue> | null>;
+  view: MultiEditorView;
+  setView: (view: MultiEditorView) => void;
 }) {
   async function generateSummary(title: string) {
     const outlineEditor = outlineEditorRef.current;
@@ -39,12 +37,10 @@ export function useEditorsInteractionsWithRefs({
     const mainEditor = mainEditorRef.current;
     if (!(outlineEditor && summaryEditor && mainEditor)) return;
     const markdown = plateToMarkdown(outlineEditor);
-    if (markdown) {
-      if (markdown && summaryEditor) {
-        await complete(markdown, {
-          body: { title: title },
-        }).catch((err) => console.error(err));
-      }
+    if (markdown && summaryEditor) {
+      await complete(markdown, {
+        body: { title: title },
+      }).catch((err) => console.error(err));
     }
   }
 

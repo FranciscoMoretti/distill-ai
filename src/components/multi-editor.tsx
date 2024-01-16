@@ -5,25 +5,24 @@ import {
   INITIAL_VALUE_OUTLINE,
   INITIAL_VALUE_SUMMARY,
 } from "../config/editor-initial-values";
-import { MultiEditorProvider } from "@/lib/multi-editor-context";
-import { useMultiEditorRefs } from "../lib/hooks/use-multi-editor-refs";
+import { MultiEditorConfigProvider } from "@/lib/multi-editor-config-context";
 import { useEditorsInteractionsWithRefs } from "../lib/hooks/use-editors-interactions";
 import { useWorkspaceConfigContext } from "@/lib/workspace-config-context";
 import { type MyValue } from "@/lib/plate/plate-types";
 import { updateDatabase } from "@/lib/update-database";
 import { usePostContext } from "@/lib/post-context";
 import { MultiEditorUi } from "@/components/multi-editor-ui";
+import { useMultiEditorStateContext } from "@/lib/multi-editor-state-context";
 
 export default function MultiEditor({
   className = "",
 }: {
   className?: string;
 }) {
-  const { mainEditorRef, outlineEditorRef, summaryEditorRef } =
-    useMultiEditorRefs();
-
   const { post, setPost } = usePostContext();
   const documentId = post.id;
+  const { mainEditorRef, outlineEditorRef, summaryEditorRef } =
+    useMultiEditorStateContext();
 
   const { generateOutline } = useEditorsInteractionsWithRefs({
     mainEditorRef,
@@ -35,7 +34,7 @@ export default function MultiEditor({
   const { autoGenerateOutline } = workspaceConfig;
 
   return (
-    <MultiEditorProvider
+    <MultiEditorConfigProvider
       mainEditor={{
         storageKey: "plate__main",
         disableLocalStorage: true,
@@ -88,6 +87,6 @@ export default function MultiEditor({
       }}
     >
       <MultiEditorUi className={className} />
-    </MultiEditorProvider>
+    </MultiEditorConfigProvider>
   );
 }
