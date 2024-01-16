@@ -344,7 +344,7 @@ export const plugins = createPlugins(
     // Deserialization
     createDeserializeDocxPlugin(),
     createDeserializeCsvPlugin(),
-    createDeserializeMdPlugin(),
+    createDeserializeMdPlugin({ options: { indentList: true } }),
     createJuicePlugin(),
   ],
   {
