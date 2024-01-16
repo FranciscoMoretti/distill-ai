@@ -40,7 +40,7 @@ export function PostCreateButton({
       //   });
       // }
       setIsLoading(false);
-      return toast.error("Something went wrong.", {
+      toast.error("Something went wrong.", {
         description: "Your post was not created. Please try again.",
       });
     },

@@ -47,12 +47,14 @@ export function UserNameForm({ user, className, ...props }: UserNameFormProps) {
   const updateName = api.user.updateName.useMutation({
     onSuccess: () => {
       toast("Your name has been updated.");
+      setIsSaving(false);
       router.refresh();
     },
     onError: () => {
       toast.error("Something went wrong.", {
         description: "Your name was not updated. Please try again.",
       });
+      setIsSaving(false);
     },
   });
 
@@ -62,10 +64,6 @@ export function UserNameForm({ user, className, ...props }: UserNameFormProps) {
     updateName.mutate({
       name: data.name,
     });
-
-    setIsSaving(false);
-
-    router.refresh();
   }
 
   return (

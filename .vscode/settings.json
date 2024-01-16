@@ -4,6 +4,18 @@
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.preferences.importModuleSpecifier": "non-relative",
 
+  "typescript.preferences.autoImportFileExcludePatterns": [
+    // Rule out radix imports to prefer shadcn-ui
+    "@radix-ui/**",
+    // useRouter should be imported from 'next/navigation'
+    "next/router.d.ts",
+    "next/dist/client/router.d.ts",
+
+    // Prefer imports from our UI lib wrappers
+    "react-hook-form/dist/index.d.ts",
+    "react-day-picker/dist/index.d.ts"
+  ],
+
   "typescript.preferences.preferTypeOnlyAutoImports": true,
 
   // Prettier

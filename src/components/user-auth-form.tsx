@@ -24,7 +24,10 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         className={cn(buttonVariants({ variant: "outline" }))}
         onClick={async () => {
           setIsDiscordLoading(true);
+          setIsLoading(true);
           await signIn("discord");
+          setIsDiscordLoading(false);
+          setIsLoading(false);
         }}
         disabled={isLoading || isDiscordLoading}
       >
