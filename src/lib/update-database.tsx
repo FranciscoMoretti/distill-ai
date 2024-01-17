@@ -4,7 +4,7 @@ import { getServerAuthSession } from "@/server/auth";
 import { api } from "@/trpc/server";
 
 export async function updateDatabase(
-  documentId: number,
+  documentId: string,
   editor: "source" | "outline" | "summary",
   value: MyValue,
 ) {
@@ -19,7 +19,7 @@ export async function updateDatabase(
 
     await api.post.update.mutate({
       // TODO Use number for id since the start
-      id: Number(documentId),
+      id: documentId,
       ...updateProps,
     });
   }

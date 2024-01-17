@@ -48,7 +48,7 @@ export function PostCreateButton({
   async function onClick() {
     setIsLoading(true);
     createPost.mutate({
-      name: "Untitled Post",
+      title: "Untitled Post",
       source: JSON.stringify(INITIAL_VALUE_MAIN),
       outline: JSON.stringify(INITIAL_VALUE_OUTLINE),
       summary: JSON.stringify(INITIAL_VALUE_SUMMARY),

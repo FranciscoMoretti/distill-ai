@@ -29,7 +29,7 @@ export default async function EditorPage({ params }: EditorPageProps) {
     redirect(authOptions?.pages?.signIn ?? "/api/auth/signin");
   }
 
-  const post = await getPostForUser(Number(params.postId));
+  const post = await getPostForUser(params.postId);
 
   if (!post) {
     notFound();
@@ -57,7 +57,7 @@ export default async function EditorPage({ params }: EditorPageProps) {
       <div className="flex w-full flex-1 flex-col items-center gap-10">
         <PostProvider initialValue={post}>
           <div className="flex w-full flex-col items-center">
-            <TitleForm title={post.name} postId={post.id} />
+            <TitleForm title={post.title} postId={post.id} />
           </div>
           <Workspace className="h-full flex-1" />
         </PostProvider>

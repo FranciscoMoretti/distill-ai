@@ -27,7 +27,7 @@ import { Icons } from "@/components/icons";
 import { api } from "@/trpc/react";
 
 interface PostOperationsProps {
-  post: Pick<Post, "id" | "name">;
+  post: Pick<Post, "id" | "title">;
 }
 
 export function PostOperations({ post }: PostOperationsProps) {

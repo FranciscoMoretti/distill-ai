@@ -21,7 +21,7 @@ export function ExportButton() {
       toast("No summary text");
       return;
     }
-    const title = post.name;
+    const title = post.tite;
     if (!title) {
       // TODO replace with common toast
       toast("No document title");

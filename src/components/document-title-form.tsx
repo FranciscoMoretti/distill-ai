@@ -35,7 +35,7 @@ export function TitleForm({
   postId,
 }: {
   title: string;
-  postId: number;
+  postId: string;
 }) {
   const router = useRouter();
   const { setPost } = usePostContext();
@@ -65,9 +65,9 @@ export function TitleForm({
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    updatePost.mutate({ id: postId, name: data.title });
+    updatePost.mutate({ id: postId, title: data.title });
     setPost((post: Post) => {
-      return { ...post, name: data.title };
+      return { ...post, title: data.title };
     });
   }
 

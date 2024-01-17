@@ -6,7 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { PostOperations } from "@/components/post-operations";
 
 interface PostItemProps {
-  post: Pick<Post, "id" | "name" | "createdAt">;
+  post: Pick<Post, "id" | "title" | "createdAt">;
 }
 
 export function PostItem({ post }: PostItemProps) {
@@ -17,7 +17,7 @@ export function PostItem({ post }: PostItemProps) {
           href={`/editor/${post.id}`}
           className="font-semibold hover:underline"
         >
-          {post.name}
+          {post.title}
         </Link>
         <div>
           <p className="text-sm text-muted-foreground">
@@ -25,7 +25,7 @@ export function PostItem({ post }: PostItemProps) {
           </p>
         </div>
       </div>
-      <PostOperations post={{ id: post.id, name: post.name }} />
+      <PostOperations post={{ id: post.id, title: post.title }} />
     </div>
   );
 }

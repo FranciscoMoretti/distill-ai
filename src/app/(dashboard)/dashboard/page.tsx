@@ -18,10 +18,7 @@ export default async function DashboardPage() {
   if (!session) {
     redirect(authOptions?.pages?.signIn ?? "/api/auth/signin");
   }
-  const user = session.user;
 
-  // TODO Fix if user id is linked to created post here and link it if not
-  const createdById = user.id || ("" as string);
   const posts = await api.post.getAll.query();
 
   return (

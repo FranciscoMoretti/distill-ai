@@ -9,7 +9,7 @@ export function GenerateSummaryButton() {
   const { post } = usePostContext();
 
   return (
-    <Button onClick={async () => await generateSummary(post.name)}>
+    <Button onClick={async () => await generateSummary(post.title)}>
       <div className="flex flex-row items-center gap-2">
         Generate Summary <Sparkles className="h-4 w-4" />
       </div>

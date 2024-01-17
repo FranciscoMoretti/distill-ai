@@ -19,7 +19,7 @@ export const postRouter = createTRPCRouter({
   create: protectedProcedure
     .input(
       z.object({
-        name: z.string().min(1),
+        title: z.string().min(1),
         source: z.string(),
         outline: z.string(),
         summary: z.string(),
@@ -31,7 +31,7 @@ export const postRouter = createTRPCRouter({
 
       return ctx.db.post.create({
         data: {
-          name: input.name,
+          title: input.title,
           source: input.source,
           outline: input.outline,
           summary: input.summary,
@@ -43,8 +43,8 @@ export const postRouter = createTRPCRouter({
   update: protectedProcedure
     .input(
       z.object({
-        id: z.number(),
-        name: postTitleSchema.optional(),
+        id: z.string(),
+        title: postTitleSchema.optional(),
         source: z.string().optional(),
         outline: z.string().optional(),
         summary: z.string().optional(),
@@ -63,7 +63,7 @@ export const postRouter = createTRPCRouter({
   get: protectedProcedure
     .input(
       z.object({
-        id: z.number(),
+        id: z.string(),
       }),
     )
     .query(({ ctx, input }) => {
@@ -101,7 +101,7 @@ export const postRouter = createTRPCRouter({
   delete: protectedProcedure
     .input(
       z.object({
-        id: z.number(),
+        id: z.string(),
       }),
     )
     .mutation(({ ctx, input }) => {

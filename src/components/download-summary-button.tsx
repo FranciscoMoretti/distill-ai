@@ -19,7 +19,7 @@ export function DownloadSummaryButton() {
       toast("No summary text");
       return;
     }
-    const title = post.name;
+    const title = post.title;
     // TODO convert title to kebabcase
     downloadMarkdownFile(markdown, title + "-summary");
   }
