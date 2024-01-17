@@ -1,25 +1,18 @@
 "use client";
 import { type PlateEditor as PlateEditorType } from "@udecode/plate-common";
-import slate, { type NodeTypes, serialize } from "remark-slate";
-import { unified } from "unified";
+import { type NodeTypes, serialize } from "remark-slate";
 import { plateNodeTypes } from "@/lib/remarkslate-nodetypes";
-import remarkParse from "remark-parse";
 import { type MyValue } from "@/lib/plate/plate-types";
+import { deserializeMd } from "@udecode/plate-serializer-md";
 
-export function markdownToPlate(markdown: string): MyValue | undefined {
-  let plateNodes = undefined;
-  unified()
-    .use(remarkParse)
-    .use(slate, {
-      nodeTypes: plateNodeTypes,
-      imageCaptionKey: "cap",
-      imageSourceKey: "src",
-    })
-    .process(markdown, (err, file) => {
-      if (err) throw err;
-      plateNodes = file?.result;
-    });
-  return plateNodes as MyValue | undefined;
+export function markdownToPlate(
+  markdown: string,
+  editor: PlateEditorType<MyValue>,
+): MyValue | undefined {
+  const plateNodes = deserializeMd<MyValue>(editor, markdown) as
+    | MyValue
+    | undefined;
+  return plateNodes;
 }
 
 export function plateToMarkdown(editor: PlateEditorType<MyValue>): string {

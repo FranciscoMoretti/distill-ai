@@ -54,7 +54,7 @@ export function useEditorsInteractionsWithRefs({
 
     const boldedMarkdown = extractBoldTextMD(markdown);
 
-    const boldedNodes = markdownToPlate(boldedMarkdown);
+    const boldedNodes = markdownToPlate(boldedMarkdown, outlineEditor);
     if (boldedNodes) {
       resetNodes(outlineEditor as Editor, {
         nodes: boldedNodes,
@@ -90,7 +90,7 @@ export function useEditorsInteractionsWithRefs({
       if (prev?.current.length > completion.length) {
         prev.current = "";
       }
-      const completionNodes = markdownToPlate(completion);
+      const completionNodes = markdownToPlate(completion, summaryEditor);
       if (completionNodes) {
         resetNodes(summaryEditor as Editor, {
           nodes: completionNodes,
