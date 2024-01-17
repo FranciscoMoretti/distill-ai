@@ -1,21 +1,23 @@
 "use client";
 import { type MyValue } from "@/lib/plate/plate-types";
 
-export const INITIAL_VALUE_MAIN: MyValue = [
+export const initial_value_source: MyValue = [
   {
     id: "1",
     type: "p",
     children: [{ text: "Place your book notes here" }],
   },
 ];
-export const INITIAL_VALUE_OUTLINE: MyValue = [
+
+export const initial_value_outline: MyValue = [
   {
     id: "1",
     type: "p",
     children: [{ text: "Outline text will be placed here" }],
   },
 ];
-export const INITIAL_VALUE_SUMMARY: MyValue = [
+
+export const initial_value_summary: MyValue = [
   {
     id: "1",
     type: "p",

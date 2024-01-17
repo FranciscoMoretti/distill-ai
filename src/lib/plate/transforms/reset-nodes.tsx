@@ -20,6 +20,7 @@ export function resetNodes(
   if (options.nodes) {
     const nodes = Node.isNode(options.nodes) ? [options.nodes] : options.nodes;
 
+    console.log(nodes);
     nodes.forEach((node, i) =>
       editor.apply({ type: "insert_node", path: [i], node: node }),
     );

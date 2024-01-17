@@ -59,7 +59,7 @@ export default async function EditorPage({ params }: EditorPageProps) {
           <div className="flex w-full flex-col items-center">
             <TitleForm title={post.title} postId={post.id} />
           </div>
-          <Workspace className="h-full flex-1" />
+          <Workspace className="h-full flex-1" storage="cloud" />
         </PostProvider>
       </div>
     </div>

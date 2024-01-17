@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { authOptions } from "@/server/auth";
 import { Icons } from "@/components/icons";
+import { PlaygroundEditor } from "@/components/playground-editor";
 
 export default async function IndexPage() {
   return (
@@ -111,6 +112,9 @@ export default async function IndexPage() {
             site built using Contentlayer and MDX.
           </p>
         </div> */}
+      </section>
+      <section>
+        <PlaygroundEditor />
       </section>
       <section id="open-source" className="container py-8 md:py-12 lg:py-24">
         <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">

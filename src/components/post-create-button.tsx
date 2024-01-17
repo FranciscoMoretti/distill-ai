@@ -9,9 +9,9 @@ import { toast } from "sonner";
 import { Icons } from "@/components/icons";
 import { api } from "@/trpc/react";
 import {
-  INITIAL_VALUE_MAIN,
-  INITIAL_VALUE_OUTLINE,
-  INITIAL_VALUE_SUMMARY,
+  initial_value_source,
+  initial_value_outline,
+  initial_value_summary,
 } from "@/config/editor-initial-values";
 
 type PostCreateButtonProps = ButtonProps;
@@ -49,9 +49,9 @@ export function PostCreateButton({
     setIsLoading(true);
     createPost.mutate({
       title: "Untitled Post",
-      source: JSON.stringify(INITIAL_VALUE_MAIN),
-      outline: JSON.stringify(INITIAL_VALUE_OUTLINE),
-      summary: JSON.stringify(INITIAL_VALUE_SUMMARY),
+      source: JSON.stringify(initial_value_source),
+      outline: JSON.stringify(initial_value_outline),
+      summary: JSON.stringify(initial_value_summary),
     });
   }
 
