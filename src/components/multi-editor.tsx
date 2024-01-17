@@ -6,7 +6,7 @@ import {
   INITIAL_VALUE_SUMMARY,
 } from "../config/editor-initial-values";
 import { MultiEditorConfigProvider } from "@/lib/multi-editor-config-context";
-import { useEditorsInteractionsWithRefs } from "@/lib/hooks/useEditorsInteractionsWithRefs";
+import { useEditorsInteractionsWithRefs } from "@/lib/hooks/use-editors-interactions";
 import { useWorkspaceConfigContext } from "@/lib/workspace-config-context";
 import { type MyValue } from "@/lib/plate/plate-types";
 import { updateDatabase } from "@/lib/update-database";
