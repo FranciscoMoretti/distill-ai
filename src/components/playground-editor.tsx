@@ -37,7 +37,6 @@ export function PlaygroundEditor() {
     ]),
   };
 
-  console.log(post);
   return (
     <div className="mx-auto flex w-full flex-1 flex-col items-start gap-10 py-8 sm:px-8 ">
       <div className="flex w-full flex-1 flex-col items-center gap-10">

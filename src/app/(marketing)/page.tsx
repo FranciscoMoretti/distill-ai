@@ -114,6 +114,7 @@ export default async function IndexPage() {
         </div> */}
       </section>
       <section>
+        {/* // TODO: Wrap in suspense */}
         <PlaygroundEditor />
       </section>
       <section id="open-source" className="container py-8 md:py-12 lg:py-24">
