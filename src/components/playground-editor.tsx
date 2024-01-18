@@ -4,7 +4,7 @@ import { Workspace } from "@/components/workspace";
 import { PostProvider } from "@/lib/post-context";
 import { type Post } from "@prisma/client";
 
-export function PlaygroundEditor() {
+export async function PlaygroundEditor() {
   const post: Post = {
     id: "",
     title: "Demo Document",

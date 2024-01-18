@@ -9,7 +9,7 @@ import {
   OutlineEditorPanel,
   SummaryEditorPanel,
 } from "./editor-panels";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { useWindowSize } from "usehooks-ts";
@@ -18,19 +18,15 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { type MultiEditorView } from "@/lib/editor-view";
 import { useMultiEditorStateContext } from "@/lib/multi-editor-state-context";
+import { MultiEditorSkeleton } from "@/components/editor-skeleton";
 
 export function MultiEditorUi({ className = "" }: { className?: string }) {
   const { view: tabValue, setView: setTabValue } = useMultiEditorStateContext();
 
   // TODO Replace strings with enum
-  const showSourceEditor = ["source", "source_outline"].includes(tabValue);
-  const showOutlineEditor = [
-    "outline",
-    "source_outline",
-    "outline_summary",
-  ].includes(tabValue);
-  const showSummaryEditor = ["summary", "outline_summary"].includes(tabValue);
+
   const defaultLayout = [50, 50];
+
   const { width } = useWindowSize();
   useEffect(() => {
     if (width >= 1024) {
@@ -39,7 +35,6 @@ export function MultiEditorUi({ className = "" }: { className?: string }) {
       setTabValue("source");
     }
   }, [width]);
-
   function handleTabValueChange(): ((value: string) => void) | undefined {
     return (value) => {
       if (value) {
@@ -125,62 +120,75 @@ export function MultiEditorUi({ className = "" }: { className?: string }) {
         </ToggleGroup>
       </div>
       <Separator />
-      {/* // TODO: Fix this workaround that prevents hydration error (same first render on client and server) */}
-      {width != 0 ? (
-        <ResizablePanelGroup
-          direction="horizontal"
-          onLayout={(sizes: number[]) => {
-            document.cookie = `react-resizable-panels:layout=${JSON.stringify(
-              sizes,
-            )}`;
-          }}
-          className="h-full min-h-[800px] w-full flex-1"
-        >
-          <ResizablePanel
-            minSize={30}
-            className={cn(
-              "flex h-full w-full flex-1 flex-col",
-              !showSourceEditor && "hidden",
-            )}
-          >
-            <MainEditorPanel />
-          </ResizablePanel>
-          <ResizableHandle
-            withHandle
-            className={cn(!(showSourceEditor && showOutlineEditor) && "hidden")}
-          />
-          <ResizablePanel
-            minSize={30}
-            className={cn(
-              "flex h-full w-full flex-1 flex-col",
 
-              !showOutlineEditor && "hidden",
-            )}
-          >
-            <OutlineEditorPanel />
-          </ResizablePanel>
-          <ResizableHandle
-            withHandle
-            className={cn(
-              !(showOutlineEditor && showSummaryEditor) && "hidden",
-            )}
-          />
-          <ResizablePanel
-            minSize={30}
-            className={cn(
-              "flex h-full w-full flex-1 flex-col",
-
-              !showSummaryEditor && "hidden",
-            )}
-          >
-            <SummaryEditorPanel />
-          </ResizablePanel>
-        </ResizablePanelGroup>
-      ) : (
-        <div className="flex h-full w-full flex-1 flex-col items-center justify-center">
-          <LoadingSpinner />
-        </div>
-      )}
+      <Suspense fallback={<MultiEditorSkeleton />}>
+        <MultiEditorView width={width} />
+      </Suspense>
     </div>
   );
+}
+
+export async function MultiEditorView({ width }: { width: number }) {
+  const { view, setView: setTabValue } = useMultiEditorStateContext();
+
+  // TODO Replace strings with enum
+  const showSourceEditor = ["source", "source_outline"].includes(view);
+  const showOutlineEditor = [
+    "outline",
+    "source_outline",
+    "outline_summary",
+  ].includes(view);
+  const showSummaryEditor = ["summary", "outline_summary"].includes(view);
+
+  if (width != 0) {
+    return (
+      <ResizablePanelGroup
+        direction="horizontal"
+        onLayout={(sizes: number[]) => {
+          document.cookie = `react-resizable-panels:layout=${JSON.stringify(
+            sizes,
+          )}`;
+        }}
+        className="h-full min-h-[800px] w-full flex-1"
+      >
+        <ResizablePanel
+          minSize={30}
+          className={cn(
+            "flex h-full w-full flex-1 flex-col",
+            !showSourceEditor && "hidden",
+          )}
+        >
+          <MainEditorPanel />
+        </ResizablePanel>
+        <ResizableHandle
+          withHandle
+          className={cn(!(showSourceEditor && showOutlineEditor) && "hidden")}
+        />
+        <ResizablePanel
+          minSize={30}
+          className={cn(
+            "flex h-full w-full flex-1 flex-col",
+
+            !showOutlineEditor && "hidden",
+          )}
+        >
+          <OutlineEditorPanel />
+        </ResizablePanel>
+        <ResizableHandle
+          withHandle
+          className={cn(!(showOutlineEditor && showSummaryEditor) && "hidden")}
+        />
+        <ResizablePanel
+          minSize={30}
+          className={cn(
+            "flex h-full w-full flex-1 flex-col",
+
+            !showSummaryEditor && "hidden",
+          )}
+        >
+          <SummaryEditorPanel />
+        </ResizablePanel>
+      </ResizablePanelGroup>
+    );
+  }
 }

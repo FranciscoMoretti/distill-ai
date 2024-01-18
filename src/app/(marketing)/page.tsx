@@ -6,6 +6,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { authOptions } from "@/server/auth";
 import { Icons } from "@/components/icons";
 import { PlaygroundEditor } from "@/components/playground-editor";
+import { Suspense } from "react";
 
 export default async function IndexPage() {
   return (
@@ -113,9 +114,15 @@ export default async function IndexPage() {
           </p>
         </div> */}
       </section>
-      <section>
-        {/* // TODO: Wrap in suspense */}
-        <PlaygroundEditor />
+      <section id="playground">
+        <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
+          <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
+            Try it out
+          </h2>
+        </div>
+        <Suspense fallback={<div>Loading...</div>}>
+          <PlaygroundEditor />
+        </Suspense>
       </section>
       <section id="open-source" className="container py-8 md:py-12 lg:py-24">
         <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
