@@ -24,3 +24,11 @@ export const initial_value_summary: MyValue = [
     children: [{ text: "This will be completed by AI" }],
   },
 ];
+
+export const empty_content: MyValue = [
+  {
+    id: "1",
+    type: "p",
+    children: [{ text: "" }],
+  },
+];

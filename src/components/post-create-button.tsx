@@ -8,11 +8,7 @@ import { type ButtonProps, buttonVariants } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Icons } from "@/components/icons";
 import { api } from "@/trpc/react";
-import {
-  initial_value_source,
-  initial_value_outline,
-  initial_value_summary,
-} from "@/config/editor-initial-values";
+import { empty_content } from "@/config/editor-initial-values";
 import { revalidateDashboard } from "@/actions/revalidation";
 
 type PostCreateButtonProps = ButtonProps;
@@ -56,9 +52,9 @@ export function PostCreateButton({
     setIsLoading(true);
     createPost.mutate({
       title: "Untitled Post",
-      source: JSON.stringify(initial_value_source),
-      outline: JSON.stringify(initial_value_outline),
-      summary: JSON.stringify(initial_value_summary),
+      source: JSON.stringify(empty_content),
+      outline: JSON.stringify(empty_content),
+      summary: JSON.stringify(empty_content),
     });
   }
 
