@@ -72,7 +72,7 @@ export async function POST(req: Request): Promise<Response> {
         role: "system",
         content:
           // TODO: Make book title variable
-          `Incorporate the following excerpts from the book '${title}', which I've selected based on their relevance and importance, into a summary of the book that also draws on external sources on the web. Please use as many details from the excerpts I provide as possible. Write the summary in rich Markdown format using h1, h2, h3, lists, tables, bold, italics, etc.`,
+          `Incorporate the following excerpts from the document: '${title}', which I've selected based on their relevance and importance, into a summary of the book that also draws on external sources on the web. Please use as many details from the excerpts I provide as possible. Write the summary in rich Markdown format using h1, h2, h3, lists, tables, bold, italics, etc.`,
       },
       {
         role: "user",
