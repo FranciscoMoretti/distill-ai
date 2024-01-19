@@ -5,7 +5,6 @@ import { useWindowSize } from "usehooks-ts";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { type MultiEditorView } from "@/lib/editor-view";
 import { useMultiEditorStateContext } from "@/lib/multi-editor-state-context";
-import { MultiEditorView } from "./multi-editor-view";
 
 export function MultiEditorViewSelector() {
   const { view: tabValue, setView: setTabValue } = useMultiEditorStateContext();
