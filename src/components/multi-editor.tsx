@@ -40,7 +40,7 @@ export default function MultiEditor({
   return (
     <MultiEditorConfigProvider
       mainEditor={{
-        storageKey: "plate__main",
+        storageKey: "plate__source",
         disableLocalStorage: storage !== "local",
         editorRef: mainEditorRef,
         initialValue: post.source

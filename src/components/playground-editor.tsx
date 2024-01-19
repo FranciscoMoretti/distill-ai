@@ -1,6 +1,11 @@
 // Playground editor functional component
 
 import { Workspace } from "@/components/workspace";
+import {
+  initial_value_outline,
+  initial_value_source,
+  initial_value_summary,
+} from "@/config/editor-initial-values";
 import { PostProvider } from "@/lib/post-context";
 import { type Post } from "@prisma/client";
 
@@ -11,30 +16,9 @@ export async function PlaygroundEditor() {
     createdById: "",
     createdAt: new Date(),
     updatedAt: new Date(),
-    source: JSON.stringify([
-      {
-        id: "1",
-        type: "p",
-        // TODO Fill with demo text
-        children: [{ text: "This will be completed by AI" }],
-      },
-    ]),
-    outline: JSON.stringify([
-      {
-        id: "1",
-        type: "p",
-        // TODO Fill with demo text
-        children: [{ text: "Outline text will be placed here" }],
-      },
-    ]),
-    summary: JSON.stringify([
-      {
-        id: "1",
-        type: "p",
-        // TODO Fill with demo text
-        children: [{ text: "Place your book notes here" }],
-      },
-    ]),
+    source: JSON.stringify(initial_value_source),
+    outline: JSON.stringify(initial_value_outline),
+    summary: JSON.stringify(initial_value_summary),
   };
 
   return (
