@@ -17,9 +17,7 @@ export function MultiEditorUi({ className = "" }: { className?: string }) {
       <MultiEditorViewSelector />
       <Separator />
 
-      <Suspense fallback={<MultiEditorSkeleton />}>
-        <MultiEditorView />
-      </Suspense>
+      <MultiEditorView />
     </div>
   );
 }

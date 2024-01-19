@@ -33,9 +33,11 @@ const debounceDuration = 1000;
 export function TitleForm({
   title,
   postId,
+  useDatabase = true,
 }: {
   title: string;
   postId: string;
+  useDatabase?: boolean;
 }) {
   const router = useRouter();
   const { setPost } = usePostContext();
@@ -65,7 +67,9 @@ export function TitleForm({
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    updatePost.mutate({ id: postId, title: data.title });
+    if (useDatabase) {
+      updatePost.mutate({ id: postId, title: data.title });
+    }
     setPost((post: Post) => {
       return { ...post, title: data.title };
     });

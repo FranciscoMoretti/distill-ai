@@ -1,5 +1,6 @@
 // Playground editor functional component
 
+import { TitleForm } from "@/components/document-title-form";
 import { Workspace } from "@/components/workspace";
 import {
   initial_value_outline,
@@ -12,7 +13,7 @@ import { type Post } from "@prisma/client";
 export async function PlaygroundEditor() {
   const post: Post = {
     id: "",
-    title: "Demo Document",
+    title: "Distill AI Guide",
     createdById: "",
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -25,6 +26,7 @@ export async function PlaygroundEditor() {
     <div className="mx-auto flex w-full flex-1 flex-col items-start gap-10 py-8 sm:px-8 ">
       <div className="flex w-full flex-1 flex-col items-center gap-10">
         <PostProvider initialValue={post}>
+          <TitleForm title={post.title} postId={""} useDatabase={false} />
           <Workspace className="h-full flex-1" storage="local" />
         </PostProvider>
       </div>{" "}
