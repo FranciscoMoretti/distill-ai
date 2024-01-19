@@ -30,11 +30,9 @@ function SingleEditorSkeleton({ className }: { className?: string }) {
 export function MultiEditorSkeleton() {
   // TODO: Fix layout shift (height) in editor skeleton vs actual editor
   return (
-    <div className="flex h-full w-full flex-1 flex-col items-center justify-center">
-      <div className="grid h-full min-h-[800px] w-full flex-1 grid-cols-1 lg:grid-cols-2">
-        <SingleEditorSkeleton />
-        <SingleEditorSkeleton className="hidden lg:flex" />
-      </div>
+    <div className="grid h-full min-h-[800px] w-full flex-1 grid-cols-1 lg:grid-cols-2">
+      <SingleEditorSkeleton />
+      <SingleEditorSkeleton className="hidden lg:flex" />
     </div>
   );
 }

@@ -13,6 +13,7 @@ import {
   initial_value_outline,
   initial_value_summary,
 } from "@/config/editor-initial-values";
+import { revalidateDashboard } from "@/actions/revalidation";
 
 type PostCreateButtonProps = ButtonProps;
 
@@ -22,12 +23,18 @@ export function PostCreateButton({
   ...props
 }: PostCreateButtonProps) {
   const router = useRouter();
+  const utils = api.useUtils();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const createPost = api.post.create.useMutation({
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       router.refresh();
       // Should invalidate the queryKey that loads posts
       setIsLoading(false);
+
+      // TODO: This should be done by only one operation
+      await utils.post.getAll.invalidate();
+      await revalidateDashboard();
+
       router.push(`/editor/${data.id}`);
     },
     onError: () => {

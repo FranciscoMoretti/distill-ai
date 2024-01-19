@@ -27,6 +27,7 @@ export default async function DashboardPage() {
         <PostCreateButton />
       </DashboardHeader>
       <div>
+        {/* // TODO Create a Posts component, move nostore into it and use Suspense*/}
         {posts?.length ? (
           <div className="divide-y divide-border rounded-md border">
             {posts.map((post) => (

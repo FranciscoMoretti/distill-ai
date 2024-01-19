@@ -120,9 +120,7 @@ export default async function IndexPage() {
             Try it out
           </h2>
         </div>
-        <Suspense fallback={<div>Loading...</div>}>
-          <PlaygroundEditor />
-        </Suspense>
+        <PlaygroundEditor />
       </section>
       <section id="open-source" className="container py-8 md:py-12 lg:py-24">
         <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">

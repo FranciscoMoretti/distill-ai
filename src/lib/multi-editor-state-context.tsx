@@ -21,7 +21,7 @@ export const MultiEditorRefsProvider: React.FC<{
   const mainEditorRef = useRef<PlateEditorType<MyValue> | null>(null);
   const outlineEditorRef = useRef<PlateEditorType<MyValue> | null>(null);
   const summaryEditorRef = useRef<PlateEditorType<MyValue> | null>(null);
-  const [view, setView] = useState<MultiEditorView>("source");
+  const [view, setView] = useState<MultiEditorView>("loading");
 
   return (
     <MultiEditorStateContext.Provider
