@@ -8,6 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { DownloadSummaryButton } from "@/components/download-summary-button";
 import { ExportButton } from "@/components/export-button";
+import { SummaryGenerationButton } from "@/components/summary-generation-button";
 
 export function MainEditorPanel({ className = "" }: { className?: string }) {
   return (
@@ -41,11 +42,14 @@ export function OutlineEditorPanel({ className = "" }: { className?: string }) {
 export function SummaryEditorPanel({ className = "" }: { className?: string }) {
   return (
     <div className={cn("flex h-full w-full flex-1 flex-col", className)}>
-      <div className="flex items-center px-4 py-2">
+      <div className="flex items-center gap-2 px-4 py-2">
         <h1 className="text-xl font-bold">Summary</h1>
-        <div className="flex w-full flex-row items-center justify-end gap-2">
-          <DownloadSummaryButton />
-          <ExportButton />
+        <div className="flex w-full flex-row items-center justify-between gap-2">
+          <SummaryGenerationButton />
+          <div className="flex w-full flex-row items-center justify-end gap-2">
+            <DownloadSummaryButton />
+            <ExportButton />
+          </div>
         </div>
       </div>
       <Separator />
