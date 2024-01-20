@@ -1,16 +1,9 @@
 "use client";
-import { type MutableRefObject, useEffect, useRef, useState } from "react";
 import { extractBoldTextMD } from "../unified/markdown-processor";
-import { extractTitleMD } from "../unified/markdown-processor";
-import { useCompletion } from "ai/react";
-import { toast } from "sonner";
 import { resetNodes } from "@/lib/plate/transforms/reset-nodes";
 import { plateToMarkdown, markdownToPlate } from "@/lib/unified/plate-markdown";
 import { type Editor } from "slate";
-import { type PlateEditor as PlateEditorType } from "@udecode/plate-common";
-import { type MyValue } from "@/lib/plate/plate-types";
 import { useMultiEditorStateContext } from "@/lib/multi-editor-state-context";
-import { type MultiEditorView } from "@/lib/editor-view";
 import { focusOnView } from "./focus-on-view";
 
 export function useEditorsInteractions() {
@@ -25,13 +18,8 @@ export function useEditorsInteractionsWithRefs({
   summaryEditorRef,
   view,
   setView,
-}: {
-  mainEditorRef: MutableRefObject<PlateEditorType<MyValue> | null>;
-  outlineEditorRef: MutableRefObject<PlateEditorType<MyValue> | null>;
-  summaryEditorRef: MutableRefObject<PlateEditorType<MyValue> | null>;
-  view: MultiEditorView;
-  setView: (view: MultiEditorView) => void;
-}) {
+  summaryCompletion,
+}: ReturnType<typeof useMultiEditorStateContext>) {
   async function generateSummary(title: string) {
     const outlineEditor = outlineEditorRef.current;
     const summaryEditor = summaryEditorRef.current;
@@ -40,9 +28,11 @@ export function useEditorsInteractionsWithRefs({
     const markdown = plateToMarkdown(outlineEditor);
     if (markdown && summaryEditor) {
       focusOnView(view, setView, "summary");
-      await complete(markdown, {
-        body: { title: title },
-      }).catch((err) => console.error(err));
+      await summaryCompletion
+        .complete(markdown, {
+          body: { title: title },
+        })
+        .catch((err) => console.error(err));
     }
   }
 
@@ -69,35 +59,7 @@ export function useEditorsInteractionsWithRefs({
     return markdown;
   }
 
-  const { complete, completion, isLoading, stop } = useCompletion({
-    id: "ai_summary",
-    api: "/api/generate",
-    onFinish: (_prompt, completion) => {
-      // TODO: Decide behavior to do on finish
-    },
-    onError: (err) => {
-      toast.error(err.message);
-    },
-  });
-
-  const prev = useRef("");
-
-  // Insert chunks of the generated text
-  useEffect(() => {
-    const summaryEditor = summaryEditorRef.current;
-    if (summaryEditor && completion) {
-      // reset prev when `complete` is called again
-      if (prev?.current.length > completion.length) {
-        prev.current = "";
-      }
-      const completionNodes = markdownToPlate(completion, summaryEditor);
-      if (completionNodes) {
-        resetNodes(summaryEditor as Editor, {
-          nodes: completionNodes,
-        });
-      }
-    }
-  }, [summaryEditorRef, completion]);
+  // TODO Move this out of editor interactions into multiEditor State context (EditorInteractionsContext)
 
   return {
     generateSummary,

@@ -13,6 +13,11 @@ import { updateDatabase } from "@/lib/update-database";
 import { usePostContext } from "@/lib/post-context";
 import { MultiEditorUi } from "@/components/multi-editor-ui";
 import { useMultiEditorStateContext } from "@/lib/multi-editor-state-context";
+import { resetNodes } from "@/lib/plate/transforms/reset-nodes";
+import { useEffect, useRef } from "react";
+import { plateToMarkdown, markdownToPlate } from "@/lib/unified/plate-markdown";
+import { toast } from "sonner";
+import { type Editor } from "slate";
 
 export default function MultiEditor({
   className = "",
@@ -23,8 +28,34 @@ export default function MultiEditor({
 }) {
   const { post, setPost } = usePostContext();
   const documentId = post.id;
-  const { mainEditorRef, outlineEditorRef, summaryEditorRef, view, setView } =
-    useMultiEditorStateContext();
+  const {
+    mainEditorRef,
+    outlineEditorRef,
+    summaryEditorRef,
+    view,
+    setView,
+    summaryCompletion,
+  } = useMultiEditorStateContext();
+
+  const { completion } = summaryCompletion;
+  const prev = useRef("");
+
+  // Insert chunks of the generated text
+  useEffect(() => {
+    const summaryEditor = summaryEditorRef.current;
+    if (summaryEditor && completion) {
+      // reset prev when `complete` is called again
+      if (prev?.current.length > completion.length) {
+        prev.current = "";
+      }
+      const completionNodes = markdownToPlate(completion, summaryEditor);
+      if (completionNodes) {
+        resetNodes(summaryEditor as Editor, {
+          nodes: completionNodes,
+        });
+      }
+    }
+  }, [summaryEditorRef, completion]);
 
   const { generateOutline } = useEditorsInteractionsWithRefs({
     mainEditorRef,
