@@ -1,5 +1,5 @@
 "use client";
-import { Check, RotateCw, StopCircle } from "lucide-react";
+import { Check, RotateCw, Sparkles, StopCircle } from "lucide-react";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { Button } from "@/components/ui/button";
 import { useMultiEditorStateContext } from "@/lib/multi-editor-state-context";
@@ -42,7 +42,7 @@ export function SummaryGenerationStop() {
       onClick={async () => await generateSummary(post.title)}
       variant={"ghost"}
     >
-      <RotateCw className="h-4 w-4" />
+      <Sparkles className="h-4 w-4" />
     </Button>
   );
 }
