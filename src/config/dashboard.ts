@@ -2,16 +2,17 @@ import { type DashboardConfig } from "@/types";
 
 export const dashboardConfig: DashboardConfig = {
   mainNav: [
-    {
-      title: "Documentation",
-      href: "/docs",
-      disabled: true,
-    },
-    {
-      title: "Support",
-      href: "/support",
-      disabled: true,
-    },
+    // TODO: Unhide once implemented
+    // {
+    //   title: "Documentation",
+    //   href: "/docs",
+    //   disabled: true,
+    // },
+    // {
+    //   title: "Support",
+    //   href: "/support",
+    //   disabled: true,
+    // },
   ],
   sidebarNav: [
     {

@@ -12,14 +12,13 @@ export const marketingConfig: MarketingConfig = {
     //   disabled: true,
     // },
     {
-      title: "Blog",
-      href: "/blog",
-      disabled: true,
+      title: "Dashboard",
+      href: "/dashboard",
     },
-    {
-      title: "Documentation",
-      href: "/docs",
-      disabled: true,
-    },
+    // {
+    //   title: "Documentation",
+    //   href: "/docs",
+    //   disabled: true,
+    // },
   ],
 };
