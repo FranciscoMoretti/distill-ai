@@ -2,6 +2,7 @@ import OpenAI from "openai";
 import { OpenAIStream, StreamingTextResponse } from "ai";
 import { kv } from "@vercel/kv";
 import { Ratelimit } from "@upstash/ratelimit";
+import { getToken } from "next-auth/jwt";
 
 // Create an OpenAI API client (that's edge friendly!)
 const openai = new OpenAI({
@@ -25,10 +26,13 @@ export async function POST(req: Request): Promise<Response> {
       },
     );
   }
+
+  const userToken = await getToken({ req });
   if (
     process.env.NODE_ENV != "development" &&
     process.env.KV_REST_API_URL &&
-    process.env.KV_REST_API_TOKEN
+    process.env.KV_REST_API_TOKEN &&
+    !userToken
   ) {
     const ip = req.headers.get("x-forwarded-for");
     const ratelimit = new Ratelimit({
@@ -63,10 +67,18 @@ export async function POST(req: Request): Promise<Response> {
     });
   }
 
-  if (tokenApproximation(prompt) > 400) {
-    return new Response("Prompt is too long", {
-      status: 400,
-    });
+  if (userToken) {
+    if (tokenApproximation(prompt) > 800) {
+      return new Response("Prompt is too long for authenticated user", {
+        status: 400,
+      });
+    }
+  } else {
+    if (tokenApproximation(prompt) > 400) {
+      return new Response("Prompt is too long for unauthenticated user", {
+        status: 400,
+      });
+    }
   }
 
   if (!title) {
