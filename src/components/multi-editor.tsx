@@ -28,6 +28,7 @@ export default function MultiEditor({
 }) {
   const { post, setPost } = usePostContext();
   const documentId = post.id;
+  const multiEditorState = useMultiEditorStateContext();
   const {
     mainEditorRef,
     outlineEditorRef,
@@ -35,8 +36,7 @@ export default function MultiEditor({
     view,
     setView,
     summaryCompletion,
-  } = useMultiEditorStateContext();
-
+  } = multiEditorState;
   const { completion } = summaryCompletion;
   const prev = useRef("");
 
@@ -57,13 +57,7 @@ export default function MultiEditor({
     }
   }, [summaryEditorRef, completion]);
 
-  const { generateOutline } = useEditorsInteractionsWithRefs({
-    mainEditorRef,
-    outlineEditorRef,
-    summaryEditorRef,
-    view,
-    setView,
-  });
+  const { generateOutline } = useEditorsInteractionsWithRefs(multiEditorState);
 
   const { workspaceConfig } = useWorkspaceConfigContext();
   const { autoGenerateOutline } = workspaceConfig;
