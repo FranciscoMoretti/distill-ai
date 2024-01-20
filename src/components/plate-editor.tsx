@@ -111,16 +111,21 @@ export function PlateEditor({
           if (!editorRef.current) {
             return;
           }
-          if (onChange) {
-            await onChange(value);
+          const isAstChange = editorRef.current.operations.some(
+            (op) => "set_selection" !== op.type,
+          );
+          if (isAstChange) {
+            // Only update if the change is not a selection change
+            if (onChange) {
+              await onChange(value);
+            }
+            await debouncedUpdates(value);
+            setSaveStatus("Saving...");
+            // Simulate a delay in saving.
+            setTimeout(() => {
+              setSaveStatus("Saved");
+            }, 500);
           }
-          await debouncedUpdates(value);
-          setSaveStatus("Saving...");
-
-          // Simulate a delay in saving.
-          setTimeout(() => {
-            setSaveStatus("Saved");
-          }, 500);
         }}
       >
         <div
