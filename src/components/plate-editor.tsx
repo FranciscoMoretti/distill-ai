@@ -119,8 +119,8 @@ export function PlateEditor({
             if (onChange) {
               await onChange(value);
             }
-            await debouncedUpdates(value);
             setSaveStatus("Saving...");
+            await debouncedUpdates(value);
             // Simulate a delay in saving.
             setTimeout(() => {
               setSaveStatus("Saved");
