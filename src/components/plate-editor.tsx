@@ -141,7 +141,8 @@ export function PlateEditor({
             </div>
             <FixedToolbarButtons />
           </FixedToolbar>
-          <ScrollArea className=" flex-1 ">
+          {/* // TODO: Editor height should be set in only one place (there is a max-h-[1000px] in a ancestor) */}
+          <ScrollArea className=" h-full max-h-[800px] flex-1 overflow-hidden">
             <Editor
               className="px-[96px] py-16"
               autoFocus

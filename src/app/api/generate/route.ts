@@ -11,6 +11,10 @@ const openai = new OpenAI({
 // IMPORTANT! Set the runtime to edge: https://vercel.com/docs/functions/edge-functions/edge-runtime
 export const runtime = "edge";
 
+function tokenApproximation(str: string): number {
+  return str.length / 4;
+}
+
 export async function POST(req: Request): Promise<Response> {
   // Check if the OPENAI_API_KEY is set, if not return 400
   if (!process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY === "") {
@@ -55,6 +59,12 @@ export async function POST(req: Request): Promise<Response> {
 
   if (typeof prompt != "string") {
     return new Response("Incorrect argument type", {
+      status: 400,
+    });
+  }
+
+  if (tokenApproximation(prompt) > 400) {
+    return new Response("Prompt is too long", {
       status: 400,
     });
   }

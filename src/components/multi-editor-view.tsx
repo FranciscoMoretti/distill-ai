@@ -37,7 +37,7 @@ export function MultiEditorView() {
           sizes,
         )}`;
       }}
-      className="h-full min-h-[800px] w-full flex-1"
+      className="h-full w-full flex-1"
     >
       <ResizablePanel
         minSize={30}
