@@ -3,6 +3,8 @@ import { OpenAIStream, StreamingTextResponse } from "ai";
 import { kv } from "@vercel/kv";
 import { Ratelimit } from "@upstash/ratelimit";
 import { getToken } from "next-auth/jwt";
+import { NextApiRequest } from "next";
+import { type NextRequest } from "next/server";
 
 // Create an OpenAI API client (that's edge friendly!)
 const openai = new OpenAI({
@@ -27,7 +29,7 @@ export async function POST(req: Request): Promise<Response> {
     );
   }
 
-  const userToken = await getToken({ req });
+  const userToken = await getToken({ req: req as NextRequest });
   if (
     process.env.NODE_ENV != "development" &&
     process.env.KV_REST_API_URL &&
