@@ -13,7 +13,7 @@ import { type Post } from "@prisma/client";
 export async function PlaygroundEditor() {
   const post: Post = {
     id: "",
-    title: "Distill AI Guide",
+    title: "Distill AI App Tutorial",
     createdById: "",
     createdAt: new Date(),
     updatedAt: new Date(),
