@@ -41,11 +41,11 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
         <DropdownMenuItem asChild>
           <Link href="/dashboard">Dashboard</Link>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild disabled>
+        {/* <DropdownMenuItem asChild disabled>
           <Link aria-disabled href="/dashboard/billing">
             Billing
           </Link>
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
         <DropdownMenuItem asChild>
           <Link href="/dashboard/settings">Settings</Link>
         </DropdownMenuItem>

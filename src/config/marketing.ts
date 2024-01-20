@@ -6,11 +6,11 @@ export const marketingConfig: MarketingConfig = {
       title: "Features",
       href: "/#features",
     },
-    {
-      title: "Pricing",
-      href: "/pricing",
-      disabled: true,
-    },
+    // {
+    //   title: "Pricing",
+    //   href: "/pricing",
+    //   disabled: true,
+    // },
     {
       title: "Blog",
       href: "/blog",
