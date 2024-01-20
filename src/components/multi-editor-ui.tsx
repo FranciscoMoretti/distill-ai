@@ -10,13 +10,12 @@ export function MultiEditorUi({ className = "" }: { className?: string }) {
   return (
     <div
       className={cn(
-        "flex h-full w-full max-w-[1800px] flex-col justify-stretch overflow-hidden rounded border bg-background lg:rounded-xl",
+        "flex h-full max-h-[1000px] min-h-[1000px] w-full max-w-[1800px] flex-col justify-stretch overflow-hidden rounded border bg-background lg:rounded-xl ",
         className,
       )}
     >
       <MultiEditorViewSelector />
       <Separator />
-
       <MultiEditorView />
     </div>
   );
