@@ -14,10 +14,6 @@ const openai = new OpenAI({
 // IMPORTANT! Set the runtime to edge: https://vercel.com/docs/functions/edge-functions/edge-runtime
 export const runtime = "edge";
 
-function tokenApproximation(str: string): number {
-  return str.length / 4;
-}
-
 export async function POST(req: Request): Promise<Response> {
   // Check if the OPENAI_API_KEY is set, if not return 400
   if (!process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY === "") {
@@ -39,7 +35,7 @@ export async function POST(req: Request): Promise<Response> {
     const ip = req.headers.get("x-forwarded-for");
     const ratelimit = new Ratelimit({
       redis: kv,
-      limiter: Ratelimit.slidingWindow(50, "1 d"),
+      limiter: Ratelimit.slidingWindow(10, "1 d"),
     });
 
     const { success, limit, reset, remaining } = await ratelimit.limit(
