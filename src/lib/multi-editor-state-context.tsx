@@ -3,6 +3,7 @@ import { type PlateEditor as PlateEditorType } from "@udecode/plate-common";
 import { type MyValue } from "@/lib/plate/plate-types";
 import { type MultiEditorView } from "@/lib/editor-view";
 import { useCompletion } from "ai/react";
+import { toast } from "sonner";
 
 type MultiEditorStateContextType = {
   mainEditorRef: React.MutableRefObject<PlateEditorType<MyValue> | null>;
@@ -27,6 +28,9 @@ export const MultiEditorRefsProvider: React.FC<{
   const summaryCompletion = useCompletion({
     id: "ai_summary",
     api: "/api/generate",
+    onError: (err) => {
+      toast.error(err.message);
+    },
   });
 
   return (

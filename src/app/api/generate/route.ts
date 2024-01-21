@@ -70,16 +70,26 @@ export async function POST(req: Request): Promise<Response> {
   }
 
   if (userToken) {
-    if (tokenApproximation(prompt) > 800) {
-      return new Response("Prompt is too long for authenticated user", {
-        status: 400,
-      });
+    const AUTHENTICATED_TOKEN_LENGTH = 800;
+    if (prompt.length > 4 * AUTHENTICATED_TOKEN_LENGTH) {
+      return new Response(
+        `Outline exceeds the ${4 * AUTHENTICATED_TOKEN_LENGTH} chars limit`,
+        {
+          status: 400,
+        },
+      );
     }
   } else {
-    if (tokenApproximation(prompt) > 400) {
-      return new Response("Prompt is too long for unauthenticated user", {
-        status: 400,
-      });
+    const UNAUTHENTICATED_TOKEN_LENGTH = 300;
+    if (prompt.length > 4 * UNAUTHENTICATED_TOKEN_LENGTH) {
+      return new Response(
+        `Outline exceeds the  ${
+          4 * UNAUTHENTICATED_TOKEN_LENGTH
+        } chars limit. Authenticate to increase the limit.`,
+        {
+          status: 400,
+        },
+      );
     }
   }
 
