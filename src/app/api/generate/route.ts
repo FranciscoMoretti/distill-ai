@@ -94,7 +94,7 @@ export async function POST(req: Request): Promise<Response> {
     messages: [
       {
         role: "system",
-        content: `Incorporate the following excerpts from the document: '${title}', which I've selected based on their relevance and importance, into a summary of the document and enrich them with information from external sources. Please use as many details from the excerpts I provide as possible. Write the summary in rich Markdown format using h2, h3, lists, tables, bold, italics, etc. Each item in the excerpts should be mapped to a section in the summary. Your output is an h2 section for each chunk in the excerpts. You may use h3 for subsections. Don't create sections that are not in the excerpts.`,
+        content: `Incorporate the following excerpts from the document: '${title}', which I've selected based on their relevance and importance, into a summary of the document. Please use as many details from the excerpts I provide as possible. Write the summary in rich Markdown format using h2, h3, lists, tables, bold, italics, etc. Each item in the excerpts should be mapped to a section in the summary. Your output is an h2 section for each chunk in the excerpts. You may use h3 for subsections. Don't create sections that are not in the excerpts.`,
       },
       {
         role: "user",
