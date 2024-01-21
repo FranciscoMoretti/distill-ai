@@ -7,6 +7,7 @@ import { authOptions } from "@/server/auth";
 import { Icons } from "@/components/icons";
 import { PlaygroundEditor } from "@/components/playground-editor";
 import { Suspense } from "react";
+import Features from "@/components/features";
 
 export default async function IndexPage() {
   return (
@@ -47,73 +48,8 @@ export default async function IndexPage() {
           </div>
         </div>
       </section>
-      <section
-        id="features"
-        className="container space-y-6 bg-slate-50 py-8 md:py-12 lg:py-24 dark:bg-transparent"
-      >
-        <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
-          <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
-            Features
-          </h2>
-        </div>
-        <div className="mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-2 ">
-          <div className="relative overflow-hidden rounded-lg border bg-background p-2">
-            <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-              <Icons.folderTree className="h-12 w-12 " />
 
-              <div className="space-y-2">
-                <h3 className="font-bold">Effortless Organization</h3>
-                <p className="text-sm text-muted-foreground">
-                  Input and edit raw book notes seamlessly in the Raw Notes
-                  Editor.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="relative overflow-hidden rounded-lg border bg-background p-2">
-            <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-              <Icons.ul className="h-12 w-12 " />
-              <div className="space-y-2">
-                <h3 className="font-bold">Structured Outlining</h3>
-                <p className="text-sm">
-                  Create organized outlines by selecting and transferring
-                  content to the Outline Editor.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="relative overflow-hidden rounded-lg border bg-background p-2">
-            <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-              <Icons.magic className="h-12 w-12 " />
-
-              <div className="space-y-2">
-                <h3 className="font-bold">AI-Powered Summaries</h3>
-                <p className="text-sm text-muted-foreground">
-                  Generate personalized book summaries with a single click using
-                  ChatGPT integration.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="relative overflow-hidden rounded-lg border bg-background p-2">
-            <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-              <Icons.download className="h-12 w-12 " />
-              <div className="space-y-2">
-                <p className="text-sm text-muted-foreground">
-                  Save drafts for future reference and export summaries in
-                  various formats.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* <div className="mx-auto text-center md:max-w-[58rem]">
-          <p className="leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-            Distill AI also includes a blog and a full-featured documentation
-            site built using Contentlayer and MDX.
-          </p>
-        </div> */}
-      </section>
+      <Features />
       <section id="playground">
         <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
           <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
