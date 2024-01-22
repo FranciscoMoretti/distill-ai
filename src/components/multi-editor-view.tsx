@@ -15,20 +15,17 @@ import { useMultiEditorStateContext } from "@/lib/multi-editor-state-context";
 import { MultiEditorSkeleton } from "@/components/editor-skeleton";
 
 export function MultiEditorView() {
-  const { view } = useMultiEditorStateContext();
+  const { multiEditorTab, editorLayout } = useMultiEditorStateContext();
 
-  // TODO Replace strings with enum
-  const showSourceEditor = ["source", "source_outline"].includes(view);
-  const showOutlineEditor = [
-    "outline",
-    "source_outline",
-    "outline_summary",
-  ].includes(view);
-  const showSummaryEditor = ["summary", "outline_summary"].includes(view);
-
-  if (view == "loading") {
+  // TODO: Replace with Suspense. Here its finding if its first load
+  if (editorLayout == "unknown") {
     return <MultiEditorSkeleton />;
   }
+
+  const isFirstTab = multiEditorTab == "first";
+  const isSecondTab = multiEditorTab == "second";
+  const isThirdTab = multiEditorTab == "third";
+
   return (
     <ResizablePanelGroup
       direction="horizontal"
@@ -43,35 +40,35 @@ export function MultiEditorView() {
         minSize={30}
         className={cn(
           "flex h-full w-full flex-1 flex-col",
-          !showSourceEditor && "hidden",
+          !isFirstTab && "hidden",
         )}
       >
         <MainEditorPanel />
       </ResizablePanel>
       <ResizableHandle
         withHandle
-        className={cn(!(showSourceEditor && showOutlineEditor) && "hidden")}
+        className={cn("hidden", isFirstTab && "lg:flex")}
       />
       <ResizablePanel
         minSize={30}
         className={cn(
           "flex h-full w-full flex-1 flex-col",
-
-          !showOutlineEditor && "hidden",
+          !isSecondTab && "hidden",
+          isFirstTab && "lg:flex", // When dual editor is on first tab, show the outline editor
         )}
       >
         <OutlineEditorPanel />
       </ResizablePanel>
       <ResizableHandle
         withHandle
-        className={cn(!(showOutlineEditor && showSummaryEditor) && "hidden")}
+        className={cn("hidden", isSecondTab && "lg:flex")}
       />
       <ResizablePanel
         minSize={30}
         className={cn(
           "flex h-full w-full flex-1 flex-col",
-
-          !showSummaryEditor && "hidden",
+          !isThirdTab && "hidden",
+          isSecondTab && "lg:flex", // When dual editor is on second tab, show the outline editor
         )}
       >
         <SummaryEditorPanel />

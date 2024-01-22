@@ -4,7 +4,6 @@ import { resetNodes } from "@/lib/plate/transforms/reset-nodes";
 import { plateToMarkdown, markdownToPlate } from "@/lib/unified/plate-markdown";
 import { type Editor } from "slate";
 import { useMultiEditorStateContext } from "@/lib/multi-editor-state-context";
-import { focusOnView } from "./focus-on-view";
 
 export function useEditorsInteractions() {
   const stateContext = useMultiEditorStateContext();
@@ -16,8 +15,7 @@ export function useEditorsInteractionsWithRefs({
   mainEditorRef,
   outlineEditorRef,
   summaryEditorRef,
-  view,
-  setView,
+  setCurrentEditor,
   summaryCompletion,
 }: ReturnType<typeof useMultiEditorStateContext>) {
   async function generateSummary(title: string) {
@@ -27,7 +25,7 @@ export function useEditorsInteractionsWithRefs({
     if (!(outlineEditor && summaryEditor && mainEditor)) return;
     const markdown = plateToMarkdown(outlineEditor);
     if (markdown && summaryEditor) {
-      focusOnView(view, setView, "summary");
+      setCurrentEditor("summary");
       await summaryCompletion
         .complete(markdown, {
           body: { title: title },

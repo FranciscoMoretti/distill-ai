@@ -33,8 +33,6 @@ export default function MultiEditor({
     mainEditorRef,
     outlineEditorRef,
     summaryEditorRef,
-    view,
-    setView,
     summaryCompletion,
   } = multiEditorState;
   const { completion } = summaryCompletion;

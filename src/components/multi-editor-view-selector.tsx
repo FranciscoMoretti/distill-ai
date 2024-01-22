@@ -1,32 +1,25 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useWindowSize } from "usehooks-ts";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { type MultiEditorView } from "@/lib/editor-view";
+import {
+  type MultiEditorTabsValues,
+  type SingleEditorView,
+} from "@/lib/editor-view";
 import { useMultiEditorStateContext } from "@/lib/multi-editor-state-context";
 
 export function MultiEditorViewSelector() {
-  const { view: tabValue, setView: setTabValue } = useMultiEditorStateContext();
+  const { multiEditorTab: tabValue, setMultiEditorTab } =
+    useMultiEditorStateContext();
 
   const defaultLayout = [50, 50];
 
-  const { width } = useWindowSize();
-
-  useEffect(() => {
-    if (width >= 1024) {
-      setTabValue("source_outline");
-    } else {
-      setTabValue("source");
-    }
-  }, [width]);
-
   // TODO Replace strings with enum
-  function handleTabValueChange(): ((value: string) => void) | undefined {
+  function handleTabValueChange(): (value: MultiEditorTabsValues) => void {
     return (value) => {
       if (value) {
-        // Only change if another is being selected (don't deselect current)
-        setTabValue(value as MultiEditorView);
+        setMultiEditorTab(value);
       }
     };
   }
@@ -48,7 +41,7 @@ export function MultiEditorViewSelector() {
         <ToggleGroupItem
           size={"sm"}
           className={TAB_CN}
-          value="source"
+          value="first"
           aria-label="Toggle bold"
         >
           {"Main"}
@@ -56,7 +49,7 @@ export function MultiEditorViewSelector() {
         <ToggleGroupItem
           size={"sm"}
           className={TAB_CN}
-          value="outline"
+          value="second"
           aria-label="Toggle italic"
         >
           {"Outline"}
@@ -64,7 +57,7 @@ export function MultiEditorViewSelector() {
         <ToggleGroupItem
           size={"sm"}
           className={TAB_CN}
-          value="summary"
+          value="third"
           aria-label="Toggle strikethrough"
         >
           {"Summary"}
@@ -84,7 +77,7 @@ export function MultiEditorViewSelector() {
         <ToggleGroupItem
           size={"sm"}
           className={TAB_CN}
-          value="source_outline"
+          value="first"
           aria-label="Toggle bold"
         >
           {"Source -> Outline"}
@@ -93,7 +86,7 @@ export function MultiEditorViewSelector() {
         <ToggleGroupItem
           size={"sm"}
           className={TAB_CN}
-          value="outline_summary"
+          value="second"
           aria-label="Toggle strikethrough"
         >
           {"Outline -> Summary"}
