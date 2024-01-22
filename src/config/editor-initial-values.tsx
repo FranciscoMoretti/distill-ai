@@ -3,16 +3,30 @@ import { type MyValue } from "@/lib/plate/plate-types";
 export const initial_value_source: MyValue = [
   {
     type: "p",
+    children: [
+      {
+        text: "In the vast landscape of the Source editor, this innovative tool unfolds a realm for you to transcribe the nuances of your reading experience. ",
+      },
+      { text: "This is a Personalized AI-powered book summarizer", bold: true },
+      {
+        text: " a beacon that illuminates the path to crafting a tailored and insightful summary.",
+      },
+    ],
+    id: "qmfik",
+  },
+  { type: "p", align: "start", id: "0ubt4", children: [{ text: "" }] },
+  {
+    type: "p",
     align: "start",
+    id: "7mon7",
     children: [
       {
         text: "Our journey unfolds within the Source editor, a canvas where you weave the tale of your book notes. As you embark on this literary adventure, remember to ",
       },
       { text: "Place notes in the Source editor.", bold: true },
     ],
-    id: "vrxq3",
   },
-  { type: "p", align: "start", children: [{ text: "" }], id: "8fex0" },
+  { type: "p", align: "start", children: [{ text: "" }], id: "2bwie" },
   {
     type: "p",
     align: "start",
@@ -28,9 +42,9 @@ export const initial_value_source: MyValue = [
         text: ". These bolded passages will guide you, shaping the very fabric of your narrative.",
       },
     ],
-    id: "qa71k",
+    id: "dmmsn",
   },
-  { type: "p", align: "start", children: [{ text: "" }], id: "0mxb7" },
+  { type: "p", align: "start", children: [{ text: "" }], id: "qjatr" },
   {
     type: "p",
     align: "start",
@@ -43,7 +57,7 @@ export const initial_value_source: MyValue = [
         text: ". Click it, and witness the skeleton of your narrative emerge.",
       },
     ],
-    id: "lsz8u",
+    id: "av8hl",
   },
   {
     type: "p",
@@ -58,7 +72,7 @@ export const initial_value_source: MyValue = [
         text: ". With every twist and turn in your notes, it diligently crafts an updated outline on every change, ensuring your story remains fluid and responsive.\n",
       },
     ],
-    id: "2exo0",
+    id: "bfeup",
   },
   {
     type: "p",
@@ -75,9 +89,9 @@ export const initial_value_source: MyValue = [
         text: " Shape your narrative, add depth, and let your story flourish.",
       },
     ],
-    id: "o8g3k",
+    id: "1auca",
   },
-  { type: "p", align: "start", id: "ecelb", children: [{ text: "" }] },
+  { type: "p", align: "start", children: [{ text: "" }], id: "toccq" },
   {
     type: "p",
     align: "start",
@@ -91,9 +105,9 @@ export const initial_value_source: MyValue = [
         text: ". Like a master storyteller, the AI weaves its magic, creating a captivating book summary in the Summary editor.",
       },
     ],
-    id: "js7af",
+    id: "c8dy8",
   },
-  { type: "p", align: "start", children: [{ text: "" }], id: "bp1to" },
+  { type: "p", align: "start", children: [{ text: "" }], id: "7vfju" },
   {
     type: "p",
     align: "start",
@@ -107,9 +121,11 @@ export const initial_value_source: MyValue = [
         text: "for a grand showcase. Should you wish to revisit this literary realm, return to Distill AI and witness your story anew.",
       },
     ],
-    id: "xc7om",
+    id: "qd7ug",
   },
-  { type: "p", align: "start", children: [{ text: "" }], id: "wbqv5" },
+  { type: "p", align: "start", children: [{ text: "" }], id: "461sn" },
+  { type: "p", children: [{ text: "" }], id: "lyode" },
+  { type: "p", children: [{ text: "" }], id: "tp3hy" },
 ];
 
 export const initial_value_outline: MyValue = [
@@ -117,8 +133,16 @@ export const initial_value_outline: MyValue = [
     type: "p",
     listStyleType: "disc",
     indent: 1,
+    children: [{ text: "This is a Personalized AI-powered book summarizer" }],
+    id: "be3zk",
+  },
+  {
+    type: "p",
+    listStyleType: "disc",
+    indent: 1,
     children: [{ text: "Place notes in the Source editor." }],
-    id: "0btxb",
+    id: "6qk4n",
+    listStart: 2,
   },
   {
     type: "p",
@@ -129,16 +153,16 @@ export const initial_value_outline: MyValue = [
         text: "Bold text in Source with ctrl+B or Bold button to include in the Outline",
       },
     ],
-    id: "9d6om",
-    listStart: 2,
+    id: "e1pv1",
+    listStart: 3,
   },
   {
     type: "p",
     listStyleType: "disc",
     indent: 1,
     children: [{ text: '"Generate Outline" button creates an outline' }],
-    id: "rmsd0",
-    listStart: 3,
+    id: "h81vs",
+    listStart: 4,
   },
   {
     type: "p",
@@ -147,8 +171,8 @@ export const initial_value_outline: MyValue = [
     children: [
       { text: '"Auto-generate outline" button generates in every change' },
     ],
-    id: "z02hk",
-    listStart: 4,
+    id: "qxl07",
+    listStart: 5,
   },
   {
     type: "p",
@@ -159,8 +183,8 @@ export const initial_value_outline: MyValue = [
         text: "Edit Outline further with summarization, thoughts, titles, or indentation.",
       },
     ],
-    id: "ur4ia",
-    listStart: 5,
+    id: "bsqor",
+    listStart: 6,
   },
   {
     type: "p",
@@ -169,8 +193,8 @@ export const initial_value_outline: MyValue = [
     children: [
       { text: '"Generate Summary" button to create a summary with AI' },
     ],
-    id: "nk7n5",
-    listStart: 6,
+    id: "lbj7t",
+    listStart: 7,
   },
   {
     type: "p",
@@ -181,10 +205,10 @@ export const initial_value_outline: MyValue = [
         text: "Copy your crafted narrative, download it for safekeeping, or export it to Notion",
       },
     ],
-    id: "x0p0g",
-    listStart: 7,
+    id: "br5hg",
+    listStart: 8,
   },
-  { type: "p", children: [{ text: "" }], id: "xshyl" },
+  { type: "p", children: [{ text: "" }], id: "2rm7w" },
 ];
 
 export const initial_value_summary: MyValue = [
