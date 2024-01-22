@@ -4,9 +4,7 @@ import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { authOptions } from "@/server/auth";
-import { Icons } from "@/components/icons";
 import { PlaygroundEditor } from "@/components/playground-editor";
-import { Suspense } from "react";
 import Features from "@/components/features";
 
 export default async function IndexPage() {
