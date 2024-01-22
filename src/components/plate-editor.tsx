@@ -145,7 +145,6 @@ export function PlateEditor({
           <ScrollArea className=" h-full max-h-[800px] flex-1 overflow-hidden">
             <Editor
               className="px-[96px] py-16"
-              autoFocus
               focusRing={false}
               variant="ghost"
               size="md"
