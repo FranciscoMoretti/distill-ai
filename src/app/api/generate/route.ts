@@ -100,12 +100,25 @@ export async function POST(req: Request): Promise<Response> {
     messages: [
       {
         role: "system",
-        content: `Incorporate the following excerpts from the document: '${title}', which I've selected based on their relevance and importance, into a summary of the document. Please use as many details from the excerpts I provide as possible. Write the summary in rich Markdown format using h2, h3, lists, tables, bold, italics, etc. Each item in the excerpts should be mapped to a section in the summary. Your output is an h2 section for each chunk in the excerpts. You may use h3 for subsections. Don't create sections that are not in the excerpts.`,
+        content: `Transform the excerpts from the INPUT document: '${title}', which I've selected based on their relevance and importance, into blocks of a new OUTPUT document.
+
+        Rules:
+        - Use as many details from the excerpts I provide as possible.
+        - Print in markdown format using h2, h3, lists, tables, bold, italics, tables, etc.
+        - Don't create sections that are not in the excerpts.
+
+        Steps:
+        1. Map each excerpt to a section with an h2 title. These are the only sections in the OUTPUT document.
+        2. Optionally create h3 for subsections.
+        3. Bold the most important information in each section.
+    `,
         // TODO: Add richness "Each section has in bold its most important information."
       },
       {
         role: "user",
-        content: prompt,
+        content: `Excerpts:
+        ${prompt}
+        `,
       },
     ],
     temperature: 0.7,
