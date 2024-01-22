@@ -142,7 +142,10 @@ export function PlateEditor({
             <FixedToolbarButtons />
           </FixedToolbar>
           {/* // TODO: Editor height should be set in only one place (there is a max-h-[1000px] in a ancestor) */}
-          <ScrollArea className=" h-full max-h-[800px] flex-1 overflow-hidden">
+          <ScrollArea
+            className="h-full flex-1"
+            viewPortClassName="max-h-[754px]"
+          >
             <Editor
               className="px-[96px] py-16"
               focusRing={false}

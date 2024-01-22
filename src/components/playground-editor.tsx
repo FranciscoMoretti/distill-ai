@@ -29,7 +29,7 @@ export async function PlaygroundEditor() {
           <TitleForm title={post.title} postId={""} useDatabase={false} />
           <Workspace className="h-full flex-1" storage="local" />
         </PostProvider>
-      </div>{" "}
+      </div>
     </div>
   );
 }
