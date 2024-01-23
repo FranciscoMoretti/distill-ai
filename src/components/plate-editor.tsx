@@ -147,10 +147,14 @@ export function PlateEditor({
             viewPortClassName="max-h-[754px]"
           >
             <Editor
-              className="h-full px-16 py-16 lg:px-24"
+              className={cn(
+                "h-full px-16 py-16 lg:px-24",
+                // Change font size responsively
+                "text-sm lg:text-base",
+              )}
               focusRing={false}
               variant="ghost"
-              size="md"
+              // size="md"
             />
           </ScrollArea>
           <FloatingToolbar>
