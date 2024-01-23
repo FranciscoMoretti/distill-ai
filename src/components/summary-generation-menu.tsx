@@ -8,7 +8,8 @@ import { usePostContext } from "@/lib/post-context";
 
 export function SummaryGenerationMenu() {
   return (
-    <div className="flex flex-row items-center gap-2">
+    <div className="flex flex-row items-center">
+      <SummaryGenerationStart />
       <SummaryGenerationStop />
       <SummaryGenerationStatus />
     </div>
@@ -18,31 +19,44 @@ export function SummaryGenerationMenu() {
 export function SummaryGenerationStatus() {
   const { summaryCompletion } = useMultiEditorStateContext();
 
-  if (!summaryCompletion.isLoading) {
-    return <Check className="h-4 w-4" />;
-  } else {
-    return <LoadingSpinner className="h-4 w-4" />;
-  }
+  return (
+    <div className="flex h-10 w-10 items-center justify-center">
+      {!summaryCompletion.isLoading ? (
+        <Check className="h-4 w-4" />
+      ) : (
+        <LoadingSpinner className="h-4 w-4" />
+      )}
+    </div>
+  );
 }
 
-export function SummaryGenerationStop() {
+export function SummaryGenerationStart() {
   const { summaryCompletion } = useMultiEditorStateContext();
   const { generateSummary } = useEditorsInteractions();
   const { post } = usePostContext();
 
-  if (summaryCompletion.isLoading) {
-    return (
-      <Button onClick={() => summaryCompletion.stop()} variant={"ghost"}>
-        <StopCircle className="h-4 w-4" />
-      </Button>
-    );
-  }
   return (
     <Button
+      size={"icon"}
       onClick={async () => await generateSummary(post.title)}
-      variant={"ghost"}
+      disabled={summaryCompletion.isLoading}
     >
       <Sparkles className="h-4 w-4" />
+    </Button>
+  );
+}
+
+export function SummaryGenerationStop() {
+  const { summaryCompletion } = useMultiEditorStateContext();
+
+  return (
+    <Button
+      size={"icon"}
+      onClick={() => summaryCompletion.stop()}
+      variant={"ghost"}
+      disabled={!summaryCompletion.isLoading}
+    >
+      <StopCircle className="h-4 w-4" />
     </Button>
   );
 }

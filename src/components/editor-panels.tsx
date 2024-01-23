@@ -48,7 +48,7 @@ export function SummaryEditorPanel({ className = "" }: { className?: string }) {
     <div
       className={cn("grid h-full w-full grid-rows-[auto,auto,1fr]", className)}
     >
-      <div className="flex items-center gap-2 px-4 py-2">
+      <div className="flex items-center gap-4 px-4 py-2">
         <h1 className="text-xl font-bold">Summary</h1>
         <div className="flex w-full flex-row items-center justify-between gap-2">
           <SummaryGenerationMenu />
