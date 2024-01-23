@@ -108,12 +108,10 @@ export async function POST(req: Request): Promise<Response> {
         - Don't create sections that are not in the excerpts.
 
         Steps:
-        1. Group the excerpts into chunks.
-        2. Map each chunk to a section of the OUTPUT document with an h2 title. These are the only sections in the OUTPUT document.
-        3. Optionally create h3 for subsections.
+        1. Map each idea from the excerpts in the INPUT document to a section of the OUTPUT document with an h2 title. These are the only sections in the OUTPUT document.
+        3. Create h3 for subsections if there are subtopics in the CHUNK.
         4. Bold the most important information in each section.
     `,
-        // TODO: Add richness "Each section has in bold its most important information."
       },
       {
         role: "user",
