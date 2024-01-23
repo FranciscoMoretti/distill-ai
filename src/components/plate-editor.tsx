@@ -147,7 +147,7 @@ export function PlateEditor({
             viewPortClassName="max-h-[754px]"
           >
             <Editor
-              className="px-[96px] py-16"
+              className="h-full px-16 py-16 lg:px-24"
               focusRing={false}
               variant="ghost"
               size="md"

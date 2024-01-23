@@ -23,6 +23,7 @@ import { api } from "@/trpc/react";
 import { useRouter } from "next/navigation";
 import { usePostContext } from "@/lib/post-context";
 import { type Post } from "@prisma/client";
+import { cn } from "@/lib/utils";
 
 const FormSchema = z.object({
   title: postTitleSchema,
@@ -34,10 +35,12 @@ export function TitleForm({
   title,
   postId,
   useDatabase = true,
+  className = "",
 }: {
   title: string;
   postId: string;
   useDatabase?: boolean;
+  className?: string;
 }) {
   const router = useRouter();
   const { setPost } = usePostContext();
@@ -77,7 +80,10 @@ export function TitleForm({
 
   return (
     <Form {...form}>
-      <form onChange={debouncedUpdates} className="w-full space-y-6">
+      <form
+        onChange={debouncedUpdates}
+        className={cn("w-full space-y-6", className)}
+      >
         <FormField
           control={form.control}
           name="title"

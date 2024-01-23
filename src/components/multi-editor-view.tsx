@@ -19,14 +19,14 @@ export function MultiEditorView() {
   const { multiEditorTab, editorLayout } = useMultiEditorStateContext();
 
   return (
-    <div>
+    <>
       <div className={cn(editorLayout != "unknown" && "hidden")}>
         <MultiEditorSkeleton />
       </div>
       <div className={cn(editorLayout == "unknown" && "hidden")}>
         <MultiEditorViewInternal multiEditorTab={multiEditorTab} />
       </div>
-    </div>
+    </>
   );
 }
 
