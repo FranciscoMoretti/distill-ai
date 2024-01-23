@@ -82,7 +82,6 @@ export function PlateEditor({
       updateLocalStorage(value);
     }
   }, debounceDuration);
-  const [saveStatus, setSaveStatus] = useState("Saved");
 
   function updateLocalStorage(value: MyValue) {
     if (!editorRef.current) {
@@ -119,12 +118,7 @@ export function PlateEditor({
             if (onChange) {
               await onChange(value);
             }
-            setSaveStatus("Saving...");
             await debouncedUpdates(value);
-            // Simulate a delay in saving.
-            setTimeout(() => {
-              setSaveStatus("Saved");
-            }, 500);
           }
         }}
       >
@@ -136,15 +130,12 @@ export function PlateEditor({
           )}
         >
           <FixedToolbar className="flex-col">
-            <div className="flex flex-row gap-2 px-4 py-2">
-              <div className="text-sm ">{saveStatus}</div>
-            </div>
             <FixedToolbarButtons />
           </FixedToolbar>
           {/* // TODO: Editor height should be set in only one place (there is a max-h-[1000px] in a ancestor) */}
           <ScrollArea
             className="h-full flex-1"
-            viewPortClassName="max-h-[754px]"
+            viewPortClassName="max-h-[839px]"
           >
             <Editor
               className={cn(
