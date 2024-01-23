@@ -27,7 +27,7 @@ export async function PlaygroundEditor() {
       <div className="flex w-full flex-1 flex-col items-center gap-10">
         <PostProvider initialValue={post}>
           <TitleForm title={post.title} postId={""} useDatabase={false} />
-          <Workspace className="h-full flex-1" storage="local" />
+          <Workspace className="h-full flex-1" storage="disabled" />
         </PostProvider>
       </div>
     </div>

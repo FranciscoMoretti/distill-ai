@@ -17,7 +17,7 @@ export function Workspace({
   storage,
 }: {
   className?: string;
-  storage: "cloud" | "local";
+  storage: "cloud" | "local" | "disabled";
 }) {
   const [workspaceConfig, setWorkspaceConfig] = React.useState<WorkspaceConfig>(
     DEFAULT_WORKSPACE_CONFIG,

@@ -24,7 +24,7 @@ export default function MultiEditor({
   storage,
 }: {
   className?: string;
-  storage: "cloud" | "local";
+  storage: "cloud" | "local" | "disabled";
 }) {
   const { post, setPost } = usePostContext();
   const documentId = post.id;
