@@ -11,6 +11,7 @@ import { type Metadata, type Viewport } from "next";
 import { cn } from "@udecode/cn";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
 import { siteConfig } from "@/config/site";
+import { env } from "@/env";
 
 export const viewport: Viewport = {
   themeColor: [
@@ -31,7 +32,7 @@ export const metadata: Metadata = {
     icon: "/favicon.svg",
   },
   openGraph: {
-    images: "/opengraph-image.png",
+    images: `${env.NEXT_PUBLIC_APP_URL}/opengraph-image.png`,
   },
 };
 
