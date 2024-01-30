@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/icons";
+import { type LucideIcon } from "lucide-react";
 
 type EmptyPlaceholderProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -35,7 +36,8 @@ EmptyPlaceholder.Icon = function EmptyPlaceHolderIcon({
   className,
   ...props
 }: EmptyPlaceholderIconProps) {
-  const Icon = Icons[name];
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const Icon = Icons[name] as LucideIcon;
 
   if (!Icon) {
     return null;
