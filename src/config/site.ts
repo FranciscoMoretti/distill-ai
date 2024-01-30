@@ -2,7 +2,8 @@ export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
   name: "Destill AI",
-  description: "Summarize your documents with progressive summarization + AI.",
+  description:
+    "Summarize your documents with AI assisted progressive summarization.",
   mainNav: [
     {
       title: "Home",
