@@ -95,7 +95,7 @@
     "date-fns": "^3.0.6",
     "framer-motion": "^11.0.3",
     "hast": "^1.0.0",
-    "lucide-react": "^0.244.0",
+    "lucide-react": "^0.307.0",
     "next": "^14.0.3",
     "next-auth": "^4.24.5",
     "next-themes": "^0.2.1",
