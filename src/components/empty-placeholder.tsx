@@ -45,7 +45,8 @@ EmptyPlaceholder.Icon = function EmptyPlaceHolderIcon({
 
   return (
     <div className="flex h-20 w-20 items-center justify-center rounded-full bg-muted">
-      <Icon className={cn("h-10 w-10", className)} {...props} />
+      {/* @ts-expect-error ref might not exist. But exist with right icon */}
+      <Icon className={cn("h-10 w-10", className)} ref={props.ref} {...props} />
     </div>
   );
 };
