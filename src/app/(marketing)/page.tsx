@@ -3,7 +3,6 @@ import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
-import { authOptions } from "@/server/auth";
 import { PlaygroundEditor } from "@/components/playground-editor";
 import Features from "@/components/features";
 import { HeroSection } from "@/components/hero-section";
@@ -11,7 +10,7 @@ import { HeroSection } from "@/components/hero-section";
 export default async function IndexPage() {
   return (
     <>
-      <section>
+      <section className="h-[calc(100vh-16px)] bg-white dark:bg-black">
         <HeroSection />
       </section>
 
