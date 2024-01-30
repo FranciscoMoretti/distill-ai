@@ -1,6 +1,6 @@
 # Text Editor for Book Summarization
 
-![Banner](src/app/opengraph-image.png)
+![Banner](public/opengraph-image.png)
 
 A web-based text editor designed to assist in the process of distilling information from books. This tool empowers users to efficiently organize raw book notes, create outlines, and generate personalized summaries using ChatGPT.
 
