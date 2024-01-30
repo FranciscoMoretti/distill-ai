@@ -23,8 +23,8 @@ export default async function MarketingLayout({
 
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="container z-40 bg-background">
-        <div className="flex h-20 items-center justify-between py-6">
+      <header className="z-40 w-full bg-background">
+        <div className="container flex h-20 items-center justify-between py-6">
           <MainNav items={marketingConfig.mainNav} />
           <nav>
             <div className="flex flex-row items-center gap-3">
