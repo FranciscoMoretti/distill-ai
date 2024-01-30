@@ -27,7 +27,7 @@ export function HeroContent({
         Effortless Summaries
       </p>
       <p className="inter-var mt-4 text-center text-base font-normal md:text-lg">
-        Curate your preferences, let AI craft the summary
+        Curate your notes, let AI craft the summary
       </p>
     </WavyBackground>
   );
