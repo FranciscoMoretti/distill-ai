@@ -201,8 +201,8 @@ dependencies:
     specifier: ^30.1.2
     version: 30.1.2(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.101.5)(slate@0.101.5)
   '@udecode/plate-serializer-md':
-    specifier: ^30.1.2
-    version: 30.1.2(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.101.5)(slate@0.101.5)
+    specifier: ^30.2.1
+    version: 30.2.1(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.101.5)(slate@0.101.5)
   '@udecode/plate-tabbable':
     specifier: ^30.1.2
     version: 30.1.2(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.101.5)(slate@0.101.5)
@@ -226,7 +226,7 @@ dependencies:
     version: 0.2.4
   ai:
     specifier: ^2.2.31
-    version: 2.2.31(react@18.2.0)(solid-js@1.8.12)(svelte@4.2.9)(vue@3.4.15)
+    version: 2.2.31(react@18.2.0)(solid-js@1.8.13)(svelte@4.2.10)(vue@3.4.15)
   class-variance-authority:
     specifier: ^0.7.0
     version: 0.7.0
@@ -462,8 +462,8 @@ packages:
       regenerator-runtime: 0.14.1
     dev: false
 
-  /@babel/runtime@7.23.8:
-    resolution: {integrity: sha512-Y7KbAP984rn1VGMbGqKmBLio9V7y5Je9GvU4rQPCPinCyNfUcToxIXl06d59URp/F3LwinvODxab5N/G6qggkw==}
+  /@babel/runtime@7.23.9:
+    resolution: {integrity: sha512-0CX6F+BI2s9dkUqr08KFrAIZgNFj75rdBU/DjCyYLIaV/quFjkk6T+EJ2LkZHyZTbEV4L5p97mNkUsHl2wLFAw==}
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.14.1
@@ -550,8 +550,8 @@ packages:
       '@floating-ui/utils': 0.1.6
     dev: false
 
-  /@floating-ui/core@1.5.3:
-    resolution: {integrity: sha512-O0WKDOo0yhJuugCx6trZQj5jVJ9yR0ystG2JaNAemYUWce+pmM6WUEFIibnWyEJKdrDxhm75NoSRME35FNaM/Q==}
+  /@floating-ui/core@1.6.0:
+    resolution: {integrity: sha512-PcF++MykgmTj3CIyOQbKA/hDzOAiqI3mhuoN44WRCopIs1sgoDoU4oty4Jtqaj/y3oDU6fnVSm4QG0a3t5i0+g==}
     dependencies:
       '@floating-ui/utils': 0.2.1
     dev: false
@@ -563,10 +563,10 @@ packages:
       '@floating-ui/utils': 0.1.6
     dev: false
 
-  /@floating-ui/dom@1.5.4:
-    resolution: {integrity: sha512-jByEsHIY+eEdCjnTVu+E3ephzTOzkQ8hgUfGwos+bg7NlH33Zc5uO+QHz1mrQUOgIKKDD1RtS201P9NvAfq3XQ==}
+  /@floating-ui/dom@1.6.1:
+    resolution: {integrity: sha512-iA8qE43/H5iGozC3W0YSnVSW42Vh522yyM1gj+BqRwVsTNOyr231PsXDaV04yT39PsO0QL2QpbI/M0ZaLUQgRQ==}
     dependencies:
-      '@floating-ui/core': 1.5.3
+      '@floating-ui/core': 1.6.0
       '@floating-ui/utils': 0.2.1
     dev: false
 
@@ -576,7 +576,7 @@ packages:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
     dependencies:
-      '@floating-ui/dom': 1.5.4
+      '@floating-ui/dom': 1.6.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
@@ -2716,22 +2716,22 @@ packages:
       '@udecode/utils': 24.3.0
       clsx: 1.2.1
       is-hotkey: 0.2.0
-      jotai: 2.6.2(@types/react@18.2.45)(react@18.2.0)
-      jotai-optics: 0.3.1(jotai@2.6.2)(optics-ts@2.4.1)
-      jotai-x: 1.2.1(@types/react@18.2.45)(jotai@2.6.2)(react@18.2.0)
+      jotai: 2.6.4(@types/react@18.2.45)(react@18.2.0)
+      jotai-optics: 0.3.1(jotai@2.6.4)(optics-ts@2.4.1)
+      jotai-x: 1.2.1(@types/react@18.2.45)(jotai@2.6.4)(react@18.2.0)
       lodash: 4.17.21
       nanoid: 3.3.7
       optics-ts: 2.4.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      react-hotkeys-hook: 4.4.4(react-dom@18.2.0)(react@18.2.0)
+      react-hotkeys-hook: 4.5.0(react-dom@18.2.0)(react@18.2.0)
       slate: 0.101.5
       slate-history: 0.100.0(slate@0.101.5)
       slate-hyperscript: 0.100.0(slate@0.101.5)
       slate-react: 0.101.5(react-dom@18.2.0)(react@18.2.0)(slate@0.101.5)
       use-deep-compare: 1.2.1(react@18.2.0)
-      zustand: 4.4.7(@types/react@18.2.45)(react@18.2.0)
-      zustand-x: 3.0.2(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(zustand@4.4.7)
+      zustand: 4.5.0(@types/react@18.2.45)(react@18.2.0)
+      zustand-x: 3.0.2(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(zustand@4.5.0)
     transitivePeerDependencies:
       - '@types/react'
       - immer
@@ -2854,7 +2854,7 @@ packages:
       slate-hyperscript: '>=0.66.0'
       slate-react: '>=0.99.0'
     dependencies:
-      '@floating-ui/core': 1.5.3
+      '@floating-ui/core': 1.6.0
       '@floating-ui/react': 0.22.3(react-dom@18.2.0)(react@18.2.0)
       '@udecode/plate-common': 30.1.2(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.101.5)(slate@0.101.5)
       react: 18.2.0
@@ -3423,8 +3423,8 @@ packages:
       - scheduler
     dev: false
 
-  /@udecode/plate-serializer-md@30.1.2(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.101.5)(slate@0.101.5):
-    resolution: {integrity: sha512-Esaroemy47n64BgZiTPyY1Q4L5gY5SSP/xtMMPIoMy4U95ZxtswEJkDEqwvX1dlSDjyCCCwEZYpSHx3nFB1+fQ==}
+  /@udecode/plate-serializer-md@30.2.1(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.101.5)(slate@0.101.5):
+    resolution: {integrity: sha512-Fw5qHD6wR3Q+UZMg/ROU/bvCA+7GjfqKjsuZuyyOvbfICif/UOuvBmU/aLLlJUNWtbwcvrCQvdr7MxTcttA4VA==}
     peerDependencies:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
@@ -3712,8 +3712,8 @@ packages:
       '@vue/compiler-ssr': 3.4.15
       '@vue/shared': 3.4.15
       estree-walker: 2.0.2
-      magic-string: 0.30.5
-      postcss: 8.4.33
+      magic-string: 0.30.7
+      postcss: 8.4.34
       source-map-js: 1.0.2
     dev: false
 
@@ -3818,7 +3818,7 @@ packages:
       humanize-ms: 1.2.1
     dev: false
 
-  /ai@2.2.31(react@18.2.0)(solid-js@1.8.12)(svelte@4.2.9)(vue@3.4.15):
+  /ai@2.2.31(react@18.2.0)(solid-js@1.8.13)(svelte@4.2.10)(vue@3.4.15):
     resolution: {integrity: sha512-WQH13RxP+RYo9IE/FX8foNQh9gcKO/dhl9OGy5JL2bHJVBlnugPmH2CYJWaRt+mvjXHaU8txB+jzGo/fbtH2HA==}
     engines: {node: '>=14.6'}
     peerDependencies:
@@ -3839,10 +3839,10 @@ packages:
       eventsource-parser: 1.0.0
       nanoid: 3.3.6
       react: 18.2.0
-      solid-js: 1.8.12
-      solid-swr-store: 0.10.7(solid-js@1.8.12)(swr-store@0.10.6)
-      sswr: 2.0.0(svelte@4.2.9)
-      svelte: 4.2.9
+      solid-js: 1.8.13
+      solid-swr-store: 0.10.7(solid-js@1.8.13)(swr-store@0.10.6)
+      sswr: 2.0.0(svelte@4.2.10)
+      svelte: 4.2.10
       swr: 2.2.0(react@18.2.0)
       swr-store: 0.10.6
       swrv: 1.0.4(vue@3.4.15)
@@ -4464,7 +4464,7 @@ packages:
     peerDependencies:
       react: '>=16.12.0'
     dependencies:
-      '@babel/runtime': 7.23.8
+      '@babel/runtime': 7.23.9
       compute-scroll-into-view: 1.0.20
       prop-types: 15.8.1
       react: 18.2.0
@@ -5326,17 +5326,17 @@ packages:
     resolution: {integrity: sha512-W+oqK4H+r5sITxfxpSU+MMdr/YSWGvgZMQDIsNoBDGGy4i7GBPTtvFKibQzW06n3U3TqHjhvBJsirShsEJ6eeQ==}
     dev: false
 
-  /jotai-optics@0.3.1(jotai@2.6.2)(optics-ts@2.4.1):
+  /jotai-optics@0.3.1(jotai@2.6.4)(optics-ts@2.4.1):
     resolution: {integrity: sha512-KibUx9IneM2hGWGIYGs/v0KCxU985lg7W2c6dt5RodJCB2XPbmok8rkkLmdVk9+fKsn2shkPMi+AG8XzHgB3+w==}
     peerDependencies:
       jotai: '>=1.11.0'
       optics-ts: '*'
     dependencies:
-      jotai: 2.6.2(@types/react@18.2.45)(react@18.2.0)
+      jotai: 2.6.4(@types/react@18.2.45)(react@18.2.0)
       optics-ts: 2.4.1
     dev: false
 
-  /jotai-x@1.2.1(@types/react@18.2.45)(jotai@2.6.2)(react@18.2.0):
+  /jotai-x@1.2.1(@types/react@18.2.45)(jotai@2.6.4)(react@18.2.0):
     resolution: {integrity: sha512-4Sgx+pCLL23+La+9XA42UAratW+PIwYCqUj58WgGlxmifagJ+q+fzNi0TIjdAwB9grUS62fwGioW36Rza9xi3w==}
     peerDependencies:
       '@types/react': '>=17.0.0'
@@ -5349,12 +5349,12 @@ packages:
         optional: true
     dependencies:
       '@types/react': 18.2.45
-      jotai: 2.6.2(@types/react@18.2.45)(react@18.2.0)
+      jotai: 2.6.4(@types/react@18.2.45)(react@18.2.0)
       react: 18.2.0
     dev: false
 
-  /jotai@2.6.2(@types/react@18.2.45)(react@18.2.0):
-    resolution: {integrity: sha512-kl4KguU1Fr+tFiLi3A3h9qPEzhvLTTDA10DO3QZAz6k7BEaQJ+qvSBwolzonnfNI4QzEovyQfUqVgnRxfnnQVQ==}
+  /jotai@2.6.4(@types/react@18.2.45)(react@18.2.0):
+    resolution: {integrity: sha512-RniwQPX4893YlNR1muOtyUGHYaTD1fhEN4qnOuZJSrDHj6xdEMrqlRSN/hCm2fshwk78ruecB/P2l+NCVWe6TQ==}
     engines: {node: '>=12.20.0'}
     peerDependencies:
       '@types/react': '>=17.0.0'
@@ -5544,8 +5544,8 @@ packages:
       react: 18.2.0
     dev: false
 
-  /magic-string@0.30.5:
-    resolution: {integrity: sha512-7xlpfBaQaP/T6Vh8MO/EqXSW5En6INHEvEXQiuff7Gku0PWjU3uf6w/j9o7O+SpB5fOAkrI5HeoNgwjEO0pFsA==}
+  /magic-string@0.30.7:
+    resolution: {integrity: sha512-8vBuFF/I/+OSLRmdf2wwFCJCz+nSn0m6DPvGH1fS/KiQoSaR+sETbov0eIk9KhEKy8CYqIkIAnbohxT/4H0kuA==}
     engines: {node: '>=12'}
     dependencies:
       '@jridgewell/sourcemap-codec': 1.4.15
@@ -6620,8 +6620,8 @@ packages:
       picocolors: 1.0.0
       source-map-js: 1.0.2
 
-  /postcss@8.4.33:
-    resolution: {integrity: sha512-Kkpbhhdjw2qQs2O2DGX+8m5OVqEcbB9HRBvuYM9pgrjEFUg30A9LmXNlTAUj4S9kgtGyrMbTzVjH7E+s5Re2yg==}
+  /postcss@8.4.34:
+    resolution: {integrity: sha512-4eLTO36woPSocqZ1zIrFD2K1v6wH7pY1uBh0JIM2KKfrVtGvPFiAku6aNOP0W1Wr9qwnaCsF0Z+CrVnryB2A8Q==}
     engines: {node: ^10 || ^12 || >=14}
     dependencies:
       nanoid: 3.3.7
@@ -6818,8 +6818,8 @@ packages:
       react: 18.2.0
     dev: false
 
-  /react-hotkeys-hook@4.4.4(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-wzZmqb/Obr0ds9Myc1sIFPJ52GA/Eeg/vXBWV0HA1LvHlVAW5Va3KB0q6EZNlNSHQWscWZ2K8+6w0GYSie2o7A==}
+  /react-hotkeys-hook@4.5.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-Samb85GSgAWFQNvVt3PS90LPPGSf9mkH/r4au81ZP1yOIFayLC3QAvqTgGtJ8YEDMXtPmaVBs6NgipHO6h4Mug==}
     peerDependencies:
       react: '>=16.8.1'
       react-dom: '>=16.8.1'
@@ -6972,7 +6972,7 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      '@babel/runtime': 7.23.8
+      '@babel/runtime': 7.23.9
       react: 18.2.0
       use-composed-ref: 1.3.0(react@18.2.0)
       use-latest: 1.2.1(@types/react@18.2.45)(react@18.2.0)
@@ -7326,22 +7326,22 @@ packages:
     resolution: {integrity: sha512-4qdtOGcBjral6YIBCWJ0ljFSKNLz9KkhbWtuGvUyRowl1kxfuE1x/Z/aJcaiilpb3do9bl5K7/1h9XC5wWpY/A==}
     dev: false
 
-  /solid-js@1.8.12:
-    resolution: {integrity: sha512-sLE/i6M9FSWlov3a2pTC5ISzanH2aKwqXTZj+bbFt4SUrVb4iGEa7fpILBMOxsQjkv3eXqEk6JVLlogOdTe0UQ==}
+  /solid-js@1.8.13:
+    resolution: {integrity: sha512-r6FrMrEhjMAH2RY88P55Fs6MOtPxdOzlDI1k/0VnZ8l4x2jAHjFrWG+5Oy00/zUARf2gHLOp572KGy4OXGG/Ag==}
     dependencies:
       csstype: 3.1.3
       seroval: 1.0.4
       seroval-plugins: 1.0.4(seroval@1.0.4)
     dev: false
 
-  /solid-swr-store@0.10.7(solid-js@1.8.12)(swr-store@0.10.6):
+  /solid-swr-store@0.10.7(solid-js@1.8.13)(swr-store@0.10.6):
     resolution: {integrity: sha512-A6d68aJmRP471aWqKKPE2tpgOiR5fH4qXQNfKIec+Vap+MGQm3tvXlT8n0I8UgJSlNAsSAUuw2VTviH2h3Vv5g==}
     engines: {node: '>=10'}
     peerDependencies:
       solid-js: ^1.2
       swr-store: ^0.10
     dependencies:
-      solid-js: 1.8.12
+      solid-js: 1.8.13
       swr-store: 0.10.6
     dev: false
 
@@ -7370,12 +7370,12 @@ packages:
     resolution: {integrity: sha512-PEGlAwrG8yXGXRjW32fGbg66JAlOAwbObuqVoJpv/mRgoWDQfgH1wDPvtzWyUSNAXBGSk8h755YDbbcEy3SH2Q==}
     dev: false
 
-  /sswr@2.0.0(svelte@4.2.9):
+  /sswr@2.0.0(svelte@4.2.10):
     resolution: {integrity: sha512-mV0kkeBHcjcb0M5NqKtKVg/uTIYNlIIniyDfSGrSfxpEdM9C365jK0z55pl9K0xAkNTJi2OAOVFQpgMPUk+V0w==}
     peerDependencies:
       svelte: ^4.0.0
     dependencies:
-      svelte: 4.2.9
+      svelte: 4.2.10
       swrev: 4.0.0
     dev: false
 
@@ -7491,8 +7491,8 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
-  /svelte@4.2.9:
-    resolution: {integrity: sha512-hsoB/WZGEPFXeRRLPhPrbRz67PhP6sqYgvwcAs+gWdSQSvNDw+/lTeUJSWe5h2xC97Fz/8QxAOqItwBzNJPU8w==}
+  /svelte@4.2.10:
+    resolution: {integrity: sha512-Ep06yCaCdgG1Mafb/Rx8sJ1QS3RW2I2BxGp2Ui9LBHSZ2/tO/aGLc5WqPjgiAP6KAnLJGaIr/zzwQlOo1b8MxA==}
     engines: {node: '>=16'}
     dependencies:
       '@ampproject/remapping': 2.2.1
@@ -7507,7 +7507,7 @@ packages:
       estree-walker: 3.0.3
       is-reference: 3.0.2
       locate-character: 3.0.0
-      magic-string: 0.30.5
+      magic-string: 0.30.7
       periscopic: 3.1.0
     dev: false
 
@@ -8247,7 +8247,7 @@ packages:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
     dev: false
 
-  /zustand-x@3.0.2(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(zustand@4.4.7):
+  /zustand-x@3.0.2(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(zustand@4.5.0):
     resolution: {integrity: sha512-tb4qMWbmgrWEdemb+LlrJiHI1ZMxwlQNz7jDHN5iA/vmU8xlpAX80MQZ2FNLP2KejBFEnsA1RWRAO/0D5O0rPw==}
     peerDependencies:
       zustand: '>=4.3.9'
@@ -8255,7 +8255,7 @@ packages:
       immer: 10.0.3
       lodash.mapvalues: 4.6.0
       react-tracked: 1.7.11(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
-      zustand: 4.4.7(@types/react@18.2.45)(react@18.2.0)
+      zustand: 4.5.0(@types/react@18.2.45)(react@18.2.0)
     transitivePeerDependencies:
       - react
       - react-dom
@@ -8263,12 +8263,12 @@ packages:
       - scheduler
     dev: false
 
-  /zustand@4.4.7(@types/react@18.2.45)(react@18.2.0):
-    resolution: {integrity: sha512-QFJWJMdlETcI69paJwhSMJz7PPWjVP8Sjhclxmxmxv/RYI7ZOvR5BHX+ktH0we9gTWQMxcne8q1OY8xxz604gw==}
+  /zustand@4.5.0(@types/react@18.2.45)(react@18.2.0):
+    resolution: {integrity: sha512-zlVFqS5TQ21nwijjhJlx4f9iGrXSL0o/+Dpy4txAP22miJ8Ti6c1Ol1RLNN98BMib83lmDH/2KmLwaNXpjrO1A==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
       '@types/react': '>=16.8'
-      immer: '>=9.0'
+      immer: '>=9.0.6'
       react: '>=16.8'
     peerDependenciesMeta:
       '@types/react':
