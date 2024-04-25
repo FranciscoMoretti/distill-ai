@@ -2,7 +2,7 @@
 
 ![Banner](public/opengraph-image.png)
 
-A web-based text editor designed to assist in the process of distilling information from books. This tool empowers users to efficiently organize raw book notes, create outlines, and generate personalized summaries using ChatGPT.
+A web-based text editor designed to assist in the process of distilling information from books. This tool help users to efficiently organize raw book notes, create outlines, and generate personalized summaries using ChatGPT.
 
 ## Features
 
