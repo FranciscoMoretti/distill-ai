@@ -12,7 +12,10 @@ import {
 
 export default function Features() {
   return (
-    <section className="flex w-full flex-col gap-16 py-12 md:py-24 lg:py-32">
+    <section
+      id="features"
+      className="flex w-full flex-col gap-16 py-12 md:py-24 lg:py-32"
+    >
       <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
         <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
           Features
